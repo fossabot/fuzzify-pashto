@@ -1,7 +1,3 @@
-// Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
-  // import "core-js/fn/array.find"
-  // ...
-
 const sSounds = "[ص س ث څ]";
 const zSounds = "[ز ض ظ ذ ځ]";
 const tdSounds = "[ط ت ټ د ډ]";
