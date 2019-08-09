@@ -92,7 +92,8 @@ const pashtoReplacerRegex = new RegExp(thingsToReplace.reduce((accumulator, curr
 }, ""), "g");
 
 export function fuzzifyPashto(input: string): RegExp {
-  const regexLogic = input.trim().replace(pashtoReplacerRegex, (mtch) => pashtoReplacer[mtch]);
+  const safeInput = input.replace(/[#-.]|[[-^]|[?|{}]/g, '');
+  const regexLogic = safeInput.trim().replace(pashtoReplacerRegex, (mtch) => pashtoReplacer[mtch]);
   // TODO: Do beginning of word re: https://stackoverflow.com/questions/40731058/regex-match-arabic-keyword
   return new RegExp('^' + regexLogic, '');
 }
