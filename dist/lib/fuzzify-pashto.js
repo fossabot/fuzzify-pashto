@@ -1,7 +1,4 @@
 "use strict";
-// Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
-// import "core-js/fn/array.find"
-// ...
 Object.defineProperty(exports, "__esModule", { value: true });
 var sSounds = "[ص س ث څ]";
 var zSounds = "[ز ض ظ ذ ځ]";
@@ -78,7 +75,8 @@ var pashtoReplacerRegex = new RegExp(thingsToReplace.reduce(function (accumulato
     return accumulator + currentValue + "|";
 }, ""), "g");
 function fuzzifyPashto(input) {
-    var regexLogic = input.trim().replace(pashtoReplacerRegex, function (mtch) { return pashtoReplacer[mtch]; });
+    var safeInput = input.replace(/[#-.]|[[-^]|[?|{}]/g, '');
+    var regexLogic = safeInput.trim().replace(pashtoReplacerRegex, function (mtch) { return pashtoReplacer[mtch]; });
     // TODO: Do beginning of word re: https://stackoverflow.com/questions/40731058/regex-match-arabic-keyword
     return new RegExp('^' + regexLogic, '');
 }
