@@ -1,6 +1,6 @@
 # fuzzify-pashto
 
-[![NPM](https://nodei.co/npm/fuzzify-pashto.png)](https://nodei.co/npm/fuzzify-pashto/)
+[![Build Status](https://travis-ci.org/openpashto/fuzzify-pashto.svg?branch=master)](https://travis-ci.org/openpashto/fuzzify-pashto)
 
 Converts Pashto text strings into Regex expressions for fuzzy searching. 
 
