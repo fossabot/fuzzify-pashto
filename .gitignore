@@ -9,3 +9,7 @@ compiled
 .awcache
 .rpt2_cache
 browsertest.html
+
+website/.cache 
+website/dist
+website/node_modules

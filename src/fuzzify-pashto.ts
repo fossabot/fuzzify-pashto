@@ -3,7 +3,7 @@ const zSounds = "زضظذځ";
 const tdSounds = "طتټدډ";
 const velarPlosives = "ګږکقگك";
 const labialPlosivesAndFricatives = "فپب";
-// Includes Arabic ى \u0649
+// Includes Arabic ى \u0649  
 const theFiveYeys = "ېۍیيئےى";
 
 // TODO: Deal with diacritics etc.
@@ -36,7 +36,7 @@ const pashtoReplacer = {
   "ہ": "اهحہ",
 
   "ع": "اوع", // TODO: make optional
-  "و": "وع",
+  "و": "وع", // TODO: make optional
   "ؤ": "وع",
   
   "ښ": "ښخشخهحغ",
@@ -75,7 +75,7 @@ const pashtoReplacer = {
   "گ": velarPlosives,
   "ق": velarPlosives,
 
-  "ږ": 'ژ' + velarPlosives,
+  "ږ": velarPlosives + 'ژ',
 
   "ب": labialPlosivesAndFricatives,
   "پ": labialPlosivesAndFricatives,
@@ -89,12 +89,6 @@ const pashtoReplacerRegex = new RegExp(thingsToReplace.reduce((accumulator, curr
   } 
   return accumulator + currentValue + "|";
 }, ""), "g");
-
-// enum beginningAtOptions {
-//   beginningOfWord = "beginningOfWord", // default
-//   beginningOfString = "beginningOfString",
-//   anywhere = "anywhere", // TODO: This conflicts with matchWholeWord
-// }
 
 interface FuzzifyOptions {
   beginningAt?: string;
