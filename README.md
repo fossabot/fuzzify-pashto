@@ -6,7 +6,7 @@
 
 Converts Pashto text strings into Regex expressions for fuzzy searching. 
 
-### Problem:
+## Problem:
 
 It can be difficult to search for words in Pashto dictionaries or text because of differences or difficulties in spelling. This is because:
 
@@ -21,7 +21,7 @@ It can be difficult to search for words in Pashto dictionaries or text because o
 
 Because of all these reasons, it can be difficult to search for words based on sound, or a particular non-standard spelling.
 
-### Solution:  
+## Solution:  
 
 Search strings can be converted to Regex expressions that can be used for fuzzy searching so that, for example:
 
@@ -53,8 +53,6 @@ console.log(fuzzyRegex);
 Takes an input of a string of Pashto text (usually a word), and returns a RegEx expression that can be used for fuzzy searching for approximate matches in Pashto text.
 
 #### Options
-
-**TODO: `g` flag option**
 
 ##### begginingAt
 
