@@ -43,7 +43,7 @@ const { fuzzifyPashto } = require("fuzzify-pashto");
 const fuzzyRegex = fuzzifyPashto("سرک");
 console.log(fuzzyRegex);
 
-// /(^|[^\u0600-\u06FF])[صسثڅ][رړ][ګږکقگك]/
+// /(^|[^\u0600-\u06FF])[صسثڅ][رړ][ګږکقگك]/mg
 ```
 
 ## API
