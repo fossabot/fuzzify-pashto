@@ -28,7 +28,7 @@ Search strings can be converted to Regex expressions that can be used for fuzzy 
 - A search for "گرزيدل" will match the word "ګرځېدل"  
 - A search for "سنگہ" will match the word "څنګه"  
 - A search for "انطزار" will match the word "انتظار" 
-- A search for "د پاره" will match theh word "دپاره" 
+- A search for "د پاره" will match the word "دپاره" 
 - **TODO:** A search for "له پاره" will match the word "لپاره" 
 
 ## Usage
