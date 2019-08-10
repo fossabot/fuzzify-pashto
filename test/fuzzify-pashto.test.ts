@@ -18,14 +18,34 @@ const defaultInfo = {
 	],
 };
 
+const matchesWithSpaces = [
+	['دپاره', 'د پاره'],
+	['بېکار', 'بې کار'],
+	['د پاره', 'د پاره'],
+	['بې کار', 'بېکار',],
+];
+
 const optionsPossibilities = [
 	{
 		options: {}, // default
 		...defaultInfo,
 	},
 	{
-		options: {beginningAt: "begginningOfWord"}, // same as default
+		options: {beginningAt: "word"}, // same as default
 		...defaultInfo,
+	},
+	{
+		options: {allowSpacesInWords: true},
+		matches: [
+			...matchesWithSpaces,
+			["دپاره", "دپاره"], // should also work without spaces
+		],
+		nonMatches: [],
+	},
+	{
+		options: {allowSpacesInWords: false},
+		matches: [],
+		nonMatches: matchesWithSpaces,
 	},
 	{
 		options: {beginningAt: "anywhere"},
@@ -48,7 +68,18 @@ const optionsPossibilities = [
 		],
 	},
 	{
-		options: {beginningAt: "beginningOfString"},
+		options: {beginningAt: "string"},
+		matches: [
+			["کور", "کور ته ځم"],
+			["سری", "سړی دی"],
+		],
+		nonMatches: [
+			["سړي", " سړيتوب"],
+			["کور", "خټين کورونه"],
+		],
+	},
+	{
+		options: {beginningAt: "string"},
 		matches: [
 			["کور", "کور ته ځم"],
 			["سری", "سړی دی"],

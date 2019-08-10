@@ -1,20 +1,20 @@
-const sSounds = "[ صسثڅ]";
-const zSounds = "[ زضظذځ]";
-const tdSounds = "[ طتټدډ]";
-const velarPlosives = "[ ګږکقگك]";
-const labialPlosivesAndFricatives = "[ فپب]";
+const sSounds = "صسثڅ";
+const zSounds = "زضظذځ";
+const tdSounds = "طتټدډ";
+const velarPlosives = "ګږکقگك";
+const labialPlosivesAndFricatives = "فپب";
 // Includes Arabic ى \u0649
-const theFiveYeys = "[ ېۍیيئےى]";
+const theFiveYeys = "ېۍیيئےى";
 
 // TODO: Deal with diacritics etc.
 // .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
 
 const pashtoReplacer = {
-  "ا": "[ا آ ه ع]?",
-  "آ": "[ا آ ه]",
-  "ٱ": "[ا آ ه]",
-  "ٲ": "[ا آ ه]",
-  "ٳ": "[ا آ ه]",
+  "ا": "ا آ ه ع", // make optional
+  "آ": "ا آ ه",
+  "ٱ": "ا آ ه",
+  "ٲ": "ا آ ه",
+  "ٳ": "ا آ ه",
 
   "ی": theFiveYeys,
   "ي": theFiveYeys,
@@ -28,23 +28,23 @@ const pashtoReplacer = {
   "ث": sSounds,
   "څ": sSounds,
 
-  "ج": "[چ ج څ]", 
-  "چ": "[چ ج څ]",
+  "ج": "چ ج څ", 
+  "چ": "چ ج څ",
   
-  "ه": "[ا ه ح ہ]",
-  "ۀ": "[ا ه ح ہ]",
-  "ہ": "[ا ه ح ہ]",
+  "ه": "ا ه ح ہ",
+  "ۀ": "ا ه ح ہ",
+  "ہ": "ا ه ح ہ",
 
-  "ع": "[ا و ع]?",
-  "و": "[و ع]",
-  "ؤ": "[و ع]",
+  "ع": "ا و ع", // make optional
+  "و": "و ع",
+  "ؤ": "و ع",
   
-  "ښ": "[ښ خ ش خ ه ح غ]",
-  "غ": '[ښ خ ش خ ه ح غ]',
-  "خ": '[ښ خ ش خ ه ح غ]',
-  "ح": '[ښ خ ش خ ه ح غ]',
+  "ښ": "ښ خ ش خ ه ح غ",
+  "غ": 'ښ خ ش خ ه ح غ',
+  "خ": 'ښ خ ش خ ه ح غ',
+  "ح": 'ښ خ ش خ ه ح غ',
 
-  "ش": '[ش ښ]',
+  "ش": 'ش ښ',
 
   "ز": zSounds,
   "ض": zSounds,
@@ -52,11 +52,11 @@ const pashtoReplacer = {
   "ځ": zSounds,
   "ظ": zSounds,
 
-  "ژ": '[ز ض ظ ذ ځ ږ]',
+  "ژ": 'ز ض ظ ذ ځ ږ',
 
-  "ر": '[ر ړ]',
-  "ړ": '[ر ړ]',
-  "ڑ": '[ر ړ]',
+  "ر": 'ر ړ',
+  "ړ": 'ر ړ',
+  "ڑ": 'ر ړ',
 
   "ت": tdSounds,
   "ټ": tdSounds,
@@ -66,16 +66,16 @@ const pashtoReplacer = {
   "ډ": tdSounds,
   "ڈ": tdSounds,
 
-  "نب": '[نب م]',
-  "ن": '[ن ڼ]',
-  "ڼ": '[ن ڼ]',
+  "نب": 'نب م',
+  "ن": 'ن ڼ',
+  "ڼ": 'ن ڼ',
 
   "ک": velarPlosives,
   "ګ": velarPlosives,
   "گ": velarPlosives,
   "ق": velarPlosives,
 
-  "ږ": '[ګ ږ ک ق ژ]',
+  "ږ": 'ګ ږ ک ق ژ',
 
   "ب": labialPlosivesAndFricatives,
   "پ": labialPlosivesAndFricatives,
@@ -100,22 +100,29 @@ const pashtoReplacerRegex = new RegExp(thingsToReplace.reduce((accumulator, curr
 interface FuzzifyOptions {
   beginningAt?: string;
   matchWholeWord?: boolean;
+  allowSpacesInWords?: boolean;
+  singleMatchOnly?: boolean;
 }
 
 export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegExp {
-  const safeInput = input.replace(/[#-.]|[[-^]|[?|{}]/g, '');
-  const regexLogic = safeInput.trim().replace(pashtoReplacerRegex, (mtch) => pashtoReplacer[mtch]);
+  let safeInput = input.replace(/[#-.]|[[-^]|[?|{}]/g, '');
+  if (options.allowSpacesInWords) {
+    safeInput = safeInput.replace(/ /g, '');
+  }
+  const regexLogic = safeInput.trim().replace(pashtoReplacerRegex, (mtch) => {
+    return `[${pashtoReplacer[mtch]}]${options.allowSpacesInWords ? '\ ?' : ''}`
+  });
   // TODO: Account for punctuation at the beginning of words
   const pashtoWordBoundaryBeginning = "(^|[^\u0600-\u06FF])"
   // Set how to begin the matching (default at the beginning of a word)
-  let beginning = options.beginningAt === "beginningOfString" ? "^" :
+  let beginning = options.beginningAt === "string" ? "^" :
                     options.beginningAt === "anywhere" ? "" :
-                    pashtoWordBoundaryBeginning;
+                    pashtoWordBoundaryBeginning; // "word" is the default
   let ending = "";
   if (options.matchWholeWord) {
-    beginning = pashtoWordBoundaryBeginning;
+    if (options.beginningAt === "anywhere") beginning = pashtoWordBoundaryBeginning;
     ending = "(?![\u0600-\u06FF])";
   }
-  return new RegExp(beginning + regexLogic + ending, 'g');
+  return new RegExp(beginning + regexLogic + ending, `m${options.singleMatchOnly ? 'g' : ''}`);
 }
   

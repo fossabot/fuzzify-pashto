@@ -23,11 +23,13 @@ Because of all these reasons, it can be difficult to search for words based on s
 
 ### Solution:  
 
-Search strings can be converted to Regex expressions that can be used for fuzzy searching so that:
+Search strings can be converted to Regex expressions that can be used for fuzzy searching so that, for example:
 
 - A search for "گرزيدل" will match the word "ګرځېدل"  
 - A search for "سنگہ" will match the word "څنګه"  
-- A search for "انطزار" will match the word "انتظار"  
+- A search for "انطزار" will match the word "انتظار" 
+- A search for "د پاره" will match theh word "دپاره" 
+- **TODO:** A search for "له پاره" will match the word "لپاره" 
 
 ## Usage
 
@@ -41,5 +43,35 @@ const { fuzzifyPashto } = require("fuzzify-pashto");
 const fuzzyRegex = fuzzifyPashto("سرک");
 console.log(fuzzyRegex);
 
-// /^[ص س ث څ][ر ړ][ګ ږ ک ق گ]/
+// /(^|[^\u0600-\u06FF])[صسثڅ][رړ][ګږکقگك]/
 ```
+
+## API
+
+### fuzzifyPashto.fuzzifyPashto(input, [options])
+
+Takes an input of a string of Pashto text (usually a word), and returns a RegEx expression that can be used for fuzzy searching for approximate matches in Pashto text.
+
+#### Options
+
+**TODO: `g` flag option**
+
+##### begginingAt
+
+Chooses where to allow matches in the string to start from
+
+ - `"word"` **(default)** Matches starting only at the beginning of a Pashto word (This is like using `\\b...`, but with Pashto/Unicode functionality)
+ - `"string"` Matches only starting at the very beginning of the string/text (`\^...\`)
+ - `"anywhere"` Matches anywhere, from the beginning or middle of the words (`\...\`)
+
+##### matchWholeWord
+ - `false` (default) Will match the beginning or parts of words
+ - `true` Will only match if the whole word is provided. This overrides `beginningAt = "anywhere"` if set. (This is like using `\\b...\b\` but with Pashto/Unicode functionality)
+
+##### allowSpacesInWords
+ - `false` (default) Mid-word spaces in either the search input or the text will break matches.
+ - `true` Will match regardless of spaces, ie. `دپاره` will match `د پاره`, and vice versa.
+
+##### singleMatchOnly
+ - `false` (default) Returns a regex that will match all matches in a text (Include the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2).)
+ - `true` (Do not include the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2).)
