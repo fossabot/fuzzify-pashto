@@ -104,7 +104,7 @@ interface FuzzifyOptions {
   singleMatchOnly?: boolean;
 }
 
-export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegExp {
+export function fuzzifyPashto(input: string, options: FuzzifyOptions): RegExp {
   let safeInput = input.replace(/[#-.]|[[-^]|[?|{}]/g, '');
   if (options.allowSpacesInWords) {
     safeInput = safeInput.replace(/ /g, '');
@@ -123,6 +123,6 @@ export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegE
     if (options.beginningAt === "anywhere") beginning = pashtoWordBoundaryBeginning;
     ending = "(?![\u0600-\u06FF])";
   }
-  return new RegExp(beginning + regexLogic + ending, `m${options.singleMatchOnly ? 'g' : ''}`);
+  return new RegExp(beginning + regexLogic + ending, `${options.singleMatchOnly ? '' : 'g'}`);
 }
   

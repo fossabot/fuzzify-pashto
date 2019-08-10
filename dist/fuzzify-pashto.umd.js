@@ -79,7 +79,6 @@
       return accumulator + currentValue + "|";
   }, ""), "g");
   function fuzzifyPashto(input, options) {
-      if (options === void 0) { options = {}; }
       var safeInput = input.replace(/[#-.]|[[-^]|[?|{}]/g, '');
       if (options.allowSpacesInWords) {
           safeInput = safeInput.replace(/ /g, '');
@@ -99,7 +98,7 @@
               beginning = pashtoWordBoundaryBeginning;
           ending = "(?![\u0600-\u06FF])";
       }
-      return new RegExp(beginning + regexLogic + ending, "m" + (options.singleMatchOnly ? 'g' : ''));
+      return new RegExp(beginning + regexLogic + ending, "" + (options.singleMatchOnly ? '' : 'g'));
   }
 
   exports.fuzzifyPashto = fuzzifyPashto;

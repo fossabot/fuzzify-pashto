@@ -1,4 +1,5 @@
 import { fuzzifyPashto } from '../src/fuzzify-pashto';
+import { tsBooleanKeyword } from '@babel/types';
 
 const defaultInfo = {
 	matches: [
@@ -107,3 +108,29 @@ optionsPossibilities.forEach(o => {
 		});
 	});
 })
+
+test(`Should only return one match`, () => {
+	// Need to do beginning at "string" because the beginning at "word" can create an extra space making an empty value in the result
+	// Don't know how to get around this without lookbehinds in javascript
+	const re = fuzzifyPashto("ته", { singleMatchOnly: true, beginningAt: "string" });
+	const result = "ته کله کلي ته ځې؟".match(re);
+	expect(result).toHaveLength(1)
+});
+
+test(`Should return many matches`, () => {
+	const re = fuzzifyPashto("ته", { singleMatchOnly: false });
+	const result = "ته کله کلي ته ځې؟".match(re);
+	expect(result).toHaveLength(2)
+});
+
+test(`Should return many matches`, () => {
+	const re = fuzzifyPashto("کار", { singleMatchOnly: false, beginningAt: "anywhere" });
+	const result = "کار کوه، بېکاره مه ګرځه".match(re);
+	expect(result).toHaveLength(2)
+});
+
+test(`matchWholeWord should override begginingAt = "anywhere"`, () => {
+	const re = fuzzifyPashto("کار", { matchWholeWord: true, beginningAt: "anywhere" });
+	const result = "کار کوه، بېکاره مه ګرځه".match(re);
+	expect(result).toHaveLength(1)
+});

@@ -4,5 +4,5 @@ interface FuzzifyOptions {
     allowSpacesInWords?: boolean;
     singleMatchOnly?: boolean;
 }
-export declare function fuzzifyPashto(input: string, options?: FuzzifyOptions): RegExp;
+export declare function fuzzifyPashto(input: string, options: FuzzifyOptions): RegExp;
 export {};
