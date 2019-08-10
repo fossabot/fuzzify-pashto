@@ -33,7 +33,6 @@
     "test:prod": "npm run lint && npm run test -- --no-cache",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "precommit": "lint-staged",
-    "publish": "npm run build && npm publish"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
