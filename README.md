@@ -63,13 +63,13 @@ Chooses where to allow matches in the string to start from
  - `"anywhere"` Matches anywhere, from the beginning or middle of the words (`\...\`)
 
 ##### matchWholeWord
- - `false` (default) Will match the beginning or parts of words
+ - `false` **(default)** Will match the beginning or parts of words
  - `true` Will only match if the whole word is provided. This overrides `beginningAt = "anywhere"` if set. (This is like using `\\b...\b\` but with Pashto/Unicode functionality)
 
 ##### allowSpacesInWords
- - `false` (default) Mid-word spaces in either the search input or the text will break matches.
+ - `false` **(default)** Mid-word spaces in either the search input or the text will break matches.
  - `true` Will match regardless of spaces, ie. `دپاره` will match `د پاره`, and vice versa.
 
 ##### singleMatchOnly
- - `false` (default) Returns a regex that will match all matches in a text (Include the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2).)
+ - `false` **(default)** Returns a regex that will match all matches in a text (Include the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2).)
  - `true` (Do not include the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2).)
