@@ -1,10 +1,10 @@
-const sSounds = "[ص س ث څ]";
-const zSounds = "[ز ض ظ ذ ځ]";
-const tdSounds = "[ط ت ټ د ډ]";
-const velarPlosives = "[ګ ږ ک ق گ ك]";
-const labialPlosivesAndFricatives = "[ف پ ب]";
+const sSounds = "[ صسثڅ]";
+const zSounds = "[ زضظذځ]";
+const tdSounds = "[ طتټدډ]";
+const velarPlosives = "[ ګږکقگك]";
+const labialPlosivesAndFricatives = "[ فپب]";
 // Includes Arabic ى \u0649
-const theFiveYeys = "[ې ۍ ی ي ئ ے ى]";
+const theFiveYeys = "[ ېۍیيئےى]";
 
 // TODO: Deal with diacritics etc.
 // .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
@@ -91,10 +91,31 @@ const pashtoReplacerRegex = new RegExp(thingsToReplace.reduce((accumulator, curr
   return accumulator + currentValue + "|";
 }, ""), "g");
 
-export function fuzzifyPashto(input: string): RegExp {
+// enum beginningAtOptions {
+//   beginningOfWord = "beginningOfWord", // default
+//   beginningOfString = "beginningOfString",
+//   anywhere = "anywhere", // TODO: This conflicts with matchWholeWord
+// }
+
+interface fuzzifyOptions {
+  beginningAt?: string;
+  matchWholeWord?: boolean;
+}
+
+export function fuzzifyPashto(input: string, options: fuzzifyOptions = {}): RegExp {
   const safeInput = input.replace(/[#-.]|[[-^]|[?|{}]/g, '');
   const regexLogic = safeInput.trim().replace(pashtoReplacerRegex, (mtch) => pashtoReplacer[mtch]);
-  // TODO: Do beginning of word re: https://stackoverflow.com/questions/40731058/regex-match-arabic-keyword
-  return new RegExp('^' + regexLogic, '');
+  // TODO: Account for punctuation at the beginning of words
+  const pashtoWordBoundaryBeginning = "(^|[^\u0600-\u06FF])"
+  // Set how to begin the matching (default at the beginning of a word)
+  let beginning = options.beginningAt === "beginningOfString" ? "^" :
+                    options.beginningAt === "anywhere" ? "" :
+                    pashtoWordBoundaryBeginning;
+  let ending = "";
+  if (options.matchWholeWord) {
+    beginning = pashtoWordBoundaryBeginning;
+    ending = "(?![\u0600-\u06FF])";
+  }
+  return new RegExp(beginning + regexLogic + ending, 'g');
 }
   

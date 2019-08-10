@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var sSounds = "[ص س ث څ]";
-var zSounds = "[ز ض ظ ذ ځ]";
-var tdSounds = "[ط ت ټ د ډ]";
-var velarPlosives = "[ګ ږ ک ق گ ك]";
-var labialPlosivesAndFricatives = "[ف پ ب]";
+var sSounds = "[ صسثڅ]";
+var zSounds = "[ زضظذځ]";
+var tdSounds = "[ طتټدډ]";
+var velarPlosives = "[ ګږکقگك]";
+var labialPlosivesAndFricatives = "[ فپب]";
 // Includes Arabic ى \u0649
-var theFiveYeys = "[ې ۍ ی ي ئ ے ى]";
+var theFiveYeys = "[ ېۍیيئےى]";
 // TODO: Deal with diacritics etc.
 // .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
 var pashtoReplacer = {
@@ -74,11 +74,22 @@ var pashtoReplacerRegex = new RegExp(thingsToReplace.reduce(function (accumulato
     }
     return accumulator + currentValue + "|";
 }, ""), "g");
-function fuzzifyPashto(input) {
+function fuzzifyPashto(input, options) {
+    if (options === void 0) { options = {}; }
     var safeInput = input.replace(/[#-.]|[[-^]|[?|{}]/g, '');
     var regexLogic = safeInput.trim().replace(pashtoReplacerRegex, function (mtch) { return pashtoReplacer[mtch]; });
-    // TODO: Do beginning of word re: https://stackoverflow.com/questions/40731058/regex-match-arabic-keyword
-    return new RegExp('^' + regexLogic, '');
+    // TODO: Account for punctuation at the beginning of words
+    var pashtoWordBoundaryBeginning = "(^|[^\u0600-\u06FF])";
+    // Set how to begin the matching (default at the beginning of a word)
+    var beginning = options.beginningAt === "beginningOfString" ? "^" :
+        options.beginningAt === "anywhere" ? "" :
+            pashtoWordBoundaryBeginning;
+    var ending = "";
+    if (options.matchWholeWord) {
+        beginning = pashtoWordBoundaryBeginning;
+        ending = "(?![\u0600-\u06FF])";
+    }
+    return new RegExp(beginning + regexLogic + ending, 'g');
 }
 exports.fuzzifyPashto = fuzzifyPashto;
 //# sourceMappingURL=fuzzify-pashto.js.map

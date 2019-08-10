@@ -4,6 +4,7 @@ coverage
 .DS_Store
 *.log
 .idea
+docs
 compiled
 .awcache
 .rpt2_cache
