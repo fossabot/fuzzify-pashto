@@ -1,5 +1,4 @@
 import { fuzzifyPashto } from '../src/fuzzify-pashto';
-import { tsBooleanKeyword } from '@babel/types';
 
 const defaultInfo = {
 	matches: [
@@ -22,7 +21,7 @@ const defaultInfo = {
 const matchesWithSpaces = [
 	['دپاره', 'د پاره'],
 	['بېکار', 'بې کار'],
-	['د پاره', 'د پاره'],
+	['د پاره', 'دپاره'],
 	['بې کار', 'بېکار',],
 ];
 

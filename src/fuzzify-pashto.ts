@@ -10,11 +10,11 @@ const theFiveYeys = "ېۍیيئےى";
 // .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
 
 const pashtoReplacer = {
-  "ا": "ا آ ه ع", // make optional
-  "آ": "ا آ ه",
-  "ٱ": "ا آ ه",
-  "ٲ": "ا آ ه",
-  "ٳ": "ا آ ه",
+  "ا": "اآهع", // TODO: make optional
+  "آ": "اآه",
+  "ٱ": "اآه",
+  "ٲ": "اآه",
+  "ٳ": "اآه",
 
   "ی": theFiveYeys,
   "ي": theFiveYeys,
@@ -28,23 +28,23 @@ const pashtoReplacer = {
   "ث": sSounds,
   "څ": sSounds,
 
-  "ج": "چ ج څ", 
-  "چ": "چ ج څ",
+  "ج": "چجڅ", 
+  "چ": "چجڅ",
   
-  "ه": "ا ه ح ہ",
-  "ۀ": "ا ه ح ہ",
-  "ہ": "ا ه ح ہ",
+  "ه": "اهحہ",
+  "ۀ": "اهحہ",
+  "ہ": "اهحہ",
 
-  "ع": "ا و ع", // make optional
-  "و": "و ع",
-  "ؤ": "و ع",
+  "ع": "اوع", // TODO: make optional
+  "و": "وع",
+  "ؤ": "وع",
   
-  "ښ": "ښ خ ش خ ه ح غ",
-  "غ": 'ښ خ ش خ ه ح غ',
-  "خ": 'ښ خ ش خ ه ح غ',
-  "ح": 'ښ خ ش خ ه ح غ',
+  "ښ": "ښخشخهحغ",
+  "غ": 'ښخشخهحغ',
+  "خ": 'ښخشخهحغ',
+  "ح": 'ښخشخهحغ',
 
-  "ش": 'ش ښ',
+  "ش": 'شښ',
 
   "ز": zSounds,
   "ض": zSounds,
@@ -52,11 +52,11 @@ const pashtoReplacer = {
   "ځ": zSounds,
   "ظ": zSounds,
 
-  "ژ": 'ز ض ظ ذ ځ ږ',
+  "ژ": 'زضظذځږ',
 
-  "ر": 'ر ړ',
-  "ړ": 'ر ړ',
-  "ڑ": 'ر ړ',
+  "ر": 'رړ',
+  "ړ": 'رړ',
+  "ڑ": 'رړ',
 
   "ت": tdSounds,
   "ټ": tdSounds,
@@ -66,21 +66,20 @@ const pashtoReplacer = {
   "ډ": tdSounds,
   "ڈ": tdSounds,
 
-  "نب": 'نب م',
-  "ن": 'ن ڼ',
-  "ڼ": 'ن ڼ',
+  "نب": 'نبم',
+  "ن": 'نڼ',
+  "ڼ": 'نڼ',
 
   "ک": velarPlosives,
   "ګ": velarPlosives,
   "گ": velarPlosives,
   "ق": velarPlosives,
 
-  "ږ": 'ګ ږ ک ق ژ',
+  "ږ": 'ژ' + velarPlosives,
 
   "ب": labialPlosivesAndFricatives,
   "پ": labialPlosivesAndFricatives,
   "ف": labialPlosivesAndFricatives,
-  " ": "",
 }
 
 const thingsToReplace = Object.keys(pashtoReplacer);
