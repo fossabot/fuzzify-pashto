@@ -1,6 +1,6 @@
 {
   "name": "fuzzify-pashto",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Creates Regex expressions based on Pashto text strings to allow for fuzzy searching of words",
   "keywords": [
     "pashto",
