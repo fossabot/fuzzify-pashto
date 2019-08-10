@@ -1,8 +1,8 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (factory((global.fuzzifyPashto = {})));
-}(this, (function (exports) { 'use strict';
+  (global = global || self, factory(global.fuzzifyPashto = {}));
+}(this, function (exports) { 'use strict';
 
   var sSounds = "[ صسثڅ]";
   var zSounds = "[ زضظذځ]";
@@ -100,5 +100,5 @@
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
 //# sourceMappingURL=fuzzify-pashto.umd.js.map

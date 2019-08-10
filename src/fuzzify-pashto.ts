@@ -97,12 +97,12 @@ const pashtoReplacerRegex = new RegExp(thingsToReplace.reduce((accumulator, curr
 //   anywhere = "anywhere", // TODO: This conflicts with matchWholeWord
 // }
 
-interface fuzzifyOptions {
+interface FuzzifyOptions {
   beginningAt?: string;
   matchWholeWord?: boolean;
 }
 
-export function fuzzifyPashto(input: string, options: fuzzifyOptions = {}): RegExp {
+export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegExp {
   const safeInput = input.replace(/[#-.]|[[-^]|[?|{}]/g, '');
   const regexLogic = safeInput.trim().replace(pashtoReplacerRegex, (mtch) => pashtoReplacer[mtch]);
   // TODO: Account for punctuation at the beginning of words

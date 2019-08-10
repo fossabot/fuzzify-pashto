@@ -1,6 +1,6 @@
-interface fuzzifyOptions {
+interface FuzzifyOptions {
     beginningAt?: string;
     matchWholeWord?: boolean;
 }
-export declare function fuzzifyPashto(input: string, options?: fuzzifyOptions): RegExp;
+export declare function fuzzifyPashto(input: string, options?: FuzzifyOptions): RegExp;
 export {};
