@@ -91,7 +91,7 @@ function fuzzifyPashto(input, options) {
             beginning = pashtoWordBoundaryBeginning;
         ending = "(?![\u0600-\u06FF])";
     }
-    return new RegExp(beginning + regexLogic + ending, "" + (options.singleMatchOnly ? '' : 'g'));
+    return new RegExp(beginning + regexLogic + ending, "m" + (options.singleMatchOnly ? '' : 'g'));
 }
 
 export { fuzzifyPashto };
