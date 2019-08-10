@@ -103,7 +103,9 @@ interface FuzzifyOptions {
   singleMatchOnly?: boolean;
 }
 
-export function fuzzifyPashto(input: string, options: FuzzifyOptions): RegExp {
+// TODO: This options initializer is needed for it to work in the browser environment
+// but it also makes us lose code coverage
+export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegExp {
   let safeInput = input.replace(/[#-.]|[[-^]|[?|{}]/g, '');
   if (options.allowSpacesInWords) {
     safeInput = safeInput.replace(/ /g, '');

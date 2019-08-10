@@ -77,7 +77,10 @@
       }
       return accumulator + currentValue + "|";
   }, ""), "g");
+  // TODO: This options initializer is needed for it to work in the browser environment
+  // but it also makes us lose code coverage
   function fuzzifyPashto(input, options) {
+      if (options === void 0) { options = {}; }
       var safeInput = input.replace(/[#-.]|[[-^]|[?|{}]/g, '');
       if (options.allowSpacesInWords) {
           safeInput = safeInput.replace(/ /g, '');
