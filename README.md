@@ -69,8 +69,8 @@ Chooses where to allow matches in the string to start from
  - `true` Will only match if the whole word is provided. This overrides `options.beginningAt = "anywhere"` if set. (This is like using `\\b...\b\` but with Pashto/Unicode functionality)
 
 ##### options.allowSpacesInWords
- - `false` **(default)** Mid-word spaces in either the search input or the text will break matches.
- - `true` Will match regardless of spaces, ie. `دپاره` will match `د پاره`, and vice versa.
+ - `false` **(default)** Mid-word spaces in either the search input or the text will break matches
+ - `true` Will match regardless of spaces, ie. `دپاره` will match `د پاره`, and vice versa
 
 ##### options.singleMatchOnly
  - `false` **(default)** Returns a regex that will match all matches in a text (Include the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2).)
