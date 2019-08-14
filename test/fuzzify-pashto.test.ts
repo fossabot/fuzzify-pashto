@@ -57,7 +57,7 @@ const optionsPossibilities = [
 		],
 	},
 	{
-		options: {matchWholeWord: true},
+		options: {matchWholeWordOnly: true},
 		matches: [
 			["کور", "کور"],
 			["سری", "سړی"],
@@ -128,8 +128,23 @@ test(`Should return many matches`, () => {
 	expect(result).toHaveLength(2)
 });
 
-test(`matchWholeWord should override begginingAt = "anywhere"`, () => {
-	const re = fuzzifyPashto("کار", { matchWholeWord: true, beginningAt: "anywhere" });
+test(`matchWholeWordOnly should override begginingAt = "anywhere"`, () => {
+	const re = fuzzifyPashto("کار", { matchWholeWordOnly: true, beginningAt: "anywhere" });
 	const result = "کار کوه، بېکاره مه ګرځه".match(re);
 	expect(result).toHaveLength(1)
+});
+
+
+test(`returnWholeWord should return the whole word`, () => {
+	const re = fuzzifyPashto("کار", { returnWholeWord: true });
+	const result = "کارونه کوه، بېکاره مه ګرځه".match(re);
+	expect(result).toHaveLength(1);
+	expect(result).toContain("کارونه");
+});
+
+test(`returnWholeWord should return the whole word even when starting the matching in the middle`, () => {
+	const re = fuzzifyPashto("کار", { returnWholeWord: true, beginningAt: "anywhere" });
+	const result = "کارونه کوه، بېکاره مه ګرځه".match(re);
+	expect(result).toHaveLength(2);
+	expect(result).toContain(" بېکاره");
 });

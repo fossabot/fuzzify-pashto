@@ -23,7 +23,7 @@ Because of all these reasons, it can be difficult to search for words based on s
 
 ## Solution:  
 
-Search strings can be converted to Regex expressions that can be used for fuzzy searching so that, for example:
+Search strings can be converted to regular expressions that can be used for fuzzy searching so that, for example:
 
 - A search for "گرزيدل" will match the word "ګرځېدل"  
 - A search for "سنگہ" will match the word "څنګه"  
@@ -62,7 +62,7 @@ Chooses where to allow matches in the string to start from
  - `"string"` Matches only starting at the very beginning of the string/text (`\^...\`)
  - `"anywhere"` Matches anywhere, from the beginning or middle of the words (`\...\`)
 
-##### options.matchWholeWord
+##### options.matchWholeWordOnly
  - `false` **(default)** Will match the beginning or parts of words
  - `true` Will only match if the whole word is provided. This overrides `options.beginningAt = "anywhere"` if set. (This is like using `\\b...\b\` but with Pashto/Unicode functionality)
 
@@ -73,3 +73,8 @@ Chooses where to allow matches in the string to start from
 ##### options.singleMatchOnly
  - `false` **(default)** Returns a regex that will match all matches in a text (Include the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2).)
  - `true` (Do not include the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2).)
+
+##### options.returnWholeWord  
+ - `false` **(default)** Will return just the matching characters
+ - `true` Will return the whole word attached to the matching characters
+ 

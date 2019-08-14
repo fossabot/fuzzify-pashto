@@ -1,3 +1,4 @@
+const pashtoCharacterRange = "\u0600-\u06FF"; 
 const sSounds = "صسثڅ";
 const zSounds = "زضظذځ";
 const tdSounds = "طتټدډ";
@@ -11,6 +12,8 @@ const theFiveYeys = "ېۍیيئےى";
 
 // TODO: API should be options.matchWholeWordOnly
 // TODO: Add options.returnWholeWord 
+
+// TOOD: handle "" input
 
 const pashtoReplacer = {
   "ا": "اآهع", // TODO: make optional
@@ -95,9 +98,10 @@ const pashtoReplacerRegex = new RegExp(thingsToReplace.reduce((accumulator, curr
 
 interface FuzzifyOptions {
   beginningAt?: string;
-  matchWholeWord?: boolean;
+  matchWholeWordOnly?: boolean;
   allowSpacesInWords?: boolean;
   singleMatchOnly?: boolean;
+  returnWholeWord?: boolean;
 }
 
 // TODO: This options initializer is needed for it to work in the browser environment
@@ -111,15 +115,21 @@ export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegE
     return `[${pashtoReplacer[mtch]}]${options.allowSpacesInWords ? '\ ?' : ''}`
   });
   // TODO: Account for punctuation at the beginning of words
-  const pashtoWordBoundaryBeginning = "(^|[^\u0600-\u06FF])"
+  const pashtoWordBoundaryBeginning = `(^|[^${pashtoCharacterRange}])`
   // Set how to begin the matching (default at the beginning of a word)
   let beginning = options.beginningAt === "string" ? "^" :
                     options.beginningAt === "anywhere" ? "" :
                     pashtoWordBoundaryBeginning; // "word" is the default
   let ending = "";
-  if (options.matchWholeWord) {
+  if (options.matchWholeWordOnly) {
     if (options.beginningAt === "anywhere") beginning = pashtoWordBoundaryBeginning;
-    ending = "(?![\u0600-\u06FF])";
+    ending = `(?![${pashtoCharacterRange}])`;
+  }
+  if (options.returnWholeWord) {
+    ending = `[${pashtoCharacterRange}]*(?![${pashtoCharacterRange}])`;
+    if (options.beginningAt === "anywhere") {
+      beginning = `${pashtoWordBoundaryBeginning}[${pashtoCharacterRange}]*`; 
+    }
   }
   return new RegExp(beginning + regexLogic + ending, `m${options.singleMatchOnly ? '' : 'g'}`);
 }
