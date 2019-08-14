@@ -27,10 +27,12 @@ Search strings can be converted to regular expressions that can be used for fuzz
 
 | Searching For  | Will Match  |
 |----------------|-------------|
-| گرزيدل | ګرځېدل  |
+| گرزيدل | ګرځېدل |
 | سنگہ | څنګه |
-| انطزار | انتظار  |
+| انطزار | انتظار |
 | د پاره | دپاره | 
+| مالوم | معلوم |
+| زبا | ژبه |
 
 - **TODO:** A search for "له پاره" will match the word "لپاره" 
 
