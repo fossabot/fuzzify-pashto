@@ -1,6 +1,14 @@
+/**
+ * Copyright (c) openpashto.com
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ */
 var pashtoCharacterRange = "\u0600-\u06FF";
 var sSounds = "صسثڅ";
-var zSounds = "زضظذځ";
+var zSounds = "زضظذځژ";
 var tdSounds = "طتټدډ";
 var velarPlosives = "ګږکقگك";
 var labialPlosivesAndFricatives = "فپب";
@@ -8,7 +16,6 @@ var labialPlosivesAndFricatives = "فپب";
 var theFiveYeys = "ېۍیيئےى";
 // TODO: Deal with diacritics etc.
 // .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
-// TODO: Add options.returnWholeWord 
 // TOOD: handle "" input
 var pashtoReplacer = {
     "ا": "اآهع",

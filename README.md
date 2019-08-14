@@ -42,7 +42,7 @@ Search strings can be converted to regular expressions that can be used for fuzz
 npm install --save fuzzify-pashto
 ```
 
-```node
+```js
 const { fuzzifyPashto } = require("fuzzify-pashto");
 
 const fuzzyRegex = fuzzifyPashto("سرک");
