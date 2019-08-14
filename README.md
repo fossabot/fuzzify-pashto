@@ -64,7 +64,7 @@ Chooses where to allow matches in the string to start from
 
 ##### options.matchWholeWord
  - `false` **(default)** Will match the beginning or parts of words
- - `true` Will only match if the whole word is provided. This overrides `beginningAt = "anywhere"` if set. (This is like using `\\b...\b\` but with Pashto/Unicode functionality)
+ - `true` Will only match if the whole word is provided. This overrides `options.beginningAt = "anywhere"` if set. (This is like using `\\b...\b\` but with Pashto/Unicode functionality)
 
 ##### options.allowSpacesInWords
  - `false` **(default)** Mid-word spaces in either the search input or the text will break matches.

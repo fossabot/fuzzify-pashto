@@ -1,6 +1,6 @@
 {
   "name": "fuzzify-pashto",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Creates Regex expressions based on Pashto text strings to allow for fuzzy searching of words",
   "keywords": [
     "pashto",
@@ -17,7 +17,7 @@
   "author": "openpashto.com",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/openpashto/fuzzify-pashto.git"
   },
   "license": "MIT",
   "engines": {
