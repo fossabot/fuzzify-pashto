@@ -148,3 +148,9 @@ test(`returnWholeWord should return the whole word even when starting the matchi
 	expect(result).toHaveLength(2);
 	expect(result).toContain(" بېکاره");
 });
+
+test(`returnWholeWord should should not return parcel matches if matchWholeWordOnly is true`, () => {
+	const re = fuzzifyPashto("کار", { returnWholeWord: true, beginningAt: "anywhere", matchWholeWordOnly: true });
+	const result = "کارونه کوه، بېکاره مه ګرځه".match(re);
+	expect(result).toBeNull();
+});

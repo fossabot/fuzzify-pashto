@@ -44,7 +44,7 @@ var pashtoReplacer = {
     "ذ": zSounds,
     "ځ": zSounds,
     "ظ": zSounds,
-    "ژ": 'زضظذځږ',
+    "ژ": 'زضظژذځږ',
     "ر": 'رړ',
     "ړ": 'رړ',
     "ڑ": 'رړ',
@@ -97,7 +97,8 @@ function fuzzifyPashto(input, options) {
             beginning = pashtoWordBoundaryBeginning;
         ending = "(?![" + pashtoCharacterRange + "])";
     }
-    if (options.returnWholeWord) {
+    // If they're already using matchWholeWordOnly, don't change it
+    if (options.returnWholeWord && !options.matchWholeWordOnly) {
         ending = "[" + pashtoCharacterRange + "]*(?![" + pashtoCharacterRange + "])";
         if (options.beginningAt === "anywhere") {
             beginning = pashtoWordBoundaryBeginning + "[" + pashtoCharacterRange + "]*";
