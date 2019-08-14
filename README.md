@@ -25,12 +25,13 @@ Because of all these reasons, it can be difficult to search for words based on s
 
 Search strings can be converted to regular expressions that can be used for fuzzy searching so that, for example:
 
-**TODO: Make this into a table?**
+| Searching For  | Will Match  |
+|----------------|-------------|
+| گرزيدل | ګرځېدل  |
+| سنگہ | څنګه |
+| انطزار | انتظار  |
+| د پاره | دپاره | 
 
-- A search for "گرزيدل" will match the word "ګرځېدل"  
-- A search for "سنگہ" will match the word "څنګه"  
-- A search for "انطزار" will match the word "انتظار" 
-- A search for "د پاره" will match the word "دپاره" 
 - **TODO:** A search for "له پاره" will match the word "لپاره" 
 
 ## Usage
