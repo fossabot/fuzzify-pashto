@@ -1,6 +1,6 @@
 const pashtoCharacterRange = "\u0600-\u06FF"; 
 const sSounds = "صسثڅ";
-const zSounds = "زضظذځ";
+const zSounds = "زضظذځژ";
 const tdSounds = "طتټدډ";
 const velarPlosives = "ګږکقگك";
 const labialPlosivesAndFricatives = "فپب";
