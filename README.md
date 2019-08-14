@@ -25,6 +25,8 @@ Because of all these reasons, it can be difficult to search for words based on s
 
 Search strings can be converted to regular expressions that can be used for fuzzy searching so that, for example:
 
+**TODO: Make this into a table?**
+
 - A search for "گرزيدل" will match the word "ګرځېدل"  
 - A search for "سنگہ" will match the word "څنګه"  
 - A search for "انطزار" will match the word "انتظار" 
@@ -43,7 +45,7 @@ const { fuzzifyPashto } = require("fuzzify-pashto");
 const fuzzyRegex = fuzzifyPashto("سرک");
 console.log(fuzzyRegex);
 
-// /(^|[^\u0600-\u06FF])[صسثڅ][رړ][ګږکقگك]/mg
+// output: /(^|[^\u0600-\u06FF])[صسثڅ][رړ][ګږکقگك]/mg
 ```
 
 ## API
@@ -77,4 +79,3 @@ Chooses where to allow matches in the string to start from
 ##### options.returnWholeWord  
  - `false` **(default)** Will return just the matching characters
  - `true` Will return the whole word attached to the matching characters
- 

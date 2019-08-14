@@ -10,8 +10,6 @@ const theFiveYeys = "ېۍیيئےى";
 // TODO: Deal with diacritics etc.
 // .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
 
-// TODO: Add options.returnWholeWord 
-
 // TOOD: handle "" input
 
 const pashtoReplacer = {
