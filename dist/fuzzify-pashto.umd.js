@@ -4,15 +4,18 @@
   (global = global || self, factory(global.fuzzifyPashto = {}));
 }(this, function (exports) { 'use strict';
 
+  var pashtoCharacterRange = "\u0600-\u06FF";
   var sSounds = "صسثڅ";
   var zSounds = "زضظذځ";
   var tdSounds = "طتټدډ";
   var velarPlosives = "ګږکقگك";
   var labialPlosivesAndFricatives = "فپب";
-  // Includes Arabic ى \u0649
+  // Includes Arabic ى \u0649  
   var theFiveYeys = "ېۍیيئےى";
   // TODO: Deal with diacritics etc.
   // .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
+  // TODO: Add options.returnWholeWord 
+  // TOOD: handle "" input
   var pashtoReplacer = {
       "ا": "اآهع",
       "آ": "اآه",
@@ -65,7 +68,7 @@
       "ګ": velarPlosives,
       "گ": velarPlosives,
       "ق": velarPlosives,
-      "ږ": 'ژ' + velarPlosives,
+      "ږ": velarPlosives + 'ژ',
       "ب": labialPlosivesAndFricatives,
       "پ": labialPlosivesAndFricatives,
       "ف": labialPlosivesAndFricatives,
@@ -89,16 +92,22 @@
           return "[" + pashtoReplacer[mtch] + "]" + (options.allowSpacesInWords ? '\ ?' : '');
       });
       // TODO: Account for punctuation at the beginning of words
-      var pashtoWordBoundaryBeginning = "(^|[^\u0600-\u06FF])";
+      var pashtoWordBoundaryBeginning = "(^|[^" + pashtoCharacterRange + "])";
       // Set how to begin the matching (default at the beginning of a word)
       var beginning = options.beginningAt === "string" ? "^" :
           options.beginningAt === "anywhere" ? "" :
               pashtoWordBoundaryBeginning; // "word" is the default
       var ending = "";
-      if (options.matchWholeWord) {
+      if (options.matchWholeWordOnly) {
           if (options.beginningAt === "anywhere")
               beginning = pashtoWordBoundaryBeginning;
-          ending = "(?![\u0600-\u06FF])";
+          ending = "(?![" + pashtoCharacterRange + "])";
+      }
+      if (options.returnWholeWord) {
+          ending = "[" + pashtoCharacterRange + "]*(?![" + pashtoCharacterRange + "])";
+          if (options.beginningAt === "anywhere") {
+              beginning = pashtoWordBoundaryBeginning + "[" + pashtoCharacterRange + "]*";
+          }
       }
       return new RegExp(beginning + regexLogic + ending, "m" + (options.singleMatchOnly ? '' : 'g'));
   }
