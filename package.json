@@ -19,6 +19,7 @@
     "type": "git",
     "url": "git+https://github.com/openpashto/fuzzify-pashto.git"
   },
+  "homepage": "https://www.openpashto.com/fuzzify-pashto",
   "license": "MIT",
   "engines": {
     "node": ">=6.0.0"
