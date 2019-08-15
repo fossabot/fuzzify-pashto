@@ -6,6 +6,8 @@
 
 A JavaScript library that creates regular expressions (regex) for fuzzy searching Pashto text (approximate string matching). 
 
+[Website and Live Demo](https://www.openpashto.com/fuzzify-pashto)
+
 ## Problem:
 
 It can be difficult to search for words in Pashto texts or dictionaries because of variants or difficulties in spelling. This is because:

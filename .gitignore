@@ -11,6 +11,5 @@ compiled
 browsertest.html
 
 website/.cache 
-website/dist
 website/node_modules
 website/package*
