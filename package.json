@@ -34,8 +34,7 @@
     "test:prod": "npm run lint && npm run test -- --no-cache",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "precommit": "lint-staged",
-    "build-website": "rimraf website/dist && parcel build website/index.html --out-dir=./website/dist --public-url=/fuzzify-pashto",
-    "publish-website": "git add . && git commit -m 'website update' && git subtree push --prefix website/dist origin gh-pages"
+    "publish-website": "rimraf website/dist && parcel build website/index.html --out-dir=./website/dist --public-url=/fuzzify-pashto && git add . && git commit -m 'website update' && git subtree push --prefix website/dist origin gh-pages"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
