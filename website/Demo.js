@@ -95,11 +95,11 @@ export default class Demo extends Component {
 
     return (
         <div className="row">
-            <div className="col">
+            <div className="col-lg-6">
                 <div className="card" style={{ maxWidth: "600px", background: "#ECEFF1"}}>
                     <div className="card-body">
                         <div className="row">
-                            <div className="col">
+                            <div className="col-sm-6">
                                 <h5>
                                     Search String:
                                 </h5>
@@ -114,7 +114,7 @@ export default class Demo extends Component {
                                     />
                                 </div>
                             </div>
-                            <div className="col">
+                            <div className="col-sm-6">
                                 <h6>Options</h6>
                                 {apiOptions.map(option => {
                                     if (option.type === "boolean") {
@@ -171,7 +171,7 @@ export default class Demo extends Component {
                     </div>
                 </div>
             </div>
-            <div className="col">
+            <div className="col-lg-6">
                 <h5>Code:</h5>
                 <pre><code>
                     {`import { fuzzifyPashto } from "fuzzify-pashto";  
