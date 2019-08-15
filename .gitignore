@@ -7,9 +7,11 @@ coverage
 docs
 compiled
 .awcache
+.cache
 .rpt2_cache
 browsertest.html
 
 website/.cache 
 website/node_modules
-website/package*
+website/pre-dist
+website/package-lock.json
