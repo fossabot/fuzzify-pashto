@@ -2390,6 +2390,12 @@ img {
 			<a href="globals.html#pashtoreplacerregex" class="tsd-kind-icon">pashto<wbr>Replacer<wbr>Regex</a>
 		</li>
 		<li class=" tsd-kind-variable tsd-is-not-exported">
+			<a href="globals.html#pashtowordboundarybeginning" class="tsd-kind-icon">pashto<wbr>Word<wbr>Boundary<wbr>Beginning</a>
+		</li>
+		<li class=" tsd-kind-variable tsd-is-not-exported">
+			<a href="globals.html#rlikesounds" class="tsd-kind-icon">r<wbr>Like<wbr>Sounds</a>
+		</li>
+		<li class=" tsd-kind-variable tsd-is-not-exported">
 			<a href="globals.html#ssounds" class="tsd-kind-icon">s<wbr>Sounds</a>
 		</li>
 		<li class=" tsd-kind-variable tsd-is-not-exported">
@@ -2423,7 +2429,7 @@ img {
 			</a>
 			<p><a href="https://nodei.co/npm/fuzzify-pashto/"><img src="https://nodei.co/npm/fuzzify-pashto.png" alt="NPM"></a></p>
 			<p><a href="https://travis-ci.org/openpashto/fuzzify-pashto"><img src="https://travis-ci.org/openpashto/fuzzify-pashto.svg?branch=master" alt="Build Status"></a></p>
-			<p>Converts Pashto text strings into Regex expressions for fuzzy searching. </p>
+			<p>A JavaScript library that creates regular expressions (regex) for fuzzy searching Pashto text (approximate string matching). </p>
 			<a href="#problem" id="problem" style="color: inherit; text-decoration: none;">
 				<h2>Problem:</h2>
 			</a>
@@ -2480,7 +2486,12 @@ img {
 						<td>زبا</td>
 						<td>ژبه</td>
 					</tr>
+					<tr>
+						<td>سڑے</td>
+						<td>سړی</td>
+					</tr>
 			</tbody></table>
+			<p>and vice versa.</p>
 			<ul>
 				<li><strong>TODO:</strong> A search for &quot;له پاره&quot; will match the word &quot;لپاره&quot; </li>
 			</ul>
@@ -2493,7 +2504,7 @@ img {
 <span class="hljs-keyword">const</span> fuzzyRegex = fuzzifyPashto(<span class="hljs-string">"سرک"</span>);
 <span class="hljs-built_in">console</span>.log(fuzzyRegex);
 
-<span class="hljs-comment">// output: /(^|[^\u0600-\u06FF])[صسثڅ][رړ][ګږکقگك]/mg</span></code></pre>
+<span class="hljs-comment">// output: /(^|[^\u0600-\u06FF])[صسثڅ][رړڑ][ګږکقگك]/mg</span></code></pre>
 			<a href="#api" id="api" style="color: inherit; text-decoration: none;">
 				<h2>API</h2>
 			</a>
@@ -2504,8 +2515,8 @@ img {
 			<a href="#options" id="options" style="color: inherit; text-decoration: none;">
 				<h4>Options</h4>
 			</a>
-			<a href="#optionsbegginingat" id="optionsbegginingat" style="color: inherit; text-decoration: none;">
-				<h5>options.begginingAt</h5>
+			<a href="#optionsmatchstart" id="optionsmatchstart" style="color: inherit; text-decoration: none;">
+				<h5>options.matchStart</h5>
 			</a>
 			<p>Chooses where to allow matches in the string to start from</p>
 			<ul>
@@ -2527,12 +2538,12 @@ img {
 				<li><code>false</code> <strong>(default)</strong> Mid-word spaces in either the search input or the text will break matches</li>
 				<li><code>true</code> Will match regardless of spaces, ie. <code>دپاره</code> will match <code>د پاره</code>, and vice versa</li>
 			</ul>
-			<a href="#optionssinglematchonly" id="optionssinglematchonly" style="color: inherit; text-decoration: none;">
-				<h5>options.singleMatchOnly</h5>
+			<a href="#optionsglobalmatch" id="optionsglobalmatch" style="color: inherit; text-decoration: none;">
+				<h5>options.globalMatch</h5>
 			</a>
 			<ul>
-				<li><code>false</code> <strong>(default)</strong> Returns a regex that will match all matches in a text (Include the <code>g</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2">flag</a>.)</li>
-				<li><code>true</code> (Do not include the <code>g</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2">flag</a>.)</li>
+				<li><code>true</code> <strong>(default)</strong> Returns a regex that will match all matches in a text (Includes the <code>g</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2">flag</a>.)</li>
+				<li><code>false</code> (Do not include the <code>g</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2">flag</a>.)</li>
 			</ul>
 			<a href="#optionsreturnwholeword" id="optionsreturnwholeword" style="color: inherit; text-decoration: none;">
 				<h5>options.returnWholeWord</h5>
@@ -2558,6 +2569,8 @@ img {
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#labialplosivesandfricatives" class="tsd-kind-icon">labial<wbr>Plosives<wbr>And<wbr>Fricatives</a></li>
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#pashtocharacterrange" class="tsd-kind-icon">pashto<wbr>Character<wbr>Range</a></li>
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#pashtoreplacerregex" class="tsd-kind-icon">pashto<wbr>Replacer<wbr>Regex</a></li>
+							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#pashtowordboundarybeginning" class="tsd-kind-icon">pashto<wbr>Word<wbr>Boundary<wbr>Beginning</a></li>
+							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#rlikesounds" class="tsd-kind-icon">r<wbr>Like<wbr>Sounds</a></li>
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#ssounds" class="tsd-kind-icon">s<wbr>Sounds</a></li>
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#tdsounds" class="tsd-kind-icon">td<wbr>Sounds</a></li>
 							<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#thefiveyeys" class="tsd-kind-icon">the<wbr>Five<wbr>Yeys</a></li>
@@ -2589,30 +2602,19 @@ img {
 				<div class="tsd-signature tsd-kind-icon">labial<wbr>Plosives<wbr>And<wbr>Fricatives<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"فپب"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;فپب&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L15">fuzzify-pashto.ts:15</a></li>
+						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L38">fuzzify-pashto.ts:38</a></li>
 					</ul>
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
 				<a name="pashtocharacterrange" class="tsd-anchor"></a>
 				<h3><span class="tsd-flag ts-flagConst">Const</span> pashto<wbr>Character<wbr>Range</h3>
-				<div class="tsd-signature tsd-kind-icon">pashto<wbr>Character<wbr>Range<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"؀-ۿ"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;؀-ۿ&quot;</span></div>
+				<div class="tsd-signature tsd-kind-icon">pashto<wbr>Character<wbr>Range<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"ء-ٰٟ-ۓە"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;ء-ٰٟ-ۓە&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L10">fuzzify-pashto.ts:10</a></li>
+						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L21">fuzzify-pashto.ts:21</a></li>
 					</ul>
 				</aside>
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Copyright (c) openpashto.com</p>
-					</div>
-					<p>This source code is licensed under the MIT license found in the
-					LICENSE file in the root directory of this source tree.</p>
-					<dl class="tsd-comment-tags">
-						<dt>flow</dt>
-						<dd></dd>
-					</dl>
-				</div>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
 				<a name="pashtoreplacerregex" class="tsd-anchor"></a>
@@ -2620,7 +2622,27 @@ img {
 				<div class="tsd-signature tsd-kind-icon">pashto<wbr>Replacer<wbr>Regex<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> =&nbsp;new RegExp(thingsToReplace.reduce((accumulator, currentValue, i) &#x3D;&gt; {if (i &#x3D;&#x3D;&#x3D; thingsToReplace.length - 1) {return accumulator + currentValue;}return accumulator + currentValue + &quot;|&quot;;}, &quot;&quot;), &quot;g&quot;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L98">fuzzify-pashto.ts:98</a></li>
+						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L116">fuzzify-pashto.ts:116</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+				<a name="pashtowordboundarybeginning" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagConst">Const</span> pashto<wbr>Word<wbr>Boundary<wbr>Beginning</h3>
+				<div class="tsd-signature tsd-kind-icon">pashto<wbr>Word<wbr>Boundary<wbr>Beginning<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;(^|[^${pashtoCharacterRange}])&#x60;</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L25">fuzzify-pashto.ts:25</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+				<a name="rlikesounds" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagConst">Const</span> r<wbr>Like<wbr>Sounds</h3>
+				<div class="tsd-signature tsd-kind-icon">r<wbr>Like<wbr>Sounds<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"رړڑڼ"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;رړڑڼ&quot;</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L37">fuzzify-pashto.ts:37</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2630,7 +2652,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">s<wbr>Sounds<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"صسثڅ"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;صسثڅ&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L11">fuzzify-pashto.ts:11</a></li>
+						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L33">fuzzify-pashto.ts:33</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2640,7 +2662,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">td<wbr>Sounds<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"طتټدډ"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;طتټدډ&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L13">fuzzify-pashto.ts:13</a></li>
+						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L35">fuzzify-pashto.ts:35</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2650,7 +2672,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">the<wbr>Five<wbr>Yeys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"ېۍیيئےى"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;ېۍیيئےى&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L17">fuzzify-pashto.ts:17</a></li>
+						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L40">fuzzify-pashto.ts:40</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2660,7 +2682,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">things<wbr>ToReplace<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;Object.keys(pashtoReplacer)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L97">fuzzify-pashto.ts:97</a></li>
+						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L115">fuzzify-pashto.ts:115</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2670,7 +2692,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">velar<wbr>Plosives<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"ګږکقگك"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;ګږکقگك&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L14">fuzzify-pashto.ts:14</a></li>
+						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L36">fuzzify-pashto.ts:36</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2680,7 +2702,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">z<wbr>Sounds<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"زضظذځژ"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;زضظذځژ&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L12">fuzzify-pashto.ts:12</a></li>
+						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L34">fuzzify-pashto.ts:34</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2697,7 +2719,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L115">fuzzify-pashto.ts:115</a></li>
+								<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L123">fuzzify-pashto.ts:123</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2722,7 +2744,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">pashto<wbr>Replacer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L24">fuzzify-pashto.ts:24</a></li>
+						<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L42">fuzzify-pashto.ts:42</a></li>
 					</ul>
 				</aside>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -2731,7 +2753,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">آ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;اآه&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L26">fuzzify-pashto.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L44">fuzzify-pashto.ts:44</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2741,7 +2763,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ؤ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;وع&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L52">fuzzify-pashto.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L70">fuzzify-pashto.ts:70</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2751,7 +2773,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ئ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;theFiveYeys</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L35">fuzzify-pashto.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L53">fuzzify-pashto.ts:53</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2761,7 +2783,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ا<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;اآهع&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L25">fuzzify-pashto.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L43">fuzzify-pashto.ts:43</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2771,7 +2793,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ب<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;labialPlosivesAndFricatives</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L92">fuzzify-pashto.ts:92</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L110">fuzzify-pashto.ts:110</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2781,7 +2803,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ت<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;tdSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L73">fuzzify-pashto.ts:73</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L91">fuzzify-pashto.ts:91</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2791,7 +2813,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ث<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;sSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L40">fuzzify-pashto.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L58">fuzzify-pashto.ts:58</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2801,7 +2823,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ج<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;چجڅ&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L43">fuzzify-pashto.ts:43</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L61">fuzzify-pashto.ts:61</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2811,7 +2833,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ح<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;ښخشخهحغ&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L57">fuzzify-pashto.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L75">fuzzify-pashto.ts:75</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2821,7 +2843,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">خ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;ښخشخهحغ&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L56">fuzzify-pashto.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L74">fuzzify-pashto.ts:74</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2831,7 +2853,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">د<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;tdSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L77">fuzzify-pashto.ts:77</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L95">fuzzify-pashto.ts:95</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2841,17 +2863,17 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ذ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;zSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L63">fuzzify-pashto.ts:63</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L81">fuzzify-pashto.ts:81</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
 					<a name="pashtoreplacer._-12" class="tsd-anchor"></a>
 					<h3>ر</h3>
-					<div class="tsd-signature tsd-kind-icon">ر<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;رړ&quot;</span></div>
+					<div class="tsd-signature tsd-kind-icon">ر<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;rLikeSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L69">fuzzify-pashto.ts:69</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L87">fuzzify-pashto.ts:87</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2861,7 +2883,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ز<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;zSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L61">fuzzify-pashto.ts:61</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L79">fuzzify-pashto.ts:79</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2871,7 +2893,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">س<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;sSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L38">fuzzify-pashto.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L56">fuzzify-pashto.ts:56</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2881,7 +2903,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ش<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;شښ&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L59">fuzzify-pashto.ts:59</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L77">fuzzify-pashto.ts:77</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2891,7 +2913,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ص<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;sSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L39">fuzzify-pashto.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L57">fuzzify-pashto.ts:57</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2901,7 +2923,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ض<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;zSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L62">fuzzify-pashto.ts:62</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L80">fuzzify-pashto.ts:80</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2911,7 +2933,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ط<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;tdSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L76">fuzzify-pashto.ts:76</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L94">fuzzify-pashto.ts:94</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2921,7 +2943,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ظ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;zSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L65">fuzzify-pashto.ts:65</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L83">fuzzify-pashto.ts:83</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2931,7 +2953,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ع<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;اوع&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L50">fuzzify-pashto.ts:50</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L68">fuzzify-pashto.ts:68</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2941,7 +2963,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">غ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;ښخشخهحغ&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L55">fuzzify-pashto.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L73">fuzzify-pashto.ts:73</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2951,7 +2973,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ف<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;labialPlosivesAndFricatives</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L94">fuzzify-pashto.ts:94</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L112">fuzzify-pashto.ts:112</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2961,7 +2983,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ق<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;velarPlosives</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L88">fuzzify-pashto.ts:88</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L106">fuzzify-pashto.ts:106</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2971,7 +2993,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ن<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;نڼ&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L82">fuzzify-pashto.ts:82</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L100">fuzzify-pashto.ts:100</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2981,7 +3003,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">نب<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;نبم&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L81">fuzzify-pashto.ts:81</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L99">fuzzify-pashto.ts:99</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2991,7 +3013,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ه<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;اهحہ&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L46">fuzzify-pashto.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L64">fuzzify-pashto.ts:64</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3001,7 +3023,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">و<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;وع&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L51">fuzzify-pashto.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L69">fuzzify-pashto.ts:69</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3011,7 +3033,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ي<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;theFiveYeys</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L32">fuzzify-pashto.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L50">fuzzify-pashto.ts:50</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3021,7 +3043,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ٱ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;اآه&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L27">fuzzify-pashto.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L45">fuzzify-pashto.ts:45</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3031,7 +3053,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ٲ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;اآه&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L28">fuzzify-pashto.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L46">fuzzify-pashto.ts:46</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3041,7 +3063,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ٳ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;اآه&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L29">fuzzify-pashto.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L47">fuzzify-pashto.ts:47</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3051,7 +3073,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ٹ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;tdSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L75">fuzzify-pashto.ts:75</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L93">fuzzify-pashto.ts:93</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3061,7 +3083,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ټ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;tdSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L74">fuzzify-pashto.ts:74</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L92">fuzzify-pashto.ts:92</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3071,7 +3093,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">پ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;labialPlosivesAndFricatives</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L93">fuzzify-pashto.ts:93</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L111">fuzzify-pashto.ts:111</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3081,7 +3103,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ځ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;zSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L64">fuzzify-pashto.ts:64</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L82">fuzzify-pashto.ts:82</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3091,7 +3113,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">څ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;sSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L41">fuzzify-pashto.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L59">fuzzify-pashto.ts:59</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3101,7 +3123,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">چ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;چجڅ&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L44">fuzzify-pashto.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L62">fuzzify-pashto.ts:62</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3111,7 +3133,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ڈ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;tdSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L79">fuzzify-pashto.ts:79</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L97">fuzzify-pashto.ts:97</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3121,27 +3143,27 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ډ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;tdSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L78">fuzzify-pashto.ts:78</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L96">fuzzify-pashto.ts:96</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
 					<a name="pashtoreplacer._-39" class="tsd-anchor"></a>
 					<h3>ڑ</h3>
-					<div class="tsd-signature tsd-kind-icon">ڑ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;رړ&quot;</span></div>
+					<div class="tsd-signature tsd-kind-icon">ڑ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;rLikeSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L71">fuzzify-pashto.ts:71</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L89">fuzzify-pashto.ts:89</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
 					<a name="pashtoreplacer._-40" class="tsd-anchor"></a>
 					<h3>ړ</h3>
-					<div class="tsd-signature tsd-kind-icon">ړ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;رړ&quot;</span></div>
+					<div class="tsd-signature tsd-kind-icon">ړ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;rLikeSounds</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L70">fuzzify-pashto.ts:70</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L88">fuzzify-pashto.ts:88</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3151,7 +3173,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ږ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;velarPlosives + &#x27;ژ&#x27;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L90">fuzzify-pashto.ts:90</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L108">fuzzify-pashto.ts:108</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3161,7 +3183,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ژ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;زضظژذځږ&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L67">fuzzify-pashto.ts:67</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L85">fuzzify-pashto.ts:85</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3171,7 +3193,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ښ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;ښخشخهحغ&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L54">fuzzify-pashto.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L72">fuzzify-pashto.ts:72</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3181,7 +3203,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ک<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;velarPlosives</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L85">fuzzify-pashto.ts:85</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L103">fuzzify-pashto.ts:103</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3191,7 +3213,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ګ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;velarPlosives</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L86">fuzzify-pashto.ts:86</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L104">fuzzify-pashto.ts:104</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3201,17 +3223,17 @@ img {
 					<div class="tsd-signature tsd-kind-icon">گ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;velarPlosives</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L87">fuzzify-pashto.ts:87</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L105">fuzzify-pashto.ts:105</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
 					<a name="pashtoreplacer._-47" class="tsd-anchor"></a>
 					<h3>ڼ</h3>
-					<div class="tsd-signature tsd-kind-icon">ڼ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;نڼ&quot;</span></div>
+					<div class="tsd-signature tsd-kind-icon">ڼ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;نڼړڑ&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L83">fuzzify-pashto.ts:83</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L101">fuzzify-pashto.ts:101</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3221,7 +3243,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ۀ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;اهحہ&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L47">fuzzify-pashto.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L65">fuzzify-pashto.ts:65</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3231,7 +3253,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ہ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;اهحہ&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L48">fuzzify-pashto.ts:48</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L66">fuzzify-pashto.ts:66</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3241,7 +3263,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ی<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;theFiveYeys</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L31">fuzzify-pashto.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L49">fuzzify-pashto.ts:49</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3251,7 +3273,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ۍ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;theFiveYeys</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L34">fuzzify-pashto.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L52">fuzzify-pashto.ts:52</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3261,7 +3283,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ې<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;theFiveYeys</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L33">fuzzify-pashto.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L51">fuzzify-pashto.ts:51</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -3271,7 +3293,7 @@ img {
 					<div class="tsd-signature tsd-kind-icon">ے<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;theFiveYeys</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/b6bd6ec/src/fuzzify-pashto.ts#L36">fuzzify-pashto.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/openpashto/fuzzify-pashto/blob/f55ca40/src/fuzzify-pashto.ts#L54">fuzzify-pashto.ts:54</a></li>
 						</ul>
 					</aside>
 				</section>

@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/openpashto/fuzzify-pashto.svg?branch=master)](https://travis-ci.org/openpashto/fuzzify-pashto)
 
-Converts Pashto text strings into Regex expressions for fuzzy searching. 
+A JavaScript library that creates regular expressions (regex) for fuzzy searching Pashto text (approximate string matching). 
 
 ## Problem:
 
@@ -33,6 +33,9 @@ Search strings can be converted to regular expressions that can be used for fuzz
 | د پاره | دپاره | 
 | مالوم | معلوم |
 | زبا | ژبه |
+| سڑے | سړی |
+
+and vice versa.
 
 - **TODO:** A search for "له پاره" will match the word "لپاره" 
 
@@ -48,7 +51,7 @@ const { fuzzifyPashto } = require("fuzzify-pashto");
 const fuzzyRegex = fuzzifyPashto("سرک");
 console.log(fuzzyRegex);
 
-// output: /(^|[^\u0600-\u06FF])[صسثڅ][رړ][ګږکقگك]/mg
+// output: /(^|[^\u0600-\u06FF])[صسثڅ][رړڑ][ګږکقگك]/mg
 ```
 
 ## API
@@ -59,7 +62,7 @@ Takes an input of a string of Pashto text (usually a word), and returns a RegEx 
 
 #### Options
 
-##### options.begginingAt
+##### options.matchStart
 
 Chooses where to allow matches in the string to start from
 
@@ -75,9 +78,9 @@ Chooses where to allow matches in the string to start from
  - `false` **(default)** Mid-word spaces in either the search input or the text will break matches
  - `true` Will match regardless of spaces, ie. `دپاره` will match `د پاره`, and vice versa
 
-##### options.singleMatchOnly
- - `false` **(default)** Returns a regex that will match all matches in a text (Include the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2).)
- - `true` (Do not include the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2).)
+##### options.globalMatch
+ - `true` **(default)** Returns a regex that will match all matches in a text (Includes the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2).)
+ - `false` (Do not include the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2).)
 
 ##### options.returnWholeWord  
  - `false` **(default)** Will return just the matching characters
