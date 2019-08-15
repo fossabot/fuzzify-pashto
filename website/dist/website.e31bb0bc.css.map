@@ -1,0 +1,1 @@
+{"version":3,"sources":["Demo.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA","file":"website.e31bb0bc.css","sourceRoot":"..","sourcesContent":["mark {\r\n  background-color: yellow;\r\n  padding: 0;\r\n}\r\n\r\npre {\r\n  background-color: #1E1E1E;\r\n  color: #ccc;\r\n  padding: 0.5rem;\r\n  border-radius: 4px;\r\n}\r\n"]}
