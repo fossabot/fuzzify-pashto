@@ -36,6 +36,7 @@ export default class Demo extends Component {
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleClear = this.handleClear.bind(this);
     } 
 
     // Creates the part of the code that gets passed as the options in the code example
@@ -53,6 +54,10 @@ export default class Demo extends Component {
             }
             return code.concat(`\t${option.name}: ${val},\n`); 
         }, firstLine) + ending;
+  }
+
+  handleClear() {
+      this.setState({ textToHighlight: "" });
   }
 
   handleInputChange(event) {
@@ -152,13 +157,22 @@ export default class Demo extends Component {
                                 })}
                             </div>
                         </div>
-                        <h5 className="mt-2">Text to Search:</h5>
+                        <h5 className="mt-2 mb-0">Text to Search:</h5>
+                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
+                            <small className="text-muted">
+                                Edit or paste text here
+                            </small>
+                            <small className="text-muted clickable" onClick={this.handleClear}>
+                                Clear
+                            </small>
+                        </div>
                         <div className="input-group">
                             <textarea 
                                 className="form-control"
                                 name='textToHighlight'
                                 value={textToHighlight}
                                 dir="rtl"
+                                rows="3"
                                 onChange={this.handleInputChange}
                             >    
                             </textarea>
