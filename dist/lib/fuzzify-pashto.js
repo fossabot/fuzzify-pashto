@@ -28,61 +28,62 @@ var labialPlosivesAndFricatives = "فپب";
 // Includes Arabic ى \u0649  
 var theFiveYeys = "ېۍیيئےى";
 var pashtoReplacer = {
-    "ا": "اآهع",
-    "آ": "اآه",
-    "ٱ": "اآه",
-    "ٲ": "اآه",
-    "ٳ": "اآه",
-    "ی": theFiveYeys,
-    "ي": theFiveYeys,
-    "ې": theFiveYeys,
-    "ۍ": theFiveYeys,
-    "ئ": theFiveYeys,
-    "ے": theFiveYeys,
-    "س": sSounds,
-    "ص": sSounds,
-    "ث": sSounds,
-    "څ": sSounds,
-    "ج": "چجڅ",
-    "چ": "چجڅ",
-    "ه": "اهحہ",
-    "ۀ": "اهحہ",
-    "ہ": "اهحہ",
-    "ع": "اوع",
-    "و": "وع",
-    "ؤ": "وع",
-    "ښ": "ښخشخهحغ",
-    "غ": 'ښخشخهحغ',
-    "خ": 'ښخشخهحغ',
-    "ح": 'ښخشخهحغ',
-    "ش": 'شښ',
-    "ز": zSounds,
-    "ض": zSounds,
-    "ذ": zSounds,
-    "ځ": zSounds,
-    "ظ": zSounds,
-    "ژ": 'زضظژذځږ',
-    "ر": rLikeSounds,
-    "ړ": rLikeSounds,
-    "ڑ": rLikeSounds,
-    "ت": tdSounds,
-    "ټ": tdSounds,
-    "ٹ": tdSounds,
-    "ط": tdSounds,
-    "د": tdSounds,
-    "ډ": tdSounds,
-    "ڈ": tdSounds,
-    "نب": 'نبم',
-    "ن": 'نڼ',
-    "ڼ": 'نڼړڑ',
-    "ک": velarPlosives,
-    "ګ": velarPlosives,
-    "گ": velarPlosives,
-    "ق": velarPlosives,
-    "ږ": velarPlosives + 'ژ',
-    "ب": labialPlosivesAndFricatives,
-    "پ": labialPlosivesAndFricatives,
-    "ف": labialPlosivesAndFricatives,
+    "اً": { range: "ان" },
+    "ا": { range: "اآهع", plus: ["اً"] },
+    "آ": { range: "اآه" },
+    "ٱ": { range: "اآه" },
+    "ٲ": { range: "اآه" },
+    "ٳ": { range: "اآه" },
+    "ی": { range: theFiveYeys },
+    "ي": { range: theFiveYeys },
+    "ې": { range: theFiveYeys },
+    "ۍ": { range: theFiveYeys },
+    "ئ": { range: theFiveYeys },
+    "ے": { range: theFiveYeys },
+    "س": { range: sSounds },
+    "ص": { range: sSounds },
+    "ث": { range: sSounds },
+    "څ": { range: sSounds },
+    "ج": { range: "چجڅ" },
+    "چ": { range: "چجڅ" },
+    "ه": { range: "اهحہ" },
+    "ۀ": { range: "اهحہ" },
+    "ہ": { range: "اهحہ" },
+    "ع": { range: "اوع", ignorable: true },
+    "و": { range: "وع", ignorable: true },
+    "ؤ": { range: "وع" },
+    "ښ": { range: "ښخشخهحغ" },
+    "غ": { range: 'ښخشخهحغ' },
+    "خ": { range: 'ښخشخهحغ' },
+    "ح": { range: 'ښخشخهحغ' },
+    "ش": { range: 'شښ' },
+    "ز": { range: zSounds },
+    "ض": { range: zSounds },
+    "ذ": { range: zSounds },
+    "ځ": { range: zSounds },
+    "ظ": { range: zSounds },
+    "ژ": { range: 'زضظژذځږ' },
+    "ر": { range: rLikeSounds },
+    "ړ": { range: rLikeSounds },
+    "ڑ": { range: rLikeSounds },
+    "ت": { range: tdSounds },
+    "ټ": { range: tdSounds },
+    "ٹ": { range: tdSounds },
+    "ط": { range: tdSounds },
+    "د": { range: tdSounds },
+    "ډ": { range: tdSounds },
+    "ڈ": { range: tdSounds },
+    "نب": { range: 'نبم' },
+    "ن": { range: 'نڼ', plus: ["اً"] },
+    "ڼ": { range: 'نڼړڑ' },
+    "ک": { range: velarPlosives },
+    "ګ": { range: velarPlosives },
+    "گ": { range: velarPlosives },
+    "ق": { range: velarPlosives },
+    "ږ": { range: velarPlosives + 'ژ' },
+    "ب": { range: labialPlosivesAndFricatives },
+    "پ": { range: labialPlosivesAndFricatives },
+    "ف": { range: labialPlosivesAndFricatives },
 };
 var thingsToReplace = Object.keys(pashtoReplacer);
 var pashtoReplacerRegex = new RegExp(thingsToReplace.reduce(function (accumulator, currentValue, i) {
@@ -93,12 +94,20 @@ var pashtoReplacerRegex = new RegExp(thingsToReplace.reduce(function (accumulato
 }, ""), "g");
 function fuzzifyPashto(input, options) {
     if (options === void 0) { options = {}; }
-    var safeInput = input.replace(/[#-.]|[[-^]|[?|{}]/g, '');
+    var safeInput = input.trim().replace(/[#-.]|[[-^]|[?|{}]/g, '');
     if (options.allowSpacesInWords) {
         safeInput = safeInput.replace(/ /g, '');
     }
-    var regexLogic = safeInput.trim().replace(pashtoReplacerRegex, function (mtch) {
-        return "[" + pashtoReplacer[mtch] + "]" + (options.allowSpacesInWords ? '\ ?' : '');
+    var regexLogic = safeInput.replace(pashtoReplacerRegex, function (mtch) {
+        var r = pashtoReplacer[mtch];
+        var range = "[" + r.range + "]";
+        if (r.plus) {
+            var additionalOptionGroups = r.plus.reduce(function (t, o) {
+                return t + o + "|";
+            }, "");
+            range = "(" + additionalOptionGroups + range + ")";
+        }
+        return "" + range + (r.ignorable ? '?' : '') + "\u0639?" + (options.allowSpacesInWords ? '\ ?' : '');
     });
     // Set how to begin the matching (default at the beginning of a word)
     var beginning = options.matchStart === "string" ? "^" :
