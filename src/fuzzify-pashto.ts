@@ -40,76 +40,77 @@ const labialPlosivesAndFricatives = "فپب";
 const theFiveYeys = "ېۍیيئےى";
 
 const pashtoReplacer = {
-  "ا": "اآهع", // TODO: make optional (if not at the beginning of word)
-  "آ": "اآه",
-  "ٱ": "اآه",
-  "ٲ": "اآه",
-  "ٳ": "اآه",
+  "اً": { range: "ان" },
+  "ا": { range: "اآهع", plus: ["اً"] }, // TODO: make optional (if not at the beginning of word)
+  "آ": { range: "اآه" },
+  "ٱ": { range: "اآه" },
+  "ٲ": { range: "اآه" },
+  "ٳ": { range: "اآه" },
 
-  "ی": theFiveYeys,
-  "ي": theFiveYeys,
-  "ې": theFiveYeys,
-  "ۍ": theFiveYeys,
-  "ئ": theFiveYeys,
-  "ے": theFiveYeys,
+  "ی": { range: theFiveYeys },
+  "ي": { range: theFiveYeys },
+  "ې": { range: theFiveYeys },
+  "ۍ": { range: theFiveYeys },
+  "ئ": { range: theFiveYeys },
+  "ے": { range: theFiveYeys },
 
-  "س": sSounds,
-  "ص": sSounds,
-  "ث": sSounds,
-  "څ": sSounds,
+  "س": { range: sSounds }, 
+  "ص": { range: sSounds },
+  "ث": { range: sSounds },
+  "څ": { range: sSounds },
 
-  "ج": "چجڅ", 
-  "چ": "چجڅ",
+  "ج": { range: "چجڅ" }, 
+  "چ": { range: "چجڅ" },
   
-  "ه": "اهحہ",
-  "ۀ": "اهحہ",
-  "ہ": "اهحہ",
+  "ه": { range: "اهحہ" },
+  "ۀ": { range: "اهحہ" },
+  "ہ": { range: "اهحہ" },
 
-  "ع": "اوع", // TODO: make optional
-  "و": "وع", // TODO: make optional (and if at the beginning of a word precede with an ا)
-  "ؤ": "وع",
+  "ع": { range: "اوع", ignorable: true }, 
+  "و": { range: "وع", ignorable: true }, 
+  "ؤ": { range: "وع"},
   
-  "ښ": "ښخشخهحغ",
-  "غ": 'ښخشخهحغ',
-  "خ": 'ښخشخهحغ',
-  "ح": 'ښخشخهحغ',
+  "ښ": { range: "ښخشخهحغ" },
+  "غ": { range: 'ښخشخهحغ' },
+  "خ": { range: 'ښخشخهحغ' },
+  "ح": { range: 'ښخشخهحغ' },
 
-  "ش": 'شښ',
+  "ش": { range: 'شښ' },
 
-  "ز": zSounds,
-  "ض": zSounds,
-  "ذ": zSounds,
-  "ځ": zSounds,
-  "ظ": zSounds,
+  "ز": { range: zSounds },
+  "ض": { range: zSounds },
+  "ذ": { range: zSounds },
+  "ځ": { range: zSounds },
+  "ظ": { range: zSounds },
 
-  "ژ": 'زضظژذځږ',
+  "ژ": { range: 'زضظژذځږ' },
 
-  "ر": rLikeSounds,
-  "ړ": rLikeSounds,
-  "ڑ": rLikeSounds,
+  "ر": { range: rLikeSounds },
+  "ړ": { range: rLikeSounds },
+  "ڑ": { range: rLikeSounds },
 
-  "ت": tdSounds,
-  "ټ": tdSounds,
-  "ٹ": tdSounds,
-  "ط": tdSounds,
-  "د": tdSounds,
-  "ډ": tdSounds,
-  "ڈ": tdSounds,
+  "ت": { range: tdSounds },
+  "ټ": { range: tdSounds },
+  "ٹ": { range: tdSounds },
+  "ط": { range: tdSounds },
+  "د": { range: tdSounds },
+  "ډ": { range: tdSounds },
+  "ڈ": { range: tdSounds },
 
-  "نب": 'نبم',
-  "ن": 'نڼ',
-  "ڼ": 'نڼړڑ',
+  "نب": { range: 'نبم' },
+  "ن": { range: 'نڼ', plus: ["اً"] }, // allow for words using اٌ at the end te be seached for with ن
+  "ڼ": { range: 'نڼړڑ' },
 
-  "ک": velarPlosives,
-  "ګ": velarPlosives,
-  "گ": velarPlosives,
-  "ق": velarPlosives,
+  "ک": { range: velarPlosives },
+  "ګ": { range: velarPlosives },
+  "گ": { range: velarPlosives },
+  "ق": { range: velarPlosives },
 
-  "ږ": velarPlosives + 'ژ',
+  "ږ": { range: velarPlosives + 'ژ' },
 
-  "ب": labialPlosivesAndFricatives,
-  "پ": labialPlosivesAndFricatives,
-  "ف": labialPlosivesAndFricatives,
+  "ب": { range: labialPlosivesAndFricatives },
+  "پ": { range: labialPlosivesAndFricatives },
+  "ف": { range: labialPlosivesAndFricatives },
 }
 
 const thingsToReplace = Object.keys(pashtoReplacer);
@@ -121,12 +122,20 @@ const pashtoReplacerRegex = new RegExp(thingsToReplace.reduce((accumulator, curr
 }, ""), "g");
 
 export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegExp {
-  let safeInput = input.replace(/[#-.]|[[-^]|[?|{}]/g, '');
+  let safeInput = input.trim().replace(/[#-.]|[[-^]|[?|{}]/g, '');
   if (options.allowSpacesInWords) {
     safeInput = safeInput.replace(/ /g, '');
   }
-  const regexLogic = safeInput.trim().replace(pashtoReplacerRegex, (mtch) => {
-    return `[${pashtoReplacer[mtch]}]${options.allowSpacesInWords ? '\ ?' : ''}`
+  const regexLogic = safeInput.replace(pashtoReplacerRegex, (mtch) => {
+    const r = pashtoReplacer[mtch];
+    let range = `[${r.range}]`;
+    if (r.plus) {
+      const additionalOptionGroups = r.plus.reduce((t: string, o: string) => {
+        return t + o + "|";
+      }, "");
+      range = `(${additionalOptionGroups}${range})`;
+    }
+    return `${range}${r.ignorable ? '?' : ''}ع?${options.allowSpacesInWords ? '\ ?' : ''}`
   });
   // Set how to begin the matching (default at the beginning of a word)
   let beginning = options.matchStart === "string" ? "^" :

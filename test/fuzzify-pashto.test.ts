@@ -13,12 +13,20 @@ const defaultInfo = {
 		["کار", "قهر"],
 		["زبا", "ژبه"],
 		["سڑے", "سړی"],
+		["استمال", "استعمال"],
+		["اعمل", "عمل"],
 	],
 	nonMatches: [
 		["سرک", "ترک"],
 		["کار", "بېکاري"],
 	],
 };
+
+const matchesWithAn = [
+	['حتمن', 'حتماً'],
+	['لتفن', 'لطفاً'],
+	['کاملا', 'کاملاً'],
+]
 
 const matchesWithSpaces = [
 	['دپاره', 'د پاره'],
@@ -124,6 +132,26 @@ optionsPossibilities.forEach(o => {
 			expect(result).toBeNull();
 		});
 	});
+})
+
+matchesWithAn.forEach(m => {
+	test(`matching ${m[0]} should work with ${m[1]}`, () => {
+		const re = fuzzifyPashto(m[0], { matchWholeWordOnly: true });
+		const result = m[1].match(re);
+		expect(result).toBeTruthy();
+	});
+	test(`matching ${m[1]} should work with ${m[0]}`, () => {
+		const re = fuzzifyPashto(m[1], { matchWholeWordOnly: true });
+		const result = m[0].match(re);
+		expect(result).toBeTruthy();
+	});
+});
+
+
+test(`وs should be optional if entered in search string`, () => {
+	const re = fuzzifyPashto("لوتفن");
+	const result = "لطفاً".match(re);
+	expect(result).toBeTruthy();
 })
 
 test(`With globalMatch set to false should only return one match`, () => {
