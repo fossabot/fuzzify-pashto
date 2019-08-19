@@ -59,8 +59,8 @@ const pashtoReplacer = {
   "ث": { range: sSounds },
   "څ": { range: sSounds },
 
-  "ج": { range: "چجڅ" }, 
-  "چ": { range: "چجڅ" },
+  "ج": { range: "چجڅځ" }, 
+  "چ": { range: "چجڅځ" },
   
   "ه": { range: "اهحہ" },
   "ۀ": { range: "اهحہ" },
@@ -80,7 +80,7 @@ const pashtoReplacer = {
   "ز": { range: zSounds },
   "ض": { range: zSounds },
   "ذ": { range: zSounds },
-  "ځ": { range: zSounds },
+  "ځ": { range: zSounds + "جڅ"},
   "ظ": { range: zSounds },
 
   "ژ": { range: 'زضظژذځږ' },
