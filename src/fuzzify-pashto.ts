@@ -25,8 +25,7 @@ const pashtoCharacterRange = "\u0621-\u065f\u0670-\u06d3\u06d5";
 const pashtoWordBoundaryBeginning = `(^|[^${pashtoCharacterRange}])`;
 // TODO: Deal with diacritics etc.
 // .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
-
-// TOOD: handle "" input
+// TODO: PROPER WORD BEGINNINGS!
 
 // TODO: add southern ش س (at beginning of word?)
 
