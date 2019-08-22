@@ -27,4 +27,4 @@ var e=require("process");module.exports=function(e){var t={};function n(r){if(t[
 },{"./cjs/react-dom.production.min.js":"jF7N"}],"Focm":[function(require,module,exports) {
 "use strict";var e=u(require("./Demo.js")),r=u(require("react")),t=require("react-dom");function u(e){return e&&e.__esModule?e:{default:e}}(0,t.render)(r.default.createElement(e.default,null),document.getElementById("demo"));
 },{"./Demo.js":"5wri","react":"HdMw","react-dom":"X9zx"}]},{},["Focm"], null)
-//# sourceMappingURL=/fuzzify-pashto/website.6ea1d254.js.map
+//# sourceMappingURL=/website.6ea1d254.js.map
