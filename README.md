@@ -56,7 +56,7 @@ console.log(fuzzyRegex);
 // output: /(^|[^\u0600-\u06FF])[صسثڅ][رړڑ][ګږکقگك]/mg
 ```
 
-See the [Live Demo](https://www.openpashto.com/fuzzify-pashto) for an up-to-date and interactive usage examples. 
+See the [Live Demo](https://www.openpashto.com/fuzzify-pashto) for up-to-date and interactive usage examples. 
 
 ## API
 
