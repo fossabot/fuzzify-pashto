@@ -95,6 +95,6 @@ Chooses where to allow matches in the string to start from
 
 ### fuzzifyPashto.es2018IsSupported()
 
-A convienience function to test is the current platform supports [lookbehind assertions](https://v8.dev/blog/regexp-lookbehind-assertions) as per es2018.
+A convienience function to test if the current platform supports [lookbehind assertions](https://v8.dev/blog/regexp-lookbehind-assertions) as per es2018.
 
 Returns `true` if lookbehind assertions are supported, and `false` if they are not.
