@@ -13,6 +13,7 @@ interface FuzzifyOptions {
   allowSpacesInWords?: boolean;
   returnWholeWord?: boolean;
   es2018?: boolean;
+  ignoreDiacritics?: boolean;
 }
 
 // Arabic punctuation to exclude
@@ -24,7 +25,8 @@ const pashtoCharacterRange = "\u0621-\u065f\u0670-\u06d3\u06d5";
 // I don't know how to solve this without lookbehinds in JavaScript (not available on all platforms)
 const pashtoWordBoundaryBeginning = `(?:^|[^${pashtoCharacterRange}])`;
 // TODO: Better testing here - to see if this is really working in all cases
-const pashtoWordBoundaryBeginningWithEs2018 = `(?<![${pashtoCharacterRange}])`
+const pashtoWordBoundaryBeginningWithEs2018 = `(?<![${pashtoCharacterRange}])`;
+const diacritics = "\u064b-\u065f\u0670\u0674"; // pretty generous diactritic range
 // TODO: Deal with diacritics etc.
 // .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
 // TODO: PROPER WORD BEGINNINGS!
@@ -139,6 +141,9 @@ export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegE
   if (options.allowSpacesInWords) {
     safeInput = safeInput.replace(/ /g, '');
   }
+  if (options.ignoreDiacritics) {
+    safeInput = safeInput.replace(new RegExp(`[${diacritics}]`, "g"), '');
+  }
   const regexLogic = safeInput.replace(pashtoReplacerRegex, (mtch) => {
     const r = pashtoReplacer[mtch];
     let range = `[${r.range}]`;
@@ -148,7 +153,7 @@ export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegE
       }, "");
       range = `(${additionalOptionGroups}${range})`;
     }
-    return `${range}${r.ignorable ? '?' : ''}ع?${options.allowSpacesInWords ? '\ ?' : ''}`
+    return `${range}${r.ignorable ? '?' : ''}ع?${options.ignoreDiacritics ? `[${diacritics}]?`: ''}${options.allowSpacesInWords ? '\ ?' : ''}`
   });
   // Set how to begin the matching (default at the beginning of a word)
   let beginning;

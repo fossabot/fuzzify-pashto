@@ -16,6 +16,7 @@ var pashtoCharacterRange = "\u0621-\u065f\u0670-\u06d3\u06d5";
 var pashtoWordBoundaryBeginning = "(?:^|[^" + pashtoCharacterRange + "])";
 // TODO: Better testing here - to see if this is really working in all cases
 var pashtoWordBoundaryBeginningWithEs2018 = "(?<![" + pashtoCharacterRange + "])";
+var diacritics = "\u064b-\u065f\u0670\u0674"; // pretty generous diactritic range
 // TODO: Deal with diacritics etc.
 // .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
 // TODO: PROPER WORD BEGINNINGS!
@@ -112,6 +113,9 @@ function fuzzifyPashto(input, options) {
     if (options.allowSpacesInWords) {
         safeInput = safeInput.replace(/ /g, '');
     }
+    if (options.ignoreDiacritics) {
+        safeInput = safeInput.replace(new RegExp("[" + diacritics + "]", "g"), '');
+    }
     var regexLogic = safeInput.replace(pashtoReplacerRegex, function (mtch) {
         var r = pashtoReplacer[mtch];
         var range = "[" + r.range + "]";
@@ -121,7 +125,7 @@ function fuzzifyPashto(input, options) {
             }, "");
             range = "(" + additionalOptionGroups + range + ")";
         }
-        return "" + range + (r.ignorable ? '?' : '') + "\u0639?" + (options.allowSpacesInWords ? '\ ?' : '');
+        return "" + range + (r.ignorable ? '?' : '') + "\u0639?" + (options.ignoreDiacritics ? "[" + diacritics + "]?" : '') + (options.allowSpacesInWords ? '\ ?' : '');
     });
     // Set how to begin the matching (default at the beginning of a word)
     var beginning;

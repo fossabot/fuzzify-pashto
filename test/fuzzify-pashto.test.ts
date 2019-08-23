@@ -26,6 +26,11 @@ const defaultInfo = {
 	],
 };
 
+const withDiacritics = [
+	['تتتت', 'تِتّتّت'],
+	['بببب', 'بّبّبَب'],
+];
+
 const matchesWithAn = [
 	['حتمن', 'حتماً'],
 	['لتفن', 'لطفاً'],
@@ -146,6 +151,19 @@ matchesWithAn.forEach(m => {
 	});
 	test(`matching ${m[1]} should work with ${m[0]}`, () => {
 		const re = fuzzifyPashto(m[1], { matchWholeWordOnly: true });
+		const result = m[0].match(re);
+		expect(result).toBeTruthy();
+	});
+});
+
+withDiacritics.forEach(m => {
+	test(`matich ${m[0]} should ignore the diactritics in ${m[1]}`, () => {
+		const re = fuzzifyPashto(m[0], { ignoreDiacritics: true });
+		const result = m[1].match(re);
+		expect(result).toBeTruthy();
+	});
+	test(`the diacritics should in ${m[0]} should be ignored when matching with ${m[1]}`, () => {
+		const re = fuzzifyPashto(m[1], { ignoreDiacritics: true });
 		const result = m[0].match(re);
 		expect(result).toBeTruthy();
 	});

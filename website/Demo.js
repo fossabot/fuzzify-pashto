@@ -7,6 +7,7 @@ const apiOptions = [
     { name: "allowSpacesInWords", label: "Allow spaces in words", type: "boolean", default: false },
     { name: "matchWholeWordOnly", label: "Match whole word only", type: "boolean", default: false },
     { name: "returnWholeWord", label: "Return whole word", type: "boolean", default: false },
+    { name: "ignoreDiacritics", label: "Ignore Diacritics", type: "boolean", falault: false },
     { name: "es2018", label: "Use ECMA2018", type: "boolean", default: false },
     { name: "matchStart", label: "Start matches at", type: "string", default: "word", enum: [
         { value: "word", optionText: "Beginning of word" },
