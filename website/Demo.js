@@ -7,6 +7,7 @@ const apiOptions = [
     { name: "allowSpacesInWords", label: "Allow spaces in words", type: "boolean", default: false },
     { name: "matchWholeWordOnly", label: "Match whole word only", type: "boolean", default: false },
     { name: "returnWholeWord", label: "Return whole word", type: "boolean", default: false },
+    { name: "es2018", label: "Use ECMA2018", type: "boolean", default: false },
     { name: "matchStart", label: "Start matches at", type: "string", default: "word", enum: [
         { value: "word", optionText: "Beginning of word" },
         { value: "string", optionText: "Beginning of string" },
@@ -31,6 +32,7 @@ export default class Demo extends Component {
             searchText: startingSearchWord,
             textToHighlight: startingText,
             regex: fuzzifyPashto(startingSearchWord, options),
+            es2018Supported: false,
             adjustedOptions: new Set(),
             ...options,
         }
@@ -38,6 +40,22 @@ export default class Demo extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleClear = this.handleClear.bind(this);
     } 
+
+    componentDidMount() {
+        // Check to see if browser has es2018 lookbehind support
+        let failed = false;
+        try {
+            new RegExp('(?<!a)bb')
+        } catch(error) {
+            failed = true
+        }
+        if (!failed) {
+            this.setState({ es2018Supported: true, es2018: true });
+            this.setState(({ adjustedOptions }) => ({
+                adjustedOptions: new Set(adjustedOptions).add("es2018")
+            }));
+        }
+    }
 
     // Creates the part of the code that gets passed as the options in the code example
     apiOptionsCode() {
@@ -64,6 +82,11 @@ export default class Demo extends Component {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
+
+    if (name === "es2018" && !this.state.es2018Supported) {
+        alert("Your browser does not support lookbehind assertions in regex as per ECMA2018");
+        return;
+    }
 
     if (apiOptions.find(o => o.name === name)) {
         this.setState(({ adjustedOptions }) => ({
@@ -193,6 +216,9 @@ export default class Demo extends Component {
 const fuzzyRegex = fuzzifyPashto("${searchText}"${adjustedOptions.size ? this.apiOptionsCode() : ""});`
 }
 </code></pre>
+                {this.state.es2018Supported && <div className="mb-2">
+                    Note: Your browser supports <a href="https://v8.dev/blog/regexp-lookbehind-assertions">ES2018 lookbehind assertions</a> in regex. This allows for cleaner matching at the beginning of words, but it's <a href="https://caniuse.com/#feat=js-regexp-lookbehind">not supported in all environments</a>.
+                </div>}
                 {regex && 
                     <>
                         <h5>Generated Regex:</h5>
