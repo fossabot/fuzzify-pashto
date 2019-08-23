@@ -13,5 +13,6 @@ interface FuzzifyOptions {
     returnWholeWord?: boolean;
     es2018?: boolean;
 }
+export declare function es2018IsSupported(): boolean;
 export declare function fuzzifyPashto(input: string, options?: FuzzifyOptions): RegExp;
 export {};

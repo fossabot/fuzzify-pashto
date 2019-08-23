@@ -125,7 +125,7 @@ const pashtoReplacerRegex = new RegExp(thingsToReplace.reduce((accumulator, curr
 export function es2018IsSupported(): boolean {
   let supported = true;
   try {
-      new RegExp('(?<!a)bb')
+    const a = new RegExp('(?<!a)b')
   } catch(error) {
     // Must ignore this line for testing, because not all environments can/will error here
     /* istanbul ignore next */ 

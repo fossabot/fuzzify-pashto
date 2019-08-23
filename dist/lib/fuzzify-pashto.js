@@ -13,10 +13,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var pashtoCharacterRange = "\u0621-\u065f\u0670-\u06d3\u06d5";
 // ISSUE: This does not work if the word is starting with a non-Pashto character like " or « or .
 // I don't know how to solve this without lookbehinds in JavaScript (not available on all platforms)
-// Need to try all these ideas: https://stackoverflow.com/questions/641407/javascript-negative-lookbehind-equivalent
 var pashtoWordBoundaryBeginning = "(?:^|[^" + pashtoCharacterRange + "])";
+// TODO: Better testing here - to see if this is really working in all cases
 var pashtoWordBoundaryBeginningWithEs2018 = "(?<![" + pashtoCharacterRange + "])";
-// something like this: ([^${pashtoCharacterRange}]?)abc  plus not whitespace/punctuation etc.
 // TODO: Deal with diacritics etc.
 // .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
 // TODO: PROPER WORD BEGINNINGS!
@@ -94,6 +93,19 @@ var pashtoReplacerRegex = new RegExp(thingsToReplace.reduce(function (accumulato
     }
     return accumulator + currentValue + "|";
 }, ""), "g");
+function es2018IsSupported() {
+    var supported = true;
+    try {
+        var a = new RegExp('(?<!a)b');
+    }
+    catch (error) {
+        // Must ignore this line for testing, because not all environments can/will error here
+        /* istanbul ignore next */
+        supported = false;
+    }
+    return supported;
+}
+exports.es2018IsSupported = es2018IsSupported;
 function fuzzifyPashto(input, options) {
     if (options === void 0) { options = {}; }
     var safeInput = input.trim().replace(/[#-.]|[[-^]|[?|{}]/g, '');
