@@ -22,10 +22,9 @@ interface FuzzifyOptions {
 const pashtoCharacterRange = "\u0621-\u065f\u0670-\u06d3\u06d5";
 // ISSUE: This does not work if the word is starting with a non-Pashto character like " or « or .
 // I don't know how to solve this without lookbehinds in JavaScript (not available on all platforms)
-// Need to try all these ideas: https://stackoverflow.com/questions/641407/javascript-negative-lookbehind-equivalent
 const pashtoWordBoundaryBeginning = `(?:^|[^${pashtoCharacterRange}])`;
+// TODO: Better testing here - to see if this is really working in all cases
 const pashtoWordBoundaryBeginningWithEs2018 = `(?<![${pashtoCharacterRange}])`
-// something like this: ([^${pashtoCharacterRange}]?)abc  plus not whitespace/punctuation etc.
 // TODO: Deal with diacritics etc.
 // .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
 // TODO: PROPER WORD BEGINNINGS!

@@ -43,6 +43,7 @@ export default class Demo extends Component {
 
     componentDidMount() {
         // Check to see if browser has es2018 lookbehind support
+        // If so enable it by default
         let failed = false;
         try {
             new RegExp('(?<!a)bb')
@@ -50,7 +51,11 @@ export default class Demo extends Component {
             failed = true
         }
         if (!failed) {
-            this.setState({ es2018Supported: true, es2018: true });
+            this.setState({ 
+                es2018Supported: true, 
+                es2018: true,
+                regex: fuzzifyPashto(this.state.searchText, { es2018: true }), 
+            });
             this.setState(({ adjustedOptions }) => ({
                 adjustedOptions: new Set(adjustedOptions).add("es2018")
             }));

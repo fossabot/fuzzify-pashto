@@ -109,7 +109,7 @@ const optionsPossibilities = [
 ];
 
 const punctuationToExclude = [
-	"،", "؟", "؛", "۔", "۲", "۹", "۰", "»", "«", "٫", "!", ".", "؋", "٪", "٬", "×", ")", "(",
+	"،", "؟", "؛", "۔", "۲", "۹", "۰", "»", "«", "٫", "!", ".", "؋", "٪", "٬", "×", ")", "(", " ", "\t",
 ];
 
 optionsPossibilities.forEach(o => {
@@ -204,9 +204,10 @@ punctuationToExclude.forEach(m => {
 		const re = fuzzifyPashto("کور", { returnWholeWord: true, matchStart: "word" });
 		// ISSUE: This should also work when the word is PRECEDED by the punctuation
 		// Need to work with a lookbehind equivalent
-		const result = `کورونه${m}`.match(re);
+		const result = `زمونږ کورونه${m} دي`.match(re);
 		expect(result).toHaveLength(1);
-		expect(result).toContain("کورونه");
+		expect(result).toContain(" کورونه");
+		// Matches will unfortunately have a space on the front of the word, issue with missing es2018 lookbehinds
 	});
 });
 
@@ -217,7 +218,7 @@ punctuationToExclude.forEach(m => {
 		// if environment is not es2018 with lookbehind support (like node 6, 8) this will fail
 		try {
 			const re = fuzzifyPashto("کور", { returnWholeWord: true, matchStart: "word", es2018: true });
-			result = `${m}کورونه${m}`.match(re);
+			result = `زمونږ ${m}کورونه${m} دي`.match(re);
 		} catch (error) {
 			failed = true;
 		}
