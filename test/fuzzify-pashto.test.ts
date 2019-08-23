@@ -208,7 +208,23 @@ punctuationToExclude.forEach(m => {
 		expect(result).toHaveLength(1);
 		expect(result).toContain("کورونه");
 	});
-})
+});
+
+punctuationToExclude.forEach(m => {
+	test(`${m} should not be considered part of a Pashto word (front or back with es2018) - or should fail if using a non es2018 environment`, () => {
+		let result: any;
+		let failed = false;
+		// if environment is not es2018 with lookbehind support (like node 6, 8) this will fail
+		try {
+			const re = fuzzifyPashto("کور", { returnWholeWord: true, matchStart: "word", es2018: true });
+			result = `${m}کورونه${m}`.match(re);
+		} catch (error) {
+			failed = true;
+		}
+		const worked = failed || (result.length === 1 && result.includes("کورونه"));
+		expect(worked).toBe(true);
+	});
+});
 
 test(`Arabic punctuation or numbers should not be considered part of a Pashto word`, () => {
 	const re = fuzzifyPashto("کار", { returnWholeWord: true });

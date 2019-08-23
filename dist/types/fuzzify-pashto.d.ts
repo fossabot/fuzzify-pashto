@@ -11,6 +11,7 @@ interface FuzzifyOptions {
     matchWholeWordOnly?: boolean;
     allowSpacesInWords?: boolean;
     returnWholeWord?: boolean;
+    es2018?: boolean;
 }
 export declare function fuzzifyPashto(input: string, options?: FuzzifyOptions): RegExp;
 export {};

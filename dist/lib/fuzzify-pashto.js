@@ -14,10 +14,12 @@ var pashtoCharacterRange = "\u0621-\u065f\u0670-\u06d3\u06d5";
 // ISSUE: This does not work if the word is starting with a non-Pashto character like " or « or .
 // I don't know how to solve this without lookbehinds in JavaScript (not available on all platforms)
 // Need to try all these ideas: https://stackoverflow.com/questions/641407/javascript-negative-lookbehind-equivalent
-var pashtoWordBoundaryBeginning = "(^|[^" + pashtoCharacterRange + "])";
+var pashtoWordBoundaryBeginning = "(?:^|[^" + pashtoCharacterRange + "])";
+var pashtoWordBoundaryBeginningWithEs2018 = "(?<![" + pashtoCharacterRange + "])";
+// something like this: ([^${pashtoCharacterRange}]?)abc  plus not whitespace/punctuation etc.
 // TODO: Deal with diacritics etc.
 // .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
-// TOOD: handle "" input
+// TODO: PROPER WORD BEGINNINGS!
 // TODO: add southern ش س (at beginning of word?)
 var sSounds = "صسثڅ";
 var zSounds = "زضظذځژ";
@@ -43,9 +45,9 @@ var pashtoReplacer = {
     "س": { range: sSounds },
     "ص": { range: sSounds },
     "ث": { range: sSounds },
-    "څ": { range: sSounds },
-    "ج": { range: "چجڅ" },
-    "چ": { range: "چجڅ" },
+    "څ": { range: sSounds + "چ" },
+    "ج": { range: "چجڅځژ" },
+    "چ": { range: "چجڅځ" },
     "ه": { range: "اهحہ" },
     "ۀ": { range: "اهحہ" },
     "ہ": { range: "اهحہ" },
@@ -60,9 +62,9 @@ var pashtoReplacer = {
     "ز": { range: zSounds },
     "ض": { range: zSounds },
     "ذ": { range: zSounds },
-    "ځ": { range: zSounds },
+    "ځ": { range: zSounds + "جڅ" },
     "ظ": { range: zSounds },
-    "ژ": { range: 'زضظژذځږ' },
+    "ژ": { range: 'زضظژذځږج' },
     "ر": { range: rLikeSounds },
     "ړ": { range: rLikeSounds },
     "ڑ": { range: rLikeSounds },
@@ -110,9 +112,18 @@ function fuzzifyPashto(input, options) {
         return "" + range + (r.ignorable ? '?' : '') + "\u0639?" + (options.allowSpacesInWords ? '\ ?' : '');
     });
     // Set how to begin the matching (default at the beginning of a word)
-    var beginning = options.matchStart === "string" ? "^" :
-        options.matchStart === "anywhere" ? "" :
-            pashtoWordBoundaryBeginning; // "word" is the default
+    var beginning;
+    if (options.matchStart === "string")
+        beginning = "^";
+    else if (options.matchStart === "anywhere")
+        beginning = "";
+    else {
+        // "word" is the default
+        if (options.es2018)
+            beginning = pashtoWordBoundaryBeginningWithEs2018;
+        else
+            beginning = pashtoWordBoundaryBeginning;
+    }
     var ending = "";
     if (options.matchWholeWordOnly) {
         if (options.matchStart === "anywhere")

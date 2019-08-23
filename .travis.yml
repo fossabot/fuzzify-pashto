@@ -9,11 +9,10 @@ os:
   - osx
   - windows
 node_js:
+  - '9'
   - '10'
   - '11'
   - '12'
-  - '8'
-  - '6'
 script:
   - npm run test:prod && npm run build
 branches:

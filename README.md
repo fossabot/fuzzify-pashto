@@ -86,4 +86,10 @@ Chooses where to allow matches in the string to start from
 
 ##### options.returnWholeWord  
  - `false` **(default)** Will return just the matching characters
- - `true` Will return the whole word attached to the matching characters
+ - `true` Will return the whole word attached to the matching characters  
+
+##### opitons.es2018
+
+ - `false` **(default)** Will not use [lookbehind assertions](https://v8.dev/blog/regexp-lookbehind-assertions) in regex because [they are not supported on every platform](https://caniuse.com/#feat=js-regexp-lookbehind)  
+ - `true` Only to be used with an environment like recent version of Chrome or Node.js, where lookbehind assertions [are supported](https://node.green/). This allows for cleaner matching of word beginnings, properly handling spaces and punctuation. **warning:** Do not use this if using in different, unsupported environments. It will cause a syntax error. 
+

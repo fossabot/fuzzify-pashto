@@ -12,6 +12,7 @@ interface FuzzifyOptions {
   matchWholeWordOnly?: boolean;
   allowSpacesInWords?: boolean;
   returnWholeWord?: boolean;
+  es2018?: boolean;
 }
 
 // Arabic punctuation to exclude
@@ -22,7 +23,9 @@ const pashtoCharacterRange = "\u0621-\u065f\u0670-\u06d3\u06d5";
 // ISSUE: This does not work if the word is starting with a non-Pashto character like " or « or .
 // I don't know how to solve this without lookbehinds in JavaScript (not available on all platforms)
 // Need to try all these ideas: https://stackoverflow.com/questions/641407/javascript-negative-lookbehind-equivalent
-const pashtoWordBoundaryBeginning = `(^|[^${pashtoCharacterRange}])`;
+const pashtoWordBoundaryBeginning = `(?:^|[^${pashtoCharacterRange}])`;
+const pashtoWordBoundaryBeginningWithEs2018 = `(?<![${pashtoCharacterRange}])`
+// something like this: ([^${pashtoCharacterRange}]?)abc  plus not whitespace/punctuation etc.
 // TODO: Deal with diacritics etc.
 // .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
 // TODO: PROPER WORD BEGINNINGS!
@@ -137,9 +140,15 @@ export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegE
     return `${range}${r.ignorable ? '?' : ''}ع?${options.allowSpacesInWords ? '\ ?' : ''}`
   });
   // Set how to begin the matching (default at the beginning of a word)
-  let beginning = options.matchStart === "string" ? "^" :
-                    options.matchStart === "anywhere" ? "" :
-                    pashtoWordBoundaryBeginning; // "word" is the default
+  let beginning;
+  if (options.matchStart === "string") beginning = "^";
+  else if (options.matchStart === "anywhere") beginning = "";
+  else {
+    // "word" is the default
+    if (options.es2018) beginning = pashtoWordBoundaryBeginningWithEs2018;
+    else beginning = pashtoWordBoundaryBeginning;
+  }
+  
   let ending = "";
   if (options.matchWholeWordOnly) {
     if (options.matchStart === "anywhere") beginning = pashtoWordBoundaryBeginning;
