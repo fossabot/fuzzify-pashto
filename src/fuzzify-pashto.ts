@@ -122,6 +122,18 @@ const pashtoReplacerRegex = new RegExp(thingsToReplace.reduce((accumulator, curr
   return accumulator + currentValue + "|";
 }, ""), "g");
 
+export function es2018IsSupported(): boolean {
+  let supported = true;
+  try {
+      new RegExp('(?<!a)bb')
+  } catch(error) {
+    // Must ignore this line for testing, because not all environments can/will error here
+    /* istanbul ignore next */ 
+    supported = false;
+  }
+  return supported;
+}
+
 export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegExp {
   let safeInput = input.trim().replace(/[#-.]|[[-^]|[?|{}]/g, '');
   if (options.allowSpacesInWords) {

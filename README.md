@@ -92,3 +92,9 @@ Chooses where to allow matches in the string to start from
 
  - `false` **(default)** Will not use [lookbehind assertions](https://v8.dev/blog/regexp-lookbehind-assertions) in regex because [they are not supported on every platform](https://caniuse.com/#feat=js-regexp-lookbehind)  
  - `true` Only to be used with an environment like recent version of Chrome or Node.js, where lookbehind assertions [are supported](https://node.green/). This allows for cleaner matching of word beginnings, properly handling spaces and punctuation. **warning:** Do not use this if using in different, unsupported environments. It will cause a syntax error. 
+
+### fuzzifyPashto.es2018IsSupported()
+
+A convienience function to test is the current platform supports [lookbehind assertions](https://v8.dev/blog/regexp-lookbehind-assertions) as per es2018.
+
+Returns `true` if lookbehind assertions are supported, and `false` if they are not.

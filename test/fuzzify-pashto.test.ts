@@ -1,4 +1,4 @@
-import { fuzzifyPashto } from '../src/fuzzify-pashto';
+import { fuzzifyPashto, es2018IsSupported } from '../src/fuzzify-pashto';
 
 const defaultInfo = {
 	matches: [
@@ -246,3 +246,9 @@ test(`returnWholeWord should should not return partial matches if matchWholeWord
 	const result = "کارونه کوه، بېکاره مه ګرځه".match(re);
 	expect(result).toBeNull();
 });
+
+test(`es2018isSuppported should either return true or false`, () => {
+	const answer = es2018IsSupported();
+	console.log(answer);
+	expect(typeof answer).toBe("boolean");
+})
