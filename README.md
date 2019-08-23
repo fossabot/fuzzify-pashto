@@ -83,8 +83,8 @@ Chooses where to allow matches in the string to start from
  - `true` Will match regardless of spaces, ie. `دپاره` will match `د پاره`, and vice versa
 
 ##### options.globalMatch
- - `true` **(default)** Returns a regex that will match all matches in a text (Includes the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2).)
- - `false` (Do not include the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2).)
+ - `true` **(default)** Returns a regex that will match all matches in a text (Includes the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2))
+ - `false` (Do not include the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2))
 
 ##### options.returnWholeWord  
  - `false` **(default)** Will return just the matching characters
@@ -93,11 +93,11 @@ Chooses where to allow matches in the string to start from
 ##### opitons.es2018
 
  - `false` **(default)** Will not use [lookbehind assertions](https://v8.dev/blog/regexp-lookbehind-assertions) in regex because [they are not supported on every platform](https://caniuse.com/#feat=js-regexp-lookbehind)  
- - `true` Only to be used with an environment like recent version of Chrome or Node.js, where lookbehind assertions [are supported](https://node.green/). This allows for cleaner matching of word beginnings, properly handling spaces and punctuation. **warning:** Do not use this if using in different, unsupported environments. It will cause a syntax error. 
+ - `true` Only to be used with an environment like recent version of Chrome or Node.js, where lookbehind assertions [are supported](https://node.green/). This allows for cleaner matching of word beginnings, properly handling spaces and punctuation. **warning:** Do not use this if using in different, unsupported environments. It will cause a syntax error 
 
 ##### options.ignoreDiacritics  
- - `false` **default** Diacritics will make or break matches.
- - `true` Diacritics will be ignored, and matches will work regardless of whether or not they are included. 
+ - `false` **default** Diacritics will make or break matches  
+ - `true` Diacritics will be ignored, and matches will work regardless of whether or not they are included  
 
 ### fuzzifyPashto.es2018IsSupported()
 
