@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import Highlighter from "react-highlight-words";
-import { fuzzifyPashto } from 'fuzzify-pashto';
-import './Demo.css';
+import { fuzzifyPashto, es2018Supported } from "fuzzify-pashto";
+import "./Demo.css";
 
 const apiOptions = [
     { name: "allowSpacesInWords", label: "Allow spaces in words", type: "boolean", default: false },
@@ -22,7 +22,7 @@ const startingText = "پښتو ژبه د لرغونو آريایي ژبو څخه
 
 export default class Demo extends Component {
     constructor (props) {
-        super(props)
+        super(props);
 
         const options = apiOptions.reduce((opts, o) => {
             opts[o.name] = o.default;
@@ -36,7 +36,7 @@ export default class Demo extends Component {
             es2018Supported: false,
             adjustedOptions: new Set(),
             ...options,
-        }
+        };
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleClear = this.handleClear.bind(this);
@@ -45,13 +45,8 @@ export default class Demo extends Component {
     componentDidMount() {
         // Check to see if browser has es2018 lookbehind support
         // If so enable it by default
-        let failed = false;
-        try {
-            new RegExp('(?<!a)bb')
-        } catch(error) {
-            failed = true
-        }
-        if (!failed) {
+        const hasEs2018 = es2018Supported();
+        if (hasEs2018) {
             this.setState({ 
                 es2018Supported: true, 
                 es2018: true,
@@ -69,7 +64,9 @@ export default class Demo extends Component {
         const ending = "}";
         return apiOptions.reduce((code, option) => {
             // Only show code for the options that have been touched
-            if (!this.state.adjustedOptions.has(option.name)) return code;
+            if (!this.state.adjustedOptions.has(option.name)) {
+                return code;
+            }
             let val;
             if (option.type === "string") {
                 val = `"${this.state[option.name]}"`;
@@ -86,7 +83,7 @@ export default class Demo extends Component {
 
   handleInputChange(event) {
     const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
     if (name === "es2018" && !this.state.es2018Supported) {
@@ -94,7 +91,7 @@ export default class Demo extends Component {
         return;
     }
 
-    if (apiOptions.find(o => o.name === name)) {
+    if (apiOptions.find((o) => o.name === name)) {
         this.setState(({ adjustedOptions }) => ({
             adjustedOptions: new Set(adjustedOptions).add(name)
         }));
@@ -114,7 +111,7 @@ export default class Demo extends Component {
 
     this.setState({
         [name]: value,
-        regex: this.state.searchText ? regex : '',
+        regex: this.state.searchText ? regex : "",
     });
   }
 
@@ -150,7 +147,7 @@ export default class Demo extends Component {
                             </div>
                             <div className="col-sm-6">
                                 <h6>Options</h6>
-                                {apiOptions.map(option => {
+                                {apiOptions.map((option) => {
                                     if (option.type === "boolean") {
                                         return (
                                             <div key={option.name} className="form-check">
@@ -176,7 +173,7 @@ export default class Demo extends Component {
                                                     onChange={this.handleInputChange} 
                                                     className="form-control form-control-sm"
                                                 >
-                                                    {option.enum.map(v => (
+                                                    {option.enum.map((v) => (
                                                         <option key={v.value} value={v.value}>{v.optionText}</option>
                                                     ))}
                                                 </select>
@@ -198,7 +195,7 @@ export default class Demo extends Component {
                         <div className="input-group">
                             <textarea 
                                 className="form-control"
-                                name='textToHighlight'
+                                name="textToHighlight"
                                 value={textToHighlight}
                                 dir="rtl"
                                 rows="3"
@@ -208,7 +205,7 @@ export default class Demo extends Component {
                         </div>
                         <h5 className="mt-2">Matches:</h5>
                         <Highlighter
-                            searchWords={[searchText ? regex : '']}
+                            searchWords={[searchText ? regex : ""]}
                             textToHighlight={textToHighlight}
                         />
                     </div>
@@ -223,7 +220,7 @@ const fuzzyRegex = fuzzifyPashto("${searchText}"${adjustedOptions.size ? this.ap
 }
 </code></pre>
                 {this.state.es2018Supported && <div className="mb-2">
-                    Note: Your browser supports <a href="https://v8.dev/blog/regexp-lookbehind-assertions">ES2018 lookbehind assertions</a> in regex. This allows for cleaner matching at the beginning of words, but it's <a href="https://caniuse.com/#feat=js-regexp-lookbehind">not supported in all environments</a>.
+                    Note: Your browser supports <a href="https://v8.dev/blog/regexp-lookbehind-assertions">ES2018 lookbehind assertions</a> in regex. This allows for cleaner matching at the beginning of words, but it"s <a href="https://caniuse.com/#feat=js-regexp-lookbehind">not supported in all environments</a>.
                 </div>}
                 {regex && 
                     <>
@@ -234,6 +231,6 @@ const fuzzyRegex = fuzzifyPashto("${searchText}"${adjustedOptions.size ? this.ap
                 }
             </div>
         </div>
-    )
+    );
   }
 }
