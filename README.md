@@ -68,7 +68,7 @@ const { fuzzifyPashto } = require("fuzzify-pashto");
 const fuzzyRegex = fuzzifyPashto("سرک");
 console.log(fuzzyRegex);
 
-// output: /(^|[^\u0600-\u06FF])[صسثڅ][رړڑ][ګږکقگك]/mg
+// output: /(?:^|[^\u0621-\u065f\u0670-\u06d3\u06d5])?[صسثڅ]ع?[رړڑڼ]ع?[ګږکقگك]/gm
 ```
 
 See the [Live Demo](https://www.openpashto.com/fuzzify-pashto) for up-to-date 
