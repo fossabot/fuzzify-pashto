@@ -32,6 +32,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
     "test:prod": "npm run lint && npm run test -- --no-cache",
+    "test-with-coverage": "jest --coverage && cat ./coverage/lcov.info | codacy-coverage --language typescript --username openpashto --projectName fuzzify-pashto",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "precommit": "lint-staged",
     "develop-website": "parcel website/index.html",
@@ -111,5 +112,8 @@
     "tslint-config-standard": "^8.0.1",
     "typedoc": "^0.15.0",
     "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "codacy-coverage": "^3.4.0"
   }
 }
