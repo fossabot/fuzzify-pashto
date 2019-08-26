@@ -162,7 +162,7 @@ export default class Demo extends Component {
                                                     {option.label}
                                                 </label>
                                             </div>
-                                        )
+                                        );
                                     } else if (option.type === "string") {
                                         return (
                                             <div key={option.name}>                                            

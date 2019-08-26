@@ -114,7 +114,7 @@ const pashtoReplacer = {
   "ب": { range: labialPlosivesAndFricatives },
   "پ": { range: labialPlosivesAndFricatives },
   "ف": { range: labialPlosivesAndFricatives },
-}
+};
 
 const thingsToReplace = Object.keys(pashtoReplacer);
 const pashtoReplacerRegex = new RegExp(thingsToReplace.reduce((accumulator, currentValue, i) => {
@@ -127,7 +127,7 @@ const pashtoReplacerRegex = new RegExp(thingsToReplace.reduce((accumulator, curr
 export function es2018IsSupported(): boolean {
   let supported = true;
   try {
-    const a = new RegExp('(?<!a)b')
+    const a = new RegExp("(?<!a)b");  
   } catch(error) {
     // Must ignore this line for testing, because not all environments can/will error here
     /* istanbul ignore next */ 
@@ -137,12 +137,12 @@ export function es2018IsSupported(): boolean {
 }
 
 export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegExp {
-  let safeInput = input.trim().replace(/[#-.]|[[-^]|[?|{}]/g, '');
+  let safeInput = input.trim().replace(/[#-.]|[[-^]|[?|{}]/g, "");
   if (options.allowSpacesInWords) {
     safeInput = safeInput.replace(/ /g, '');
   }
   if (options.ignoreDiacritics) {
-    safeInput = safeInput.replace(new RegExp(`[${diacritics}]`, "g"), '');
+    safeInput = safeInput.replace(new RegExp(`[${diacritics}]`, "g"), "");
   }
   const regexLogic = safeInput.replace(pashtoReplacerRegex, (mtch) => {
     const r = pashtoReplacer[mtch];
@@ -153,7 +153,7 @@ export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegE
       }, "");
       range = `(${additionalOptionGroups}${range})`;
     }
-    return `${range}${r.ignorable ? '?' : ''}ع?${options.ignoreDiacritics ? `[${diacritics}]?`: ''}${options.allowSpacesInWords ? '\ ?' : ''}`
+    return `${range}${r.ignorable ? "?" : ""}ع?${options.ignoreDiacritics ? `[${diacritics}]?`: ""}${options.allowSpacesInWords ? "\ ?" : ""}`
   });
   // Set how to begin the matching (default at the beginning of a word)
   let beginning;
@@ -172,7 +172,9 @@ export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegE
   
   let ending = "";
   if (options.matchWholeWordOnly) {
-    if (options.matchStart === "anywhere") beginning = pashtoWordBoundaryBeginning;
+    if (options.matchStart === "anywhere") {
+      beginning = pashtoWordBoundaryBeginning;
+    }
     ending = `(?![${pashtoCharacterRange}])`;
   }
   // If they're already using matchWholeWordOnly, don't change it
