@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/openpashto/fuzzify-pashto.svg?branch=master)](https://travis-ci.org/openpashto/fuzzify-pashto)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e8ff024189134686af29bc707798ed73)](https://www.codacy.com/app/openpashto/fuzzify-pashto?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=openpashto/fuzzify-pashto&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/e8ff024189134686af29bc707798ed73)](https://www.codacy.com/app/openpashto/fuzzify-pashto?utm_source=github.com&utm_medium=referral&utm_content=openpashto/fuzzify-pashto&utm_campaign=Badge_Coverage)
+[![Made with Typescript](https://img.shields.io/badge/Made%20with-Typescript-1f425f.svg)](https://www.typescriptlang.org/)
 
 A JavaScript library that creates regular expressions (regex) for fuzzy 
 searching Pashto text (approximate string matching).

@@ -53,16 +53,16 @@ var pashtoReplacer = {
     "و": { range: "وع", ignorable: true },
     "ؤ": { range: "وع" },
     "ښ": { range: "ښخشخهحغ" },
-    "غ": { range: 'ښخشخهحغ' },
-    "خ": { range: 'ښخشخهحغ' },
-    "ح": { range: 'ښخشخهحغ' },
-    "ش": { range: 'شښ' },
+    "غ": { range: "ښخشخهحغ" },
+    "خ": { range: "ښخشخهحغ" },
+    "ح": { range: "ښخشخهحغ" },
+    "ش": { range: "شښ" },
     "ز": { range: zSounds },
     "ض": { range: zSounds },
     "ذ": { range: zSounds },
     "ځ": { range: zSounds + "جڅ" },
     "ظ": { range: zSounds },
-    "ژ": { range: 'زضظژذځږج' },
+    "ژ": { range: "زضظژذځږج" },
     "ر": { range: rLikeSounds },
     "ړ": { range: rLikeSounds },
     "ڑ": { range: rLikeSounds },
@@ -73,14 +73,14 @@ var pashtoReplacer = {
     "د": { range: tdSounds },
     "ډ": { range: tdSounds },
     "ڈ": { range: tdSounds },
-    "نب": { range: 'نبم' },
-    "ن": { range: 'نڼ', plus: ["اً"] },
-    "ڼ": { range: 'نڼړڑ' },
+    "نب": { range: "نبم" },
+    "ن": { range: "نڼ", plus: ["اً"] },
+    "ڼ": { range: "نڼړڑ" },
     "ک": { range: velarPlosives },
     "ګ": { range: velarPlosives },
     "گ": { range: velarPlosives },
     "ق": { range: velarPlosives },
-    "ږ": { range: velarPlosives + 'ژ' },
+    "ږ": { range: velarPlosives + "ژ" },
     "ب": { range: labialPlosivesAndFricatives },
     "پ": { range: labialPlosivesAndFricatives },
     "ف": { range: labialPlosivesAndFricatives },
@@ -95,7 +95,7 @@ var pashtoReplacerRegex = new RegExp(thingsToReplace.reduce(function (accumulato
 function es2018IsSupported() {
     var supported = true;
     try {
-        var a = new RegExp('(?<!a)b');
+        var a = new RegExp("(?<!a)b");
     }
     catch (error) {
         // Must ignore this line for testing, because not all environments can/will error here
@@ -106,12 +106,12 @@ function es2018IsSupported() {
 }
 function fuzzifyPashto(input, options) {
     if (options === void 0) { options = {}; }
-    var safeInput = input.trim().replace(/[#-.]|[[-^]|[?|{}]/g, '');
+    var safeInput = input.trim().replace(/[#-.]|[[-^]|[?|{}]/g, "");
     if (options.allowSpacesInWords) {
-        safeInput = safeInput.replace(/ /g, '');
+        safeInput = safeInput.replace(/ /g, "");
     }
     if (options.ignoreDiacritics) {
-        safeInput = safeInput.replace(new RegExp("[" + diacritics + "]", "g"), '');
+        safeInput = safeInput.replace(new RegExp("[" + diacritics + "]", "g"), "");
     }
     var regexLogic = safeInput.replace(pashtoReplacerRegex, function (mtch) {
         var r = pashtoReplacer[mtch];
@@ -122,25 +122,30 @@ function fuzzifyPashto(input, options) {
             }, "");
             range = "(" + additionalOptionGroups + range + ")";
         }
-        return "" + range + (r.ignorable ? '?' : '') + "\u0639?" + (options.ignoreDiacritics ? "[" + diacritics + "]?" : '') + (options.allowSpacesInWords ? '\ ?' : '');
+        return "" + range + (r.ignorable ? "?" : "") + "\u0639?" + (options.ignoreDiacritics ? "[" + diacritics + "]?" : "") + (options.allowSpacesInWords ? "\ ?" : "");
     });
     // Set how to begin the matching (default at the beginning of a word)
     var beginning;
-    if (options.matchStart === "string")
+    if (options.matchStart === "string") {
         beginning = "^";
-    else if (options.matchStart === "anywhere")
+    }
+    else if (options.matchStart === "anywhere") {
         beginning = "";
+    }
     else {
         // "word" is the default
-        if (options.es2018)
+        if (options.es2018) {
             beginning = pashtoWordBoundaryBeginningWithEs2018;
-        else
+        }
+        else {
             beginning = pashtoWordBoundaryBeginning;
+        }
     }
     var ending = "";
     if (options.matchWholeWordOnly) {
-        if (options.matchStart === "anywhere")
+        if (options.matchStart === "anywhere") {
             beginning = pashtoWordBoundaryBeginning;
+        }
         ending = "(?![" + pashtoCharacterRange + "])";
     }
     // If they're already using matchWholeWordOnly, don't change it
@@ -150,7 +155,7 @@ function fuzzifyPashto(input, options) {
             beginning = pashtoWordBoundaryBeginning + "[" + pashtoCharacterRange + "]*";
         }
     }
-    var flags = "m" + (options.globalMatch === false ? '' : 'g');
+    var flags = "m" + (options.globalMatch === false ? "" : "g");
     return new RegExp("" + beginning + regexLogic + ending, flags);
 }
 

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import Highlighter from "react-highlight-words";
-import { fuzzifyPashto, es2018Supported } from "fuzzify-pashto";
+import { fuzzifyPashto, es2018IsSupported } from "fuzzify-pashto";
 import "./Demo.css";
 
 const apiOptions = [
     { name: "allowSpacesInWords", label: "Allow spaces in words", type: "boolean", default: false },
     { name: "matchWholeWordOnly", label: "Match whole word only", type: "boolean", default: false },
     { name: "returnWholeWord", label: "Return whole word", type: "boolean", default: false },
-    { name: "ignoreDiacritics", label: "Ignore Diacritics", type: "boolean", falault: false },
+    { name: "ignoreDiacritics", label: "Ignore Diacritics", type: "boolean", default: false },
     { name: "es2018", label: "Use ECMA2018", type: "boolean", default: false },
     { name: "matchStart", label: "Start matches at", type: "string", default: "word", enum: [
         { value: "word", optionText: "Beginning of word" },
@@ -45,8 +45,7 @@ export default class Demo extends Component {
     componentDidMount() {
         // Check to see if browser has es2018 lookbehind support
         // If so enable it by default
-        const hasEs2018 = es2018Supported();
-        if (hasEs2018) {
+        if (es2018IsSupported()) {
             this.setState({ 
                 es2018Supported: true, 
                 es2018: true,
