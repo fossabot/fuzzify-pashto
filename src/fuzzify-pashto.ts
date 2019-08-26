@@ -74,11 +74,11 @@ const pashtoReplacer = {
   "ؤ": { range: "وع"},
   
   "ښ": { range: "ښخشخهحغ" },
-  "غ": { range: 'ښخشخهحغ' },
-  "خ": { range: 'ښخشخهحغ' },
-  "ح": { range: 'ښخشخهحغ' },
+  "غ": { range: "ښخشخهحغ" },
+  "خ": { range: "ښخشخهحغ" },
+  "ح": { range: "ښخشخهحغ" },
 
-  "ش": { range: 'شښ' },
+  "ش": { range: "شښ" },
 
   "ز": { range: zSounds },
   "ض": { range: zSounds },
@@ -86,7 +86,7 @@ const pashtoReplacer = {
   "ځ": { range: zSounds + "جڅ"},
   "ظ": { range: zSounds },
 
-  "ژ": { range: 'زضظژذځږج' },
+  "ژ": { range: "زضظژذځږج" },
 
   "ر": { range: rLikeSounds },
   "ړ": { range: rLikeSounds },
@@ -100,16 +100,16 @@ const pashtoReplacer = {
   "ډ": { range: tdSounds },
   "ڈ": { range: tdSounds },
 
-  "نب": { range: 'نبم' },
-  "ن": { range: 'نڼ', plus: ["اً"] }, // allow for words using اٌ at the end te be seached for with ن
-  "ڼ": { range: 'نڼړڑ' },
+  "نب": { range: "نبم" },
+  "ن": { range: "نڼ", plus: ["اً"] }, // allow for words using اٌ at the end te be seached for with ن
+  "ڼ": { range: "نڼړڑ" },
 
   "ک": { range: velarPlosives },
   "ګ": { range: velarPlosives },
   "گ": { range: velarPlosives },
   "ق": { range: velarPlosives },
 
-  "ږ": { range: velarPlosives + 'ژ' },
+  "ږ": { range: velarPlosives + "ژ" },
 
   "ب": { range: labialPlosivesAndFricatives },
   "پ": { range: labialPlosivesAndFricatives },
@@ -157,12 +157,17 @@ export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegE
   });
   // Set how to begin the matching (default at the beginning of a word)
   let beginning;
-  if (options.matchStart === "string") beginning = "^";
-  else if (options.matchStart === "anywhere") beginning = "";
-  else {
+  if (options.matchStart === "string") {
+    beginning = "^";
+  } else if (options.matchStart === "anywhere") {
+    beginning = "";
+  } else {
     // "word" is the default
-    if (options.es2018) beginning = pashtoWordBoundaryBeginningWithEs2018;
-    else beginning = pashtoWordBoundaryBeginning;
+    if (options.es2018) {
+      beginning = pashtoWordBoundaryBeginningWithEs2018;
+    } else {
+      beginning = pashtoWordBoundaryBeginning;
+    }
   }
   
   let ending = "";
@@ -177,7 +182,7 @@ export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegE
       beginning = `${pashtoWordBoundaryBeginning}[${pashtoCharacterRange}]*`; 
     }
   }
-  const flags = `m${options.globalMatch === false ? '' : 'g'}`;
+  const flags = `m${options.globalMatch === false ? "" : "g"}`;
   return new RegExp(`${beginning}${regexLogic}${ending}`, flags);
 }
   
