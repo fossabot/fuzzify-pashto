@@ -107,7 +107,6 @@ export default class Demo extends Component {
         return acc;
     }, {});
     const regex = fuzzifyPashto(name === "searchText" ? value : this.state.searchText, fuzzifyOptions);
-
     this.setState({
         [name]: value,
         regex: this.state.searchText ? regex : "",
