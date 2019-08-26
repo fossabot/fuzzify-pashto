@@ -139,7 +139,7 @@ export function es2018IsSupported(): boolean {
 export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegExp {
   let safeInput = input.trim().replace(/[#-.]|[[-^]|[?|{}]/g, "");
   if (options.allowSpacesInWords) {
-    safeInput = safeInput.replace(/ /g, '');
+    safeInput = safeInput.replace(/ /g, "");
   }
   if (options.ignoreDiacritics) {
     safeInput = safeInput.replace(new RegExp(`[${diacritics}]`, "g"), "");
@@ -153,7 +153,7 @@ export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegE
       }, "");
       range = `(${additionalOptionGroups}${range})`;
     }
-    return `${range}${r.ignorable ? "?" : ""}ع?${options.ignoreDiacritics ? `[${diacritics}]?`: ""}${options.allowSpacesInWords ? "\ ?" : ""}`
+    return `${range}${r.ignorable ? "?" : ""}ع?${options.ignoreDiacritics ? `[${diacritics}]?`: ""}${options.allowSpacesInWords ? "\ ?" : ""}`;
   });
   // Set how to begin the matching (default at the beginning of a word)
   let beginning;
