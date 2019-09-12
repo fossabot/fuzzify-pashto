@@ -27,8 +27,6 @@ const pashtoWordBoundaryBeginning = `(?:^|[^${pashtoCharacterRange}])`;
 const pashtoWordBoundaryBeginningWithES2018 = `(?<![${pashtoCharacterRange}])`;
 const diacritics = "\u064b-\u065f\u0670\u0674"; // pretty generous diactritic range
 
-// NON-EXPORTED HELPER FUNCTIONS
-
 function sanitizeInput(input: string, options: FuzzifyOptions): string {
   let safeInput = input.trim().replace(/[#-.]|[[-^]|[?|{}]/g, "");
   if (options.allowSpacesInWords) {
@@ -54,41 +52,39 @@ function prepareMainRegexLogic(sanitizedInput: string, options: FuzzifyOptions):
   });
 }
 
-function prepareBeginning(options: FuzzifyOptions): string {
-  let beginning;
-  if (options.matchStart === "string") {
-    beginning = "^";
-  } else if (options.matchStart === "anywhere") {
-    beginning = "";
-  } else {
-    // options.matchStart === "word" is the default
-    if (options.es2018) {
-      beginning = pashtoWordBoundaryBeginningWithES2018;
-    } else {
-      beginning = pashtoWordBoundaryBeginning;
-    }
-  }
+function getBeginningWithAnywhere(options: FuzzifyOptions): string {
   // Override the "anywhere" when matchWholeWordOnly is true
-  if (options.matchStart === "anywhere" && options.matchWholeWordOnly) {
-    beginning = pashtoWordBoundaryBeginning;
+  if (options.matchWholeWordOnly) {
+    return pashtoWordBoundaryBeginning;
+  } 
+  if (options.returnWholeWord) {
+    // Return the whole world even if matching from the middle (if desired)
+    return `${pashtoWordBoundaryBeginning}[${pashtoCharacterRange}]*`; 
   }
-  // Return the whole world even if matching from the middle (if desired)
-  if (options.returnWholeWord && !options.matchWholeWordOnly) {
-    if (options.matchStart === "anywhere") {
-      beginning = `${pashtoWordBoundaryBeginning}[${pashtoCharacterRange}]*`; 
-    }
+  return "";
+}
+
+function prepareBeginning(options: FuzzifyOptions): string {
+  // options.matchStart can be "string", "anywhere", or "word" (default)
+  if (options.matchStart === "string") {
+    return "^";
+  } 
+  if (options.matchStart === "anywhere") {
+    return getBeginningWithAnywhere(options);
   }
-  return beginning;
+  // options.matchStart default "word"
+  // return the beginning word boundary depending on whether es2018 is enabled or not
+  return options.es2018 ? pashtoWordBoundaryBeginningWithES2018 : pashtoWordBoundaryBeginning;
 }
 
 function prepareEnding(options: FuzzifyOptions): string {
-  let ending = "";
   if (options.matchWholeWordOnly) {
-    ending = `(?![${pashtoCharacterRange}])`;
-  } else if (options.returnWholeWord) {
-    ending = `[${pashtoCharacterRange}]*(?![${pashtoCharacterRange}])`;
+    return `(?![${pashtoCharacterRange}])`;
   }
-  return ending;
+  if (options.returnWholeWord) {
+    return `[${pashtoCharacterRange}]*(?![${pashtoCharacterRange}])`;
+  }
+  return "";
 }
 
 function prepareFlags(options: FuzzifyOptions): string {
