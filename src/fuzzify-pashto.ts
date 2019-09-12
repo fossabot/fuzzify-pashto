@@ -8,7 +8,7 @@
 
 import { pashtoReplacerRegex, pashtoReplacerInfo } from './replacer';
 
-interface FuzzifyOptions {
+interface IFuzzifyOptions {
   globalMatch?: boolean;
   matchStart?: string;
   matchWholeWordOnly?: boolean;
@@ -27,7 +27,7 @@ const pashtoWordBoundaryBeginning = `(?:^|[^${pashtoCharacterRange}])`;
 const pashtoWordBoundaryBeginningWithES2018 = `(?<![${pashtoCharacterRange}])`;
 const diacritics = "\u064b-\u065f\u0670\u0674"; // pretty generous diactritic range
 
-function sanitizeInput(input: string, options: FuzzifyOptions): string {
+function sanitizeInput(input: string, options: IFuzzifyOptions): string {
   let safeInput = input.trim().replace(/[#-.]|[[-^]|[?|{}]/g, "");
   if (options.allowSpacesInWords) {
     safeInput = safeInput.replace(/ /g, "");
@@ -38,7 +38,7 @@ function sanitizeInput(input: string, options: FuzzifyOptions): string {
   return safeInput;
 }
 
-function prepareMainRegexLogic(sanitizedInput: string, options: FuzzifyOptions): string {
+function prepareMainRegexLogic(sanitizedInput: string, options: IFuzzifyOptions): string {
   return sanitizedInput.replace(pashtoReplacerRegex, (mtch) => {
     const r = pashtoReplacerInfo[mtch];
     let range = `[${r.range}]`;
@@ -52,7 +52,7 @@ function prepareMainRegexLogic(sanitizedInput: string, options: FuzzifyOptions):
   });
 }
 
-function getBeginningWithAnywhere(options: FuzzifyOptions): string {
+function getBeginningWithAnywhere(options: IFuzzifyOptions): string {
   // Override the "anywhere" when matchWholeWordOnly is true
   if (options.matchWholeWordOnly) {
     return pashtoWordBoundaryBeginning;
@@ -64,7 +64,7 @@ function getBeginningWithAnywhere(options: FuzzifyOptions): string {
   return "";
 }
 
-function prepareBeginning(options: FuzzifyOptions): string {
+function prepareBeginning(options: IFuzzifyOptions): string {
   // options.matchStart can be "string", "anywhere", or "word" (default)
   if (options.matchStart === "string") {
     return "^";
@@ -77,7 +77,7 @@ function prepareBeginning(options: FuzzifyOptions): string {
   return options.es2018 ? pashtoWordBoundaryBeginningWithES2018 : pashtoWordBoundaryBeginning;
 }
 
-function prepareEnding(options: FuzzifyOptions): string {
+function prepareEnding(options: IFuzzifyOptions): string {
   if (options.matchWholeWordOnly) {
     return `(?![${pashtoCharacterRange}])`;
   }
@@ -87,12 +87,12 @@ function prepareEnding(options: FuzzifyOptions): string {
   return "";
 }
 
-function prepareFlags(options: FuzzifyOptions): string {
+function prepareFlags(options: IFuzzifyOptions): string {
   return `m${options.globalMatch === false ? "" : "g"}`;
 }
 
 // Main function for returning a regular expression based on a string of Pashto text
-export function fuzzifyPashto(input: string, options: FuzzifyOptions = {}): RegExp {
+export function fuzzifyPashto(input: string, options: IFuzzifyOptions = {}): RegExp {
   const sanitizedInput = sanitizeInput(input, options);
   const mainRegexLogic = prepareMainRegexLogic(sanitizedInput, options);
   const beginning = prepareBeginning(options);

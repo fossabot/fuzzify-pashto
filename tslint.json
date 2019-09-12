@@ -4,6 +4,11 @@
     "tslint-config-prettier"
   ],
   "rules": {
-    "cyclomatic-complexity": [true, 5]
+    "cyclomatic-complexity": [true, 5],
+    "no-conditional-assignment": true,
+    "no-duplicate-variable": true,
+    "triple-equals": true,
+    "interface-name": true,
+    "align": true
   }
 }
