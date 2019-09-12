@@ -18,7 +18,7 @@ const labialPlosivesAndFricatives = "فپب";
 const theFiveYeys = "ېۍیيئےى";
 const guttural = "ښخشخهحغ";
 
-const pashtoReplacer = {
+const pashtoReplacerInfo = {
   "اً": { range: "ان" },
   "ا": { range: "اآهع", plus: ["اً"] }, // TODO: make optional (if not at the beginning of word)
   "آ": { range: "اآه" },
@@ -92,12 +92,9 @@ const pashtoReplacer = {
   "ف": { range: labialPlosivesAndFricatives },
 };
 
-const thingsToReplace = Object.keys(pashtoReplacer);
-const pashtoReplacerRegex = new RegExp(thingsToReplace.reduce((accumulator, currentValue, i) => {
-  if (i === thingsToReplace.length - 1) {
-    return accumulator + currentValue; 
-  } 
-  return accumulator + currentValue + "|";
-}, ""), "g");
+const pashtoReplacerRegex = new RegExp(
+  Object.keys(pashtoReplacerInfo).join("|"), 
+  "g"
+);
 
-export { pashtoReplacer, pashtoReplacerRegex };
+export { pashtoReplacerInfo, pashtoReplacerRegex };

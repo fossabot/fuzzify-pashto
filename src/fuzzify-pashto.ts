@@ -6,7 +6,7 @@
  *
  */
 
-import { pashtoReplacerRegex, pashtoReplacer } from './replacer';
+import { pashtoReplacerRegex, pashtoReplacerInfo } from './replacer';
 
 interface FuzzifyOptions {
   globalMatch?: boolean;
@@ -40,7 +40,7 @@ function sanitizeInput(input: string, options: FuzzifyOptions): string {
 
 function prepareMainRegexLogic(sanitizedInput: string, options: FuzzifyOptions): string {
   return sanitizedInput.replace(pashtoReplacerRegex, (mtch) => {
-    const r = pashtoReplacer[mtch];
+    const r = pashtoReplacerInfo[mtch];
     let range = `[${r.range}]`;
     if (r.plus) {
       const additionalOptionGroups = r.plus.reduce((t: string, o: string) => {

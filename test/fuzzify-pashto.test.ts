@@ -267,6 +267,5 @@ test(`returnWholeWord should should not return partial matches if matchWholeWord
 
 test(`es2018isSuppported should either return true or false`, () => {
 	const answer = es2018IsSupported();
-	console.log(answer);
 	expect(typeof answer).toBe("boolean");
-})
+});
