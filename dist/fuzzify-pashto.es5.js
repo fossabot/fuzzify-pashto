@@ -5,19 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-// Arabic punctuation to exclude
-// ، \u060c ؟ \u061f ؛ \u061b ۔ \u06d4
-// Digits etc. exclude \u0660 - \u066f
-var pashtoCharacterRange = "\u0621-\u065f\u0670-\u06d3\u06d5";
-// ISSUE: This does not work if the word is starting with a non-Pashto character like " or « or .
-// I don't know how to solve this without lookbehinds in JavaScript (not available on all platforms)
-var pashtoWordBoundaryBeginning = "(?:^|[^" + pashtoCharacterRange + "])";
-// TODO: Better testing here - to see if this is really working in all cases
-var pashtoWordBoundaryBeginningWithEs2018 = "(?<![" + pashtoCharacterRange + "])";
-var diacritics = "\u064b-\u065f\u0670\u0674"; // pretty generous diactritic range
-// TODO: Deal with diacritics etc.
-// .replace(/[\u0600-\u061e\u064c-\u0670\u06D6-\u06Ed]/g, '');
-// TODO: PROPER WORD BEGINNINGS!
 // TODO: add southern ش س (at beginning of word?)
 var sSounds = "صسثڅ";
 var zSounds = "زضظذځژ";
@@ -27,7 +14,8 @@ var rLikeSounds = "رړڑڼ";
 var labialPlosivesAndFricatives = "فپب";
 // Includes Arabic ى \u0649  
 var theFiveYeys = "ېۍیيئےى";
-var pashtoReplacer = {
+var guttural = "ښخشخهحغ";
+var pashtoReplacerInfo = {
     "اً": { range: "ان" },
     "ا": { range: "اآهع", plus: ["اً"] },
     "آ": { range: "اآه" },
@@ -52,10 +40,10 @@ var pashtoReplacer = {
     "ع": { range: "اوع", ignorable: true },
     "و": { range: "وع", ignorable: true },
     "ؤ": { range: "وع" },
-    "ښ": { range: "ښخشخهحغ" },
-    "غ": { range: "ښخشخهحغ" },
-    "خ": { range: "ښخشخهحغ" },
-    "ح": { range: "ښخشخهحغ" },
+    "ښ": { range: guttural },
+    "غ": { range: guttural },
+    "خ": { range: guttural },
+    "ح": { range: guttural },
     "ش": { range: "شښ" },
     "ز": { range: zSounds },
     "ض": { range: zSounds },
@@ -85,27 +73,24 @@ var pashtoReplacer = {
     "پ": { range: labialPlosivesAndFricatives },
     "ف": { range: labialPlosivesAndFricatives },
 };
-var thingsToReplace = Object.keys(pashtoReplacer);
-var pashtoReplacerRegex = new RegExp(thingsToReplace.reduce(function (accumulator, currentValue, i) {
-    if (i === thingsToReplace.length - 1) {
-        return accumulator + currentValue;
-    }
-    return accumulator + currentValue + "|";
-}, ""), "g");
-function es2018IsSupported() {
-    var supported = true;
-    try {
-        var a = new RegExp("(?<!a)b");
-    }
-    catch (error) {
-        // Must ignore this line for testing, because not all environments can/will error here
-        /* istanbul ignore next */
-        supported = false;
-    }
-    return supported;
-}
-function fuzzifyPashto(input, options) {
-    if (options === void 0) { options = {}; }
+var pashtoReplacerRegex = new RegExp(Object.keys(pashtoReplacerInfo).join("|"), "g");
+
+/**
+ * Copyright (c) openpashto.com
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+var pashtoCharacterRange = "\u0621-\u065f\u0670-\u06d3\u06d5";
+// Unfortunately, without ES2018 lookbehind assertions word boundary matching is not as clean
+// Without lookbehind assertions, we are unable to ignore punctuation directly in front of a word
+// and matching results include a space before the word
+var pashtoWordBoundaryBeginning = "(?:^|[^" + pashtoCharacterRange + "])";
+// These problems are solved by using the ES2018 lookbehind assertions where environments permit
+var pashtoWordBoundaryBeginningWithES2018 = "(?<![" + pashtoCharacterRange + "])";
+var diacritics = "\u064b-\u065f\u0670\u0674"; // pretty generous diactritic range
+function sanitizeInput(input, options) {
     var safeInput = input.trim().replace(/[#-.]|[[-^]|[?|{}]/g, "");
     if (options.allowSpacesInWords) {
         safeInput = safeInput.replace(/ /g, "");
@@ -113,8 +98,11 @@ function fuzzifyPashto(input, options) {
     if (options.ignoreDiacritics) {
         safeInput = safeInput.replace(new RegExp("[" + diacritics + "]", "g"), "");
     }
-    var regexLogic = safeInput.replace(pashtoReplacerRegex, function (mtch) {
-        var r = pashtoReplacer[mtch];
+    return safeInput;
+}
+function prepareMainRegexLogic(sanitizedInput, options) {
+    return sanitizedInput.replace(pashtoReplacerRegex, function (mtch) {
+        var r = pashtoReplacerInfo[mtch];
         var range = "[" + r.range + "]";
         if (r.plus) {
             var additionalOptionGroups = r.plus.reduce(function (t, o) {
@@ -124,39 +112,68 @@ function fuzzifyPashto(input, options) {
         }
         return "" + range + (r.ignorable ? "?" : "") + "\u0639?" + (options.ignoreDiacritics ? "[" + diacritics + "]?" : "") + (options.allowSpacesInWords ? "\ ?" : "");
     });
-    // Set how to begin the matching (default at the beginning of a word)
-    var beginning;
-    if (options.matchStart === "string") {
-        beginning = "^";
-    }
-    else if (options.matchStart === "anywhere") {
-        beginning = "";
-    }
-    else {
-        // "word" is the default
-        if (options.es2018) {
-            beginning = pashtoWordBoundaryBeginningWithEs2018;
-        }
-        else {
-            beginning = pashtoWordBoundaryBeginning;
-        }
-    }
-    var ending = "";
+}
+function getBeginningWithAnywhere(options) {
+    // Override the "anywhere" when matchWholeWordOnly is true
     if (options.matchWholeWordOnly) {
-        if (options.matchStart === "anywhere") {
-            beginning = pashtoWordBoundaryBeginning;
-        }
-        ending = "(?![" + pashtoCharacterRange + "])";
+        return pashtoWordBoundaryBeginning;
     }
-    // If they're already using matchWholeWordOnly, don't change it
-    if (options.returnWholeWord && !options.matchWholeWordOnly) {
-        ending = "[" + pashtoCharacterRange + "]*(?![" + pashtoCharacterRange + "])";
-        if (options.matchStart === "anywhere") {
-            beginning = pashtoWordBoundaryBeginning + "[" + pashtoCharacterRange + "]*";
-        }
+    if (options.returnWholeWord) {
+        // Return the whole world even if matching from the middle (if desired)
+        return pashtoWordBoundaryBeginning + "[" + pashtoCharacterRange + "]*";
     }
-    var flags = "m" + (options.globalMatch === false ? "" : "g");
-    return new RegExp("" + beginning + regexLogic + ending, flags);
+    return "";
+}
+function prepareBeginning(options) {
+    // options.matchStart can be "string", "anywhere", or "word" (default)
+    if (options.matchStart === "string") {
+        return "^";
+    }
+    if (options.matchStart === "anywhere") {
+        return getBeginningWithAnywhere(options);
+    }
+    // options.matchStart default "word"
+    // return the beginning word boundary depending on whether es2018 is enabled or not
+    return options.es2018 ? pashtoWordBoundaryBeginningWithES2018 : pashtoWordBoundaryBeginning;
+}
+function prepareEnding(options) {
+    if (options.matchWholeWordOnly) {
+        return "(?![" + pashtoCharacterRange + "])";
+    }
+    if (options.returnWholeWord) {
+        return "[" + pashtoCharacterRange + "]*(?![" + pashtoCharacterRange + "])";
+    }
+    return "";
+}
+function prepareFlags(options) {
+    return "m" + (options.globalMatch === false ? "" : "g");
+}
+// Main function for returning a regular expression based on a string of Pashto text
+function fuzzifyPashto(input, options) {
+    if (options === void 0) { options = {}; }
+    var sanitizedInput = sanitizeInput(input, options);
+    var mainRegexLogic = prepareMainRegexLogic(sanitizedInput, options);
+    var beginning = prepareBeginning(options);
+    var ending = prepareEnding(options);
+    var flags = prepareFlags(options);
+    return new RegExp("" + beginning + mainRegexLogic + ending, flags);
+}
+// Convienience function for testing if an environment supports lookbehind assertions
+// Lookbehind assertions allow for cleaner word matching. 
+// (Punctuation directly in fron of the word is ignored and there is no extra space)
+function es2018IsSupported() {
+    var supported = true;
+    try {
+        // Test expression to see if environment supports lookbehind assertions
+        var a = new RegExp("(?<!a)b");
+    }
+    catch (error) {
+        // Environment does not support lookbehind assertions in regex
+        // Must ignore this line for testing, because not all environments can/will error here
+        /* istanbul ignore next */
+        supported = false;
+    }
+    return supported;
 }
 
 export { es2018IsSupported, fuzzifyPashto };

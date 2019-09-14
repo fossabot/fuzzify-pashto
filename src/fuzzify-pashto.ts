@@ -10,7 +10,7 @@ import { pashtoReplacerRegex, pashtoReplacerInfo } from './replacer';
 
 interface IFuzzifyOptions {
   globalMatch?: boolean;
-  matchStart?: string;
+  matchStart?: "word" | "string" | "anywhere";
   matchWholeWordOnly?: boolean;
   allowSpacesInWords?: boolean;
   returnWholeWord?: boolean;
