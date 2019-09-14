@@ -103,7 +103,7 @@ const optionsPossibilities = [{
   },
   {
     options: {
-      matchStart: "string"
+      matchStart: "string",
     },
     matches: [
       ["کور", "کور ته ځم"],
@@ -163,7 +163,7 @@ optionsPossibilities.forEach(o => {
 matchesWithAn.forEach(m => {
   test(`matching ${m[0]} should work with ${m[1]}`, () => {
     const re = fuzzifyPashto(m[0], {
-      matchWholeWordOnly: true
+      matchWholeWordOnly: true,
     });
     const result = m[1].match(re);
     expect(result).toBeTruthy();
@@ -187,7 +187,7 @@ withDiacritics.forEach(m => {
   });
   test(`the diacritics should in ${m[0]} should be ignored when matching with ${m[1]}`, () => {
     const re = fuzzifyPashto(m[1], {
-      ignoreDiacritics: true
+      ignoreDiacritics: true,
     });
     const result = m[0].match(re);
     expect(result).toBeTruthy();
@@ -229,7 +229,7 @@ test(`globalMatch should be set to true by default`, () => {
 test(`Should return many matches`, () => {
   const re = fuzzifyPashto("کار", {
     globalMatch: true,
-    matchStart: "anywhere"
+    matchStart: "anywhere",
   });
   const result = "کار کوه، بېکاره مه ګرځه".match(re);
   expect(result).toHaveLength(2);
@@ -248,7 +248,7 @@ test(`matchWholeWordOnly should override matchStart = "anywhere"`, () => {
 
 test(`returnWholeWord should return the whole word`, () => {
   const re = fuzzifyPashto("کار", {
-    returnWholeWord: true
+    returnWholeWord: true,
   });
   const result = "کارونه کوه، بېکاره مه ګرځه".match(re);
   expect(result).toHaveLength(1);
@@ -259,7 +259,7 @@ punctuationToExclude.forEach(m => {
   test(`${m} should not be considered part of a Pashto word`, () => {
     const re = fuzzifyPashto("کور", {
       returnWholeWord: true,
-      matchStart: "word"
+      matchStart: "word",
     });
     // ISSUE: This should also work when the word is PRECEDED by the punctuation
     // Need to work with a lookbehind equivalent
@@ -274,6 +274,7 @@ punctuationToExclude.forEach(m => {
   test(
     `${m} should not be considered part of a Pashto word (front or back with es2018) - or should fail if using a non es2018 environment`,
     () => {
+      // tslint:disable-next-line
       let result: any;
       let failed = false;
       // if environment is not es2018 with lookbehind support (like node 6, 8) this will fail
@@ -281,7 +282,7 @@ punctuationToExclude.forEach(m => {
         const re = fuzzifyPashto("کور", {
           returnWholeWord: true,
           matchStart: "word",
-          es2018: true
+          es2018: true,
         });
         result = `زمونږ ${m}کورونه${m} دي`.match(re);
       } catch (error) {
