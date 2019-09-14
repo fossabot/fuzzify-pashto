@@ -7,7 +7,6 @@
  */
 
 // TODO: add southern ش س (at beginning of word?)
-
 const sSounds = "صسثڅ";
 const zSounds = "زضظذځژ";
 const tdSounds = "طتټدډ";

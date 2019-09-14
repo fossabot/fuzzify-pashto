@@ -174,7 +174,7 @@ test(`وs should be optional if entered in search string`, () => {
 	const re = fuzzifyPashto("لوتفن");
 	const result = "لطفاً".match(re);
 	expect(result).toBeTruthy();
-})
+});
 
 test(`With globalMatch set to false should only return one match`, () => {
 	// Need to do beginning at "string" because the beginning at "word" can create an extra space making an empty value in the result
