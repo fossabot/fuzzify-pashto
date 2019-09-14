@@ -1,6 +1,6 @@
 import {
   fuzzifyPashto,
-  es2018IsSupported
+  es2018IsSupported,
 } from '../src/fuzzify-pashto';
 
 const defaultInfo = {
@@ -44,7 +44,7 @@ const matchesWithSpaces = [
   ['دپاره', 'د پاره'],
   ['بېکار', 'بې کار'],
   ['د پاره', 'دپاره'],
-  ['بې کار', 'بېکار', ],
+  ['بې کار', 'بېکار'],
 ];
 
 const optionsPossibilities = [{
@@ -61,7 +61,7 @@ const optionsPossibilities = [{
   },
   {
     options: {
-      allowSpacesInWords: true
+      allowSpacesInWords: true,
     },
     matches: [
       ...matchesWithSpaces,
@@ -71,14 +71,14 @@ const optionsPossibilities = [{
   },
   {
     options: {
-      allowSpacesInWords: false
+      allowSpacesInWords: false,
     },
     matches: [],
     nonMatches: matchesWithSpaces,
   },
   {
     options: {
-      matchStart: "anywhere"
+      matchStart: "anywhere",
     },
     matches: [
       ["کار", "بېکاري"],
@@ -89,7 +89,7 @@ const optionsPossibilities = [{
   },
   {
     options: {
-      matchWholeWordOnly: true
+      matchWholeWordOnly: true,
     },
     matches: [
       ["کور", "کور"],
@@ -116,7 +116,7 @@ const optionsPossibilities = [{
   },
   {
     options: {
-      matchStart: "string"
+      matchStart: "string",
     },
     matches: [
       ["کور", "کور ته ځم"],
@@ -170,7 +170,7 @@ matchesWithAn.forEach(m => {
   });
   test(`matching ${m[1]} should work with ${m[0]}`, () => {
     const re = fuzzifyPashto(m[1], {
-      matchWholeWordOnly: true
+      matchWholeWordOnly: true,
     });
     const result = m[0].match(re);
     expect(result).toBeTruthy();
@@ -180,7 +180,7 @@ matchesWithAn.forEach(m => {
 withDiacritics.forEach(m => {
   test(`matich ${m[0]} should ignore the diactritics in ${m[1]}`, () => {
     const re = fuzzifyPashto(m[0], {
-      ignoreDiacritics: true
+      ignoreDiacritics: true,
     });
     const result = m[1].match(re);
     expect(result).toBeTruthy();
@@ -206,7 +206,7 @@ test(`With globalMatch set to false should only return one match`, () => {
   // Don't know how to get around this without lookbehinds in javascript regex
   const re = fuzzifyPashto("ته", {
     globalMatch: false,
-    matchStart: "string"
+    matchStart: "string",
   });
   const result = "ته کله کلي ته ځې؟".match(re);
   expect(result).toHaveLength(1)
@@ -214,7 +214,7 @@ test(`With globalMatch set to false should only return one match`, () => {
 
 test(`With globalMatch set to true should return many matches`, () => {
   const re = fuzzifyPashto("ته", {
-    globalMatch: true
+    globalMatch: true,
   });
   const result = "ته کله کلي ته ځې؟".match(re);
   expect(result).toHaveLength(2)
@@ -238,7 +238,7 @@ test(`Should return many matches`, () => {
 test(`matchWholeWordOnly should override matchStart = "anywhere"`, () => {
   const re = fuzzifyPashto("کار", {
     matchWholeWordOnly: true,
-    matchStart: "anywhere"
+    matchStart: "anywhere",
   });
   const result = "کار کوه، بېکاره مه ګرځه".match(re);
   expect(result).toHaveLength(1);
@@ -294,7 +294,7 @@ punctuationToExclude.forEach(m => {
 
 test(`Arabic punctuation or numbers should not be considered part of a Pashto word`, () => {
   const re = fuzzifyPashto("کار", {
-    returnWholeWord: true
+    returnWholeWord: true,
   });
   const result = "کارونه کوه، بېکاره مه ګرځه".match(re);
   expect(result).toHaveLength(1);
@@ -305,7 +305,7 @@ test(`returnWholeWord should return the whole word even when starting the matchi
 () => {
   const re = fuzzifyPashto("کار", {
     returnWholeWord: true,
-    matchStart: "anywhere"
+    matchStart: "anywhere",
   });
   const result = "کارونه کوه، بېکاره مه ګرځه".match(re);
   expect(result).toHaveLength(2);
@@ -317,7 +317,7 @@ test(`returnWholeWord should should not return partial matches if matchWholeWord
   const re = fuzzifyPashto("کار", {
     returnWholeWord: true,
     matchStart: "anywhere",
-    matchWholeWordOnly: true
+    matchWholeWordOnly: true,
   });
   const result = "کارونه کوه، بېکاره مه ګرځه".match(re);
   expect(result).toBeNull();
