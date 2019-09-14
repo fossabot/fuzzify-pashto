@@ -2,7 +2,7 @@ import { fuzzifyPashto, es2018IsSupported } from '../src/fuzzify-pashto';
 
 const defaultInfo = {
 	matches: [
-		["سرک", "صړق"],
+    ["سرک", "صړق"],
 		["انطذاړ", "انتظار"],
 		["مالوم", "معلوم"],
 		["معلوم", "مالوم"],
