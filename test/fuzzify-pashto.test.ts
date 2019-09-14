@@ -54,7 +54,7 @@ const optionsPossibilities = [{
   },
   {
     options: {
-      matchStart: "word"
+      matchStart: "word",
     }, // same as default
     ...defaultInfo,
     viceVersaMatches: true,
