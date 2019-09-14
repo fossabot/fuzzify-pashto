@@ -8,11 +8,9 @@
 
 import { pashtoReplacerRegex, pashtoReplacerInfo } from './replacer';
 
-type matchStart = "word" | "string" | "anywhere";
-
 interface IFuzzifyOptions {
   globalMatch?: boolean;
-  matchStart?: matchStart;
+  matchStart?: string;
   matchWholeWordOnly?: boolean;
   allowSpacesInWords?: boolean;
   returnWholeWord?: boolean;
