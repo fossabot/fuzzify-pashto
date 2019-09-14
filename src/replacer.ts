@@ -93,7 +93,7 @@ const pashtoReplacerInfo = {
 
 const pashtoReplacerRegex = new RegExp(
   Object.keys(pashtoReplacerInfo).join("|"), 
-  "g"
+  "g",
 );
 
 export { pashtoReplacerInfo, pashtoReplacerRegex };

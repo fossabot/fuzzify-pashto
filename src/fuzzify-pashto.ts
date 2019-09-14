@@ -117,4 +117,4 @@ export function es2018IsSupported(): boolean {
   }
   return supported;
 }
-  
+
