@@ -7,7 +7,7 @@
  */
 interface IFuzzifyOptions {
     globalMatch?: boolean;
-    matchStart?: "word" | "string" | "anywhere";
+    matchStart?: (string | "word" | "string" | "anywhere");
     matchWholeWordOnly?: boolean;
     allowSpacesInWords?: boolean;
     returnWholeWord?: boolean;
