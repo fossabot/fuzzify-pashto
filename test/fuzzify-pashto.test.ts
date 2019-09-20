@@ -48,7 +48,7 @@ const matchesWithSpaces = [
 ];
 
 const optionsPossibilities = [{
-    options: {}, // default
+    options: undefined, // default
     ...defaultInfo,
     viceVersaMatches: true,
   },
@@ -158,7 +158,7 @@ optionsPossibilities.forEach(o => {
       expect(result).toBeNull();
     });
   });
-})
+});
 
 matchesWithAn.forEach(m => {
   test(`matching ${m[0]} should work with ${m[1]}`, () => {
