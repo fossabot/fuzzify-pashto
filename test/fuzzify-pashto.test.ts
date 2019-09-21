@@ -47,7 +47,19 @@ const matchesWithSpaces = [
   ['بې کار', 'بېکار'],
 ];
 
-const optionsPossibilities = [{
+// Hacky interface needed for type issues in looping through optionsPossibilities
+interface IOp {
+  options?: { 
+    matchStart?: "word" | "string" | "anywhere"; 
+    allowSpacesInWords?: boolean;
+    matchWholeWordOnly?: boolean;
+  }
+  viceVersaMatches?: boolean,
+  matches?: any;
+  nonMatches?: any;
+}
+
+const optionsPossibilities: Array<IOp> = [{
     options: undefined, // default
     ...defaultInfo,
     viceVersaMatches: true,
@@ -135,6 +147,7 @@ const punctuationToExclude = [
 ];
 
 optionsPossibilities.forEach(o => {
+  console.log(o.options);
   o.matches.forEach(m => {
     test(`${m[0]} should match ${m[1]}`, () => {
       const re = fuzzifyPashto(m[0], o.options);
@@ -145,7 +158,7 @@ optionsPossibilities.forEach(o => {
   if (o.viceVersaMatches === true) {
     o.matches.forEach(m => {
       test(`${m[1]} should match ${m[0]}`, () => {
-        const re = fuzzifyPashto(m[1], o.options);
+        const re = fuzzifyPashto(m[1], undefined);
         const result = m[0].match(re);
         expect(result).toBeTruthy();
       });
@@ -153,7 +166,7 @@ optionsPossibilities.forEach(o => {
   }
   o.nonMatches.forEach(m => {
     test(`${m[0]} should not match ${m[1]}`, () => {
-      const re = fuzzifyPashto(m[0], o.options);
+      const re = fuzzifyPashto(m[0], undefined);
       const result = m[1].match(re);
       expect(result).toBeNull();
     });
