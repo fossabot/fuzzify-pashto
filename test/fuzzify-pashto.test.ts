@@ -1,4 +1,4 @@
-import { fuzzifyPashto, es2018IsSupported } from '../src/fuzzify-pashto';
+import { fuzzifyPashto } from "../src/fuzzify-pashto";
 import { IFuzzifyOptions } from "../src/types";
 
 const defaultInfo = {
@@ -28,31 +28,31 @@ const defaultInfo = {
 };
 
 const withDiacritics = [
-    ['تتتت', 'تِتّتّت'],
-    ['بببب', 'بّبّبَب'],
+    ["تتتت", "تِتّتّت"],
+    ["بببب", "بّبّبَب"],
 ];
 
 const matchesWithAn = [
-    ['حتمن', 'حتماً'],
-    ['لتفن', 'لطفاً'],
-    ['کاملا', 'کاملاً'],
-]
-
-const matchesWithSpaces = [
-    ['دپاره', 'د پاره'],
-    ['بېکار', 'بې کار'],
-    ['د پاره', 'دپاره'],
-    ['بې کار', 'بېکار'],
+    ["حتمن", "حتماً"],
+    ["لتفن", "لطفاً"],
+    ["کاملا", "کاملاً"],
 ];
 
-type opps = {
-  options: IFuzzifyOptions,
-  matches?: any,
-  nonMatches?: any,
-  viceVersaMatches?: any,
+const matchesWithSpaces = [
+    ["دپاره", "د پاره"],
+    ["بېکار", "بې کار"],
+    ["د پاره", "دپاره"],
+    ["بې کار", "بېکار"],
+];
+
+interface ITestOptions {
+  options: IFuzzifyOptions;
+  matches?: any;
+  nonMatches?: any;
+  viceVersaMatches?: any;
 }
 
-const optionsPossibilities: Array<opps> = [
+const optionsPossibilities: ITestOptions[] = [
     {
         options: {}, // default
         ...defaultInfo,
@@ -64,41 +64,40 @@ const optionsPossibilities: Array<opps> = [
         viceVersaMatches: true,
     },
     {
-        options: {allowSpacesInWords: true},
         matches: [
             ...matchesWithSpaces,
         ],
         nonMatches: [],
+        options: {allowSpacesInWords: true},
         viceVersaMatches: true,
     },
     {
-        options: {allowSpacesInWords: false},
         matches: [],
         nonMatches: matchesWithSpaces,
+        options: {allowSpacesInWords: false},
     },
     {
-        options: {matchStart: "anywhere"},
         matches: [
             ["کار", "بېکاري"],
         ],
         nonMatches: [
             ["سرک", "بېترک"],
         ],
+        options: {matchStart: "anywhere"},
     },
     {
-        options: {matchWholeWordOnly: true},
         matches: [
             ["کور", "کور"],
             ["سری", "سړی"],
         ],
-        viceVersaMatches: true,
         nonMatches: [
             ["سړي", "سړيتوب"],
             ["کور", "کورونه"],
         ],
+        options: {matchWholeWordOnly: true},
+        viceVersaMatches: true,
     },
     {
-        options: {matchStart: "string"},
         matches: [
             ["کور", "کور ته ځم"],
             ["سری", "سړی دی"],
@@ -107,9 +106,9 @@ const optionsPossibilities: Array<opps> = [
             ["سړي", " سړيتوب"],
             ["کور", "خټين کورونه"],
         ],
+        options: {matchStart: "string"},
     },
     {
-        options: {matchStart: "string"},
         matches: [
             ["کور", "کور ته ځم"],
             ["سری", "سړی دی"],
@@ -118,6 +117,7 @@ const optionsPossibilities: Array<opps> = [
             ["سړي", " سړيتوب"],
             ["کور", "خټين کورونه"],
         ],
+        options: {matchStart: "string"},
     },
 ];
 
@@ -125,7 +125,7 @@ const punctuationToExclude = [
     "،", "؟", "؛", "۔", "۲", "۹", "۰", "»", "«", "٫", "!", ".", "؋", "٪", "٬", "×", ")", "(", " ", "\t",
 ];
 
-optionsPossibilities.forEach(o => {
+optionsPossibilities.forEach((o) => {
     o.matches.forEach((m: any) => {
         test(`${m[0]} should match ${m[1]}`, () => {
             const re = fuzzifyPashto(m[0], o.options);
@@ -149,7 +149,7 @@ optionsPossibilities.forEach(o => {
             expect(result).toBeNull();
         });
     });
-})
+});
 
 matchesWithAn.forEach((m: any) => {
     test(`matching ${m[0]} should work with ${m[1]}`, () => {
@@ -181,7 +181,7 @@ test(`وs should be optional if entered in search string`, () => {
     const re = fuzzifyPashto("لوتفن");
     const result = "لطفاً".match(new RegExp(re));
     expect(result).toBeTruthy();
-})
+});
 
 test(`matchWholeWordOnly should override matchStart = "anywhere"`, () => {
     const re = fuzzifyPashto("کار", { matchWholeWordOnly: true, matchStart: "anywhere" });
@@ -190,7 +190,6 @@ test(`matchWholeWordOnly should override matchStart = "anywhere"`, () => {
     expect(result).toEqual(expect.not.arrayContaining(["بېکاره"]));
 });
 
-
 test(`returnWholeWord should return the whole word`, () => {
     const re = fuzzifyPashto("کار", { returnWholeWord: true });
     const result = "کارونه کوه، بېکاره مه ګرځه".match(new RegExp(re));
@@ -198,7 +197,7 @@ test(`returnWholeWord should return the whole word`, () => {
     expect(result).toContain("کارونه");
 });
 
-punctuationToExclude.forEach(m => {
+punctuationToExclude.forEach((m) => {
     test(`${m} should not be considered part of a Pashto word`, () => {
         const re = fuzzifyPashto("کور", { returnWholeWord: true, matchStart: "word" });
         // ISSUE: This should also work when the word is PRECEDED by the punctuation
@@ -210,7 +209,8 @@ punctuationToExclude.forEach(m => {
     });
 });
 
-punctuationToExclude.forEach(m => {
+punctuationToExclude.forEach((m) => {
+    // tslint:disable-next-line
     test(`${m} should not be considered part of a Pashto word (front or back with es2018) - or should fail if using a non es2018 environment`, () => {
         let result: any;
         let failed = false;
@@ -245,9 +245,3 @@ test(`returnWholeWord should should not return partial matches if matchWholeWord
     const result = "کارونه کوه، بېکاره مه ګرځه".match(new RegExp(re));
     expect(result).toBeNull();
 });
-
-test(`es2018isSuppported should either return true or false`, () => {
-    const answer = es2018IsSupported();
-    expect(typeof answer).toBe("boolean");
-});
-

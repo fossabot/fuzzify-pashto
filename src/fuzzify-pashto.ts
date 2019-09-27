@@ -6,7 +6,10 @@
  *
  */
 
-import { pashtoReplacerRegex, pashtoReplacerInfo } from "./replacer";
+import {
+  pashtoReplacerInfo,
+  pashtoReplacerRegex,
+} from "./replacer";
 import { IFuzzifyOptions } from "./types";
 
 export const pashtoCharacterRange = "\u0621-\u065f\u0670-\u06d3\u06d5";
@@ -29,14 +32,6 @@ function sanitizeInput(input: string, options: IFuzzifyOptions): string {
   return safeInput;
 }
 
-// TODO: make across files
-type replacerItem = { 
-  char: string, 
-  range: string, 
-  plus?: string[],
-  ignorable?: boolean, 
-}
-
 function prepareMainRegexLogic(sanitizedInput: string, options: IFuzzifyOptions): string {
   return sanitizedInput.replace(pashtoReplacerRegex, (mtch) => {
     const r = pashtoReplacerInfo.find((x) => x.char === mtch);
@@ -45,6 +40,7 @@ function prepareMainRegexLogic(sanitizedInput: string, options: IFuzzifyOptions)
       const additionalOptionGroups = r.plus.join("|");
       section = `(?:${section}|${additionalOptionGroups})`;
     }
+    // tslint:disable-next-line
     return `${section}${r && r.ignorable ? "?" : ""}ع?${options.ignoreDiacritics ? `[${diacritics}]?`: ""}${options.allowSpacesInWords ? "\ ?" : ""}`;
   });
 }
@@ -53,10 +49,10 @@ function getBeginningWithAnywhere(options: IFuzzifyOptions): string {
   // Override the "anywhere" when matchWholeWordOnly is true
   if (options.matchWholeWordOnly) {
     return pashtoWordBoundaryBeginning;
-  } 
+  }
   if (options.returnWholeWord) {
     // Return the whole world even if matching from the middle (if desired)
-    return `${pashtoWordBoundaryBeginning}[${pashtoCharacterRange}]*`; 
+    return `${pashtoWordBoundaryBeginning}[${pashtoCharacterRange}]*`;
   }
   return "";
 }
@@ -65,7 +61,7 @@ function prepareBeginning(options: IFuzzifyOptions): string {
   // options.matchStart can be "string", "anywhere", or "word" (default)
   if (options.matchStart === "string") {
     return "^";
-  } 
+  }
   if (options.matchStart === "anywhere") {
     return getBeginningWithAnywhere(options);
   }
@@ -92,21 +88,3 @@ export function fuzzifyPashto(input: string, options: IFuzzifyOptions = {}): str
   const ending = prepareEnding(options);
   return `${beginning}${mainRegexLogic}${ending}`;
 }
-
-// Convienience function for testing if an environment supports lookbehind assertions
-// Lookbehind assertions allow for cleaner word matching. 
-// (Punctuation directly in fron of the word is ignored and there is no extra space)
-export function es2018IsSupported(): boolean {
-  let supported = true;
-  try {
-    // Test expression to see if environment supports lookbehind assertions
-    const a = new RegExp("(?<!a)b");  
-  } catch(error) {
-    // Environment does not support lookbehind assertions in regex
-    // Must ignore this line for testing, because not all environments can/will error here
-    /* istanbul ignore next */ 
-    supported = false;
-  }
-  return supported;
-}
-

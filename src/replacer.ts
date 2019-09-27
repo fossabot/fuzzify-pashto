@@ -13,18 +13,18 @@ const tdSounds = "طتټدډ";
 const velarPlosives = "ګږکقگك";
 const rLikeSounds = "رړڑڼ";
 const labialPlosivesAndFricatives = "فپب";
-// Includes Arabic ى \u0649  
+// Includes Arabic ى \u0649
 const theFiveYeys = "ېۍیيئےى";
 const guttural = "ښخشخهحغ";
 
-type replacerInfoItem = { 
-  char: string, 
-  range: string, 
-  plus?: string[],
-  ignorable?: boolean, 
+interface IReplacerInfoItem {
+  char: string;
+  range: string;
+  plus?: string[];
+  ignorable?: boolean;
 }
 
-const pashtoReplacerInfo: replacerInfoItem[] = [
+const pashtoReplacerInfo: IReplacerInfoItem[] = [
   { char: "اً", range: "ان" },
   { char: "ا", range: "اآهع", plus: ["اً"] }, // TODO: make optional (if not at the beginning of word)
   { char: "آ", range: "اآه" },
@@ -39,22 +39,22 @@ const pashtoReplacerInfo: replacerInfoItem[] = [
   { char: "ئ", range: theFiveYeys },
   { char: "ے", range: theFiveYeys },
 
-  { char: "س", range: sSounds }, 
+  { char: "س", range: sSounds },
   { char: "ص", range: sSounds },
   { char: "ث", range: sSounds },
   { char: "څ", range: sSounds + "چ" },
 
-  { char: "ج", range: "چجڅځژ" }, 
+  { char: "ج", range: "چجڅځژ" },
   { char: "چ", range: "چجڅځ" },
-  
+
   { char: "ه", range: "اهحہ" },
   { char: "ۀ", range: "اهحہ" },
   { char: "ہ", range: "اهحہ" },
 
-  { char: "ع", range: "اوع", ignorable: true }, 
-  { char: "و", range: "وع", ignorable: true }, 
+  { char: "ع", range: "اوع", ignorable: true },
+  { char: "و", range: "وع", ignorable: true },
   { char: "ؤ", range: "وع"},
-  
+
   { char: "ښ", range: guttural },
   { char: "غ", range: guttural },
   { char: "خ", range: guttural },
@@ -98,6 +98,7 @@ const pashtoReplacerInfo: replacerInfoItem[] = [
   { char: "ف", range: labialPlosivesAndFricatives },
 ];
 
+// tslint:disable-next-line
 const pashtoReplacerRegex = /اً|ا|آ|ٱ|ٲ|ٳ|ی|ي|ې|ۍ|ئ|ے|س|ص|ث|څ|ج|چ|ه|ۀ|ہ|ع|و|ؤ|ښ|غ|خ|ح|ش|ز|ض|ذ|ځ|ظ|ژ|ر|ړ|ڑ|ت|ټ|ٹ|ط|د|ډ|ڈ|نب|ن|ڼ|ک|ګ|گ|ق|ږ|ب|پ|ف/g;
 
 export { pashtoReplacerInfo, pashtoReplacerRegex };
