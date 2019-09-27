@@ -10,6 +10,7 @@ compiled
 .cache
 .rpt2_cache
 browsertest.html
+dist
 
 website/.cache 
 website/node_modules

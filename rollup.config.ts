@@ -32,7 +32,7 @@ export default {
     terser({
       output: {
         // @ts-ignore
-        comments: function(node, comment) {
+        comments: (node, comment) => {
           const text = comment.value;
           const type = comment.type;
           if (type === "comment2") {
