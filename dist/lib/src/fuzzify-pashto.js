@@ -27,7 +27,16 @@ function sanitizeInput(input, options) {
     }
     return safeInput;
 }
-function prepareMainRegexLogic(sanitizedInput, options) {
+function prepareMainRegexLogicLatin(sanitizedInput, options) {
+    return sanitizedInput.replace(replacer_1.latinReplacerRegex, function (mtch) {
+        var r = replacer_1.latinReplacerInfo.find(function (x) { return x.char === mtch; });
+        var section = r && r.repl;
+        // TODO: Should we allow ignorable letters as we do with the Pashto script?
+        // tslint:disable-next-line
+        return "" + section + (options.allowSpacesInWords ? "\ ?" : "");
+    });
+}
+function prepareMainRegexLogicPashto(sanitizedInput, options) {
     return sanitizedInput.replace(replacer_1.pashtoReplacerRegex, function (mtch) {
         var r = replacer_1.pashtoReplacerInfo.find(function (x) { return x.char === mtch; });
         var section = "[" + (r && r.range) + "]";
@@ -42,10 +51,13 @@ function prepareMainRegexLogic(sanitizedInput, options) {
 function getBeginningWithAnywhere(options) {
     // Override the "anywhere" when matchWholeWordOnly is true
     if (options.matchWholeWordOnly) {
-        return exports.pashtoWordBoundaryBeginning;
+        return (options.script === "Latin") ? "\\b" : exports.pashtoWordBoundaryBeginning;
     }
     if (options.returnWholeWord) {
         // Return the whole world even if matching from the middle (if desired)
+        if (options.script === "Latin") {
+            return "\\b\\S*";
+        }
         return exports.pashtoWordBoundaryBeginning + "[" + exports.pashtoCharacterRange + "]*";
     }
     return "";
@@ -60,14 +72,17 @@ function prepareBeginning(options) {
     }
     // options.matchStart default "word"
     // return the beginning word boundary depending on whether es2018 is enabled or not
+    if (options.script === "Latin") {
+        return "\\b";
+    }
     return options.es2018 ? exports.pashtoWordBoundaryBeginningWithES2018 : exports.pashtoWordBoundaryBeginning;
 }
 function prepareEnding(options) {
     if (options.matchWholeWordOnly) {
-        return "(?![" + exports.pashtoCharacterRange + "])";
+        return (options.script === "Latin") ? "\\b" : "(?![" + exports.pashtoCharacterRange + "])";
     }
     if (options.returnWholeWord) {
-        return "[" + exports.pashtoCharacterRange + "]*(?![" + exports.pashtoCharacterRange + "])";
+        return (options.script === "Latin") ? "\\S*\\b" : "[" + exports.pashtoCharacterRange + "]*(?![" + exports.pashtoCharacterRange + "])";
     }
     return "";
 }
@@ -75,7 +90,13 @@ function prepareEnding(options) {
 function fuzzifyPashto(input, options) {
     if (options === void 0) { options = {}; }
     var sanitizedInput = sanitizeInput(input, options);
-    var mainRegexLogic = prepareMainRegexLogic(sanitizedInput, options);
+    var mainRegexLogic;
+    if (options.script === "Latin") {
+        mainRegexLogic = prepareMainRegexLogicLatin(sanitizedInput, options);
+    }
+    else {
+        mainRegexLogic = prepareMainRegexLogicPashto(sanitizedInput, options);
+    }
     var beginning = prepareBeginning(options);
     var ending = prepareEnding(options);
     return "" + beginning + mainRegexLogic + ending;

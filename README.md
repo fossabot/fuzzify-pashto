@@ -113,12 +113,10 @@ text will break matches
 -   `true` Will match regardless of spaces, ie. `دپاره` will match `د پاره`, 
 and vice versa
 
-##### options.globalMatch
+##### options.JavaScript
 
--   `true` **(default)** Returns a regex that will match all matches in a text 
-(Includes the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2))
-
--   `false` (Do not include the `g` [flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Advanced_searching_with_flags_2))
+- `"Pashto"` **(default)** Use Pashto script (پښټو)
+- `"Latin"` Use Latin script (phonetics) (puxto)
 
 ##### options.returnWholeWord
 

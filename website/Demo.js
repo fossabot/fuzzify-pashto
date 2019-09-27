@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Highlighter from "react-highlight-words";
-import { fuzzifyPashto, es2018IsSupported } from "fuzzify-pashto";
+import { fuzzifyPashto } from "fuzzify-pashto";
 import "./Demo.css";
 
 const apiOptions = [

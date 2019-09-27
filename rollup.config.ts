@@ -3,8 +3,8 @@ import commonjs from "rollup-plugin-commonjs";
 import json from "rollup-plugin-json";
 import resolve from "rollup-plugin-node-resolve";
 import sourceMaps from "rollup-plugin-sourcemaps";
+import { terser } from "rollup-plugin-terser";
 import typescript from "rollup-plugin-typescript2";
-// import { terser } from "rollup-plugin-terser"
 
 // tslint:disable-next-line
 const pkg = require("./package.json");
@@ -29,7 +29,19 @@ export default {
     // which external modules to include in the bundle
     // https://github.com/rollup/rollup-plugin-node-resolve#usage
     resolve(),
-    // terser(), (Enable when figure out licensing preserving)
+    terser({
+      output: {
+        // @ts-ignore
+        comments: function(node, comment) {
+          const text = comment.value;
+          const type = comment.type;
+          if (type === "comment2") {
+            // multiline comment
+            return /Copyright/i.test(text);
+          }
+        },
+      },
+    }),
     // Resolve source maps to the original source
     sourceMaps(),
   ],

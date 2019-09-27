@@ -1,5 +1,6 @@
 export interface IFuzzifyOptions {
     matchStart?: "word" | "string" | "anywhere";
+    script?: "Pashto" | "Latin";
     matchWholeWordOnly?: boolean;
     allowSpacesInWords?: boolean;
     returnWholeWord?: boolean;

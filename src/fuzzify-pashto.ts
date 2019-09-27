@@ -7,6 +7,8 @@
  */
 
 import {
+  latinReplacerInfo,
+  latinReplacerRegex,
   pashtoReplacerInfo,
   pashtoReplacerRegex,
 } from "./replacer";
@@ -33,7 +35,17 @@ function sanitizeInput(input: string, options: IFuzzifyOptions): string {
   return safeInput;
 }
 
-function prepareMainRegexLogic(sanitizedInput: string, options: IFuzzifyOptions): string {
+function prepareMainRegexLogicLatin(sanitizedInput: string, options: IFuzzifyOptions): string {
+  return sanitizedInput.replace(latinReplacerRegex, (mtch) => {
+    const r = latinReplacerInfo.find((x) => x.char === mtch);
+    const section = r && r.repl;
+    // TODO: Should we allow ignorable letters as we do with the Pashto script?
+    // tslint:disable-next-line
+    return `${section}${options.allowSpacesInWords ? "\ ?" : ""}`;
+  });
+}
+
+function prepareMainRegexLogicPashto(sanitizedInput: string, options: IFuzzifyOptions): string {
   return sanitizedInput.replace(pashtoReplacerRegex, (mtch) => {
     const r = pashtoReplacerInfo.find((x) => x.char === mtch);
     let section = `[${r && r.range}]`;
@@ -49,10 +61,13 @@ function prepareMainRegexLogic(sanitizedInput: string, options: IFuzzifyOptions)
 function getBeginningWithAnywhere(options: IFuzzifyOptions): string {
   // Override the "anywhere" when matchWholeWordOnly is true
   if (options.matchWholeWordOnly) {
-    return pashtoWordBoundaryBeginning;
+    return (options.script === "Latin") ? "\\b" : pashtoWordBoundaryBeginning;
   }
   if (options.returnWholeWord) {
     // Return the whole world even if matching from the middle (if desired)
+    if (options.script === "Latin") {
+      return "\\b\\S*";
+    }
     return `${pashtoWordBoundaryBeginning}[${pashtoCharacterRange}]*`;
   }
   return "";
@@ -68,15 +83,18 @@ function prepareBeginning(options: IFuzzifyOptions): string {
   }
   // options.matchStart default "word"
   // return the beginning word boundary depending on whether es2018 is enabled or not
+  if (options.script === "Latin") {
+    return "\\b";
+  }
   return options.es2018 ? pashtoWordBoundaryBeginningWithES2018 : pashtoWordBoundaryBeginning;
 }
 
 function prepareEnding(options: IFuzzifyOptions): string {
   if (options.matchWholeWordOnly) {
-    return `(?![${pashtoCharacterRange}])`;
+    return (options.script === "Latin") ? "\\b" : `(?![${pashtoCharacterRange}])`;
   }
   if (options.returnWholeWord) {
-    return `[${pashtoCharacterRange}]*(?![${pashtoCharacterRange}])`;
+    return (options.script === "Latin") ? "\\S*\\b" : `[${pashtoCharacterRange}]*(?![${pashtoCharacterRange}])`;
   }
   return "";
 }
@@ -84,7 +102,12 @@ function prepareEnding(options: IFuzzifyOptions): string {
 // Main function for returning a regular expression based on a string of Pashto text
 export function fuzzifyPashto(input: string, options: IFuzzifyOptions = {}): string {
   const sanitizedInput = sanitizeInput(input, options);
-  const mainRegexLogic = prepareMainRegexLogic(sanitizedInput, options);
+  let mainRegexLogic: string;
+  if (options.script === "Latin") {
+    mainRegexLogic = prepareMainRegexLogicLatin(sanitizedInput, options);
+  } else {
+    mainRegexLogic = prepareMainRegexLogicPashto(sanitizedInput, options);
+  }
   const beginning = prepareBeginning(options);
   const ending = prepareEnding(options);
   return `${beginning}${mainRegexLogic}${ending}`;

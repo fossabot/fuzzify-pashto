@@ -37,6 +37,37 @@ var defaultInfo = {
         ["کار", "بېکاري"],
     ],
 };
+var defaultLatinInfo = {
+    matches: [
+        ["lootfun", "lUtfan"],
+        ["sarey", "saRey"],
+        ["senga", "tsanga"],
+        ["daktur", "DakTar"],
+        ["iteebar", "itibaar"],
+        ["dzaal", "jaal"],
+        ["bekaar", "bekáar"],
+        ["bekár", "bekaar"],
+        ["chaai", "cháai"],
+        ["day", "daai"],
+        ["dai", "dey"],
+        ["daktar", "Daktár"],
+        ["sarái", "saRey"],
+        ["beter", "bahtár"],
+        ["doosti", "dostee"],
+        ["dar", "dăr"],
+        ["der", "dăr"],
+        ["dur", "dăr"],
+        ["chee", "che"],
+        ["dzooy", "zooy"],
+        ["delta", "dalta"],
+        ["koorbaani", "qUrbaanee"],
+        ["fermaai", "farmaayee"],
+    ],
+    nonMatches: [
+        ["kor", "por"],
+        ["intizaar", "intizaam"],
+    ],
+};
 var withDiacritics = [
     ["تتتت", "تِتّتّت"],
     ["بببب", "بّبّبَب"],
@@ -52,8 +83,15 @@ var matchesWithSpaces = [
     ["د پاره", "دپاره"],
     ["بې کار", "بېکار"],
 ];
+var matchesWithSpacesLatin = [
+    ["dupaara", "du paara"],
+    ["bekaara", "be kaara"],
+    ["du paara", "dupaara"],
+    ["be kaara", "bekaara"],
+];
 var optionsPossibilities = [
     __assign({ options: {} }, defaultInfo, { viceVersaMatches: true }),
+    __assign({ options: { script: "Latin" } }, defaultLatinInfo, { viceVersaMatches: false }),
     __assign({ options: { matchStart: "word" } }, defaultInfo, { viceVersaMatches: true }),
     {
         matches: matchesWithSpaces.slice(),
@@ -62,9 +100,20 @@ var optionsPossibilities = [
         viceVersaMatches: true,
     },
     {
+        matches: matchesWithSpacesLatin.slice(),
+        nonMatches: [],
+        options: { allowSpacesInWords: true, script: "Latin" },
+        viceVersaMatches: true,
+    },
+    {
         matches: [],
         nonMatches: matchesWithSpaces,
         options: { allowSpacesInWords: false },
+    },
+    {
+        matches: [],
+        nonMatches: matchesWithSpacesLatin,
+        options: { allowSpacesInWords: false, script: "Latin" },
     },
     {
         matches: [
@@ -183,11 +232,56 @@ test("matchWholeWordOnly should override matchStart = \"anywhere\"", function ()
     expect(result).toEqual(expect.not.arrayContaining(["بېکاره"]));
 });
 test("returnWholeWord should return the whole word", function () {
+    // With Pashto Script
     var re = fuzzify_pashto_1.fuzzifyPashto("کار", { returnWholeWord: true });
     // eslint-disable-next-line
     var result = "کارونه کوه، بېکاره مه ګرځه".match(new RegExp(re));
     expect(result).toHaveLength(1);
     expect(result).toContain("کارونه");
+    // With Latin Script
+    var reLatin = fuzzify_pashto_1.fuzzifyPashto("kaar", {
+        returnWholeWord: true,
+        script: "Latin",
+    });
+    // eslint-disable-next-line
+    var resultLatin = "kaaroona kawa, bekaara ma gurdza.".match(new RegExp(reLatin));
+    expect(resultLatin).toHaveLength(1);
+    expect(resultLatin).toContain("kaaroona");
+});
+test("returnWholeWord should return the whole word even when starting the matching in the middle", function () {
+    // With Pashto Script
+    var re = fuzzify_pashto_1.fuzzifyPashto("کار", { returnWholeWord: true, matchStart: "anywhere" });
+    // eslint-disable-next-line
+    var result = "کارونه کوه، بېکاره مه ګرځه".match(new RegExp(re, "g"));
+    expect(result).toHaveLength(2);
+    expect(result).toContain(" بېکاره");
+    // With Latin Script
+    var reLatin = fuzzify_pashto_1.fuzzifyPashto("kaar", {
+        matchStart: "anywhere",
+        returnWholeWord: true,
+        script: "Latin",
+    });
+    // eslint-disable-next-line
+    var resultLatin = "kaaroona kawa bekaara ma gurdza".match(new RegExp(reLatin, "g"));
+    expect(resultLatin).toHaveLength(2);
+    expect(resultLatin).toContain("bekaara");
+});
+test("returnWholeWord should should not return partial matches if matchWholeWordOnly is true", function () {
+    // With Pashto Script
+    var re = fuzzify_pashto_1.fuzzifyPashto("کار", { returnWholeWord: true, matchStart: "anywhere", matchWholeWordOnly: true });
+    // eslint-disable-next-line
+    var result = "کارونه کوه، بېکاره مه ګرځه".match(new RegExp(re));
+    expect(result).toBeNull();
+    // With Latin Script
+    var reLatin = fuzzify_pashto_1.fuzzifyPashto("kaar", {
+        matchStart: "anywhere",
+        matchWholeWordOnly: true,
+        returnWholeWord: true,
+        script: "Latin",
+    });
+    // eslint-disable-next-line
+    var resultLatin = "kaaroona kawa bekaara ma gurdza".match(new RegExp(reLatin));
+    expect(resultLatin).toBeNull();
 });
 punctuationToExclude.forEach(function (m) {
     test(m + " should not be considered part of a Pashto word", function () {
@@ -225,18 +319,5 @@ test("Arabic punctuation or numbers should not be considered part of a Pashto wo
     var result = "کارونه کوه، بېکاره مه ګرځه".match(new RegExp(re));
     expect(result).toHaveLength(1);
     expect(result).toContain("کارونه");
-});
-test("returnWholeWord should return the whole word even when starting the matching in the middle", function () {
-    var re = fuzzify_pashto_1.fuzzifyPashto("کار", { returnWholeWord: true, matchStart: "anywhere" });
-    // eslint-disable-next-line
-    var result = "کارونه کوه، بېکاره مه ګرځه".match(new RegExp(re, "g"));
-    expect(result).toHaveLength(2);
-    expect(result).toContain(" بېکاره");
-});
-test("returnWholeWord should should not return partial matches if matchWholeWordOnly is true", function () {
-    var re = fuzzify_pashto_1.fuzzifyPashto("کار", { returnWholeWord: true, matchStart: "anywhere", matchWholeWordOnly: true });
-    // eslint-disable-next-line
-    var result = "کارونه کوه، بېکاره مه ګرځه".match(new RegExp(re));
-    expect(result).toBeNull();
 });
 //# sourceMappingURL=fuzzify-pashto.test.js.map
