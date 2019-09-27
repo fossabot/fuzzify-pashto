@@ -15,4 +15,5 @@ dist
 website/.cache 
 website/node_modules
 website/pre-dist
+website/dist
 website/package-lock.json
