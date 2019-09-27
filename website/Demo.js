@@ -45,7 +45,13 @@ export default class Demo extends Component {
     componentDidMount() {
         // Check to see if browser has es2018 lookbehind support
         // If so enable it by default
-        if (es2018IsSupported()) {
+        let es2018Works = true;
+        try {
+           const r = new RegExp("(?<=a)b"); 
+        } catch (error) {
+            es2018Works = false;
+        }
+        if (es2018Works) {
             this.setState({ 
                 es2018Supported: true, 
                 es2018: true,
