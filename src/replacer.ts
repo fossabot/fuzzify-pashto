@@ -17,83 +17,87 @@ const labialPlosivesAndFricatives = "فپب";
 const theFiveYeys = "ېۍیيئےى";
 const guttural = "ښخشخهحغ";
 
-const pashtoReplacerInfo = {
-  "اً": { range: "ان" },
-  "ا": { range: "اآهع", plus: ["اً"] }, // TODO: make optional (if not at the beginning of word)
-  "آ": { range: "اآه" },
-  "ٱ": { range: "اآه" },
-  "ٲ": { range: "اآه" },
-  "ٳ": { range: "اآه" },
+type replacerInfoItem = { 
+  char: string, 
+  range: string, 
+  plus?: string[],
+  ignorable?: boolean, 
+}
 
-  "ی": { range: theFiveYeys },
-  "ي": { range: theFiveYeys },
-  "ې": { range: theFiveYeys },
-  "ۍ": { range: theFiveYeys },
-  "ئ": { range: theFiveYeys },
-  "ے": { range: theFiveYeys },
+const pashtoReplacerInfo: replacerInfoItem[] = [
+  { char: "اً", range: "ان" },
+  { char: "ا", range: "اآهع", plus: ["اً"] }, // TODO: make optional (if not at the beginning of word)
+  { char: "آ", range: "اآه" },
+  { char: "ٱ", range: "اآه" },
+  { char: "ٲ", range: "اآه" },
+  { char: "ٳ", range: "اآه" },
 
-  "س": { range: sSounds }, 
-  "ص": { range: sSounds },
-  "ث": { range: sSounds },
-  "څ": { range: sSounds + "چ" },
+  { char: "ی", range: theFiveYeys },
+  { char: "ي", range: theFiveYeys },
+  { char: "ې", range: theFiveYeys },
+  { char: "ۍ", range: theFiveYeys },
+  { char: "ئ", range: theFiveYeys },
+  { char: "ے", range: theFiveYeys },
 
-  "ج": { range: "چجڅځژ" }, 
-  "چ": { range: "چجڅځ" },
+  { char: "س", range: sSounds }, 
+  { char: "ص", range: sSounds },
+  { char: "ث", range: sSounds },
+  { char: "څ", range: sSounds + "چ" },
+
+  { char: "ج", range: "چجڅځژ" }, 
+  { char: "چ", range: "چجڅځ" },
   
-  "ه": { range: "اهحہ" },
-  "ۀ": { range: "اهحہ" },
-  "ہ": { range: "اهحہ" },
+  { char: "ه", range: "اهحہ" },
+  { char: "ۀ", range: "اهحہ" },
+  { char: "ہ", range: "اهحہ" },
 
-  "ع": { range: "اوع", ignorable: true }, 
-  "و": { range: "وع", ignorable: true }, 
-  "ؤ": { range: "وع"},
+  { char: "ع", range: "اوع", ignorable: true }, 
+  { char: "و", range: "وع", ignorable: true }, 
+  { char: "ؤ", range: "وع"},
   
-  "ښ": { range: guttural },
-  "غ": { range: guttural },
-  "خ": { range: guttural },
-  "ح": { range: guttural },
+  { char: "ښ", range: guttural },
+  { char: "غ", range: guttural },
+  { char: "خ", range: guttural },
+  { char: "ح", range: guttural },
 
-  "ش": { range: "شښ" },
+  { char: "ش", range: "شښ" },
 
-  "ز": { range: zSounds },
-  "ض": { range: zSounds },
-  "ذ": { range: zSounds },
-  "ځ": { range: zSounds + "جڅ"},
-  "ظ": { range: zSounds },
+  { char: "ز", range: zSounds },
+  { char: "ض", range: zSounds },
+  { char: "ذ", range: zSounds },
+  { char: "ځ", range: zSounds + "جڅ"},
+  { char: "ظ", range: zSounds },
 
-  "ژ": { range: "زضظژذځږج" },
+  { char: "ژ", range: "زضظژذځږج" },
 
-  "ر": { range: rLikeSounds },
-  "ړ": { range: rLikeSounds },
-  "ڑ": { range: rLikeSounds },
+  { char: "ر", range: rLikeSounds },
+  { char: "ړ", range: rLikeSounds },
+  { char: "ڑ", range: rLikeSounds },
 
-  "ت": { range: tdSounds },
-  "ټ": { range: tdSounds },
-  "ٹ": { range: tdSounds },
-  "ط": { range: tdSounds },
-  "د": { range: tdSounds },
-  "ډ": { range: tdSounds },
-  "ڈ": { range: tdSounds },
+  { char: "ت", range: tdSounds },
+  { char: "ټ", range: tdSounds },
+  { char: "ٹ", range: tdSounds },
+  { char: "ط", range: tdSounds },
+  { char: "د", range: tdSounds },
+  { char: "ډ", range: tdSounds },
+  { char: "ڈ", range: tdSounds },
 
-  "نب": { range: "نبم" },
-  "ن": { range: "نڼ", plus: ["اً"] }, // allow for words using اٌ at the end to be seached for with ن
-  "ڼ": { range: "نڼړڑ" },
+  { char: "نب", range: "نبم" },
+  { char: "ن", range: "نڼ", plus: ["اً"] }, // allow for words using اٌ at the end to be seached for with ن
+  { char: "ڼ", range: "نڼړڑ" },
 
-  "ک": { range: velarPlosives },
-  "ګ": { range: velarPlosives },
-  "گ": { range: velarPlosives },
-  "ق": { range: velarPlosives },
+  { char: "ک", range: velarPlosives },
+  { char: "ګ", range: velarPlosives },
+  { char: "گ", range: velarPlosives },
+  { char: "ق", range: velarPlosives },
 
-  "ږ": { range: velarPlosives + "ژ" },
+  { char: "ږ", range: velarPlosives + "ژ" },
 
-  "ب": { range: labialPlosivesAndFricatives },
-  "پ": { range: labialPlosivesAndFricatives },
-  "ف": { range: labialPlosivesAndFricatives },
-};
+  { char: "ب", range: labialPlosivesAndFricatives },
+  { char: "پ", range: labialPlosivesAndFricatives },
+  { char: "ف", range: labialPlosivesAndFricatives },
+];
 
-const pashtoReplacerRegex = new RegExp(
-  Object.keys(pashtoReplacerInfo).join("|"), 
-  "g",
-);
+const pashtoReplacerRegex = /اً|ا|آ|ٱ|ٲ|ٳ|ی|ي|ې|ۍ|ئ|ے|س|ص|ث|څ|ج|چ|ه|ۀ|ہ|ع|و|ؤ|ښ|غ|خ|ح|ش|ز|ض|ذ|ځ|ظ|ژ|ر|ړ|ڑ|ت|ټ|ٹ|ط|د|ډ|ڈ|نب|ن|ڼ|ک|ګ|گ|ق|ږ|ب|پ|ف/g;
 
 export { pashtoReplacerInfo, pashtoReplacerRegex };

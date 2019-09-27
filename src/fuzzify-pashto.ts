@@ -6,25 +6,16 @@
  *
  */
 
-import { pashtoReplacerRegex, pashtoReplacerInfo } from './replacer';
+import { pashtoReplacerRegex, pashtoReplacerInfo } from "./replacer";
+import { IFuzzifyOptions } from "./types";
 
-interface IFuzzifyOptions {
-  globalMatch?: boolean;
-  matchStart?: "word" | "string" | "anywhere";
-  matchWholeWordOnly?: boolean;
-  allowSpacesInWords?: boolean;
-  returnWholeWord?: boolean;
-  es2018?: boolean;
-  ignoreDiacritics?: boolean;
-}
-
-const pashtoCharacterRange = "\u0621-\u065f\u0670-\u06d3\u06d5";
+export const pashtoCharacterRange = "\u0621-\u065f\u0670-\u06d3\u06d5";
 // Unfortunately, without ES2018 lookbehind assertions word boundary matching is not as clean
 // Without lookbehind assertions, we are unable to ignore punctuation directly in front of a word
 // and matching results include a space before the word
-const pashtoWordBoundaryBeginning = `(?:^|[^${pashtoCharacterRange}])`;
+export const pashtoWordBoundaryBeginning = `(?:^|[^${pashtoCharacterRange}])`;
 // These problems are solved by using the ES2018 lookbehind assertions where environments permit
-const pashtoWordBoundaryBeginningWithES2018 = `(?<![${pashtoCharacterRange}])`;
+export const pashtoWordBoundaryBeginningWithES2018 = `(?<![${pashtoCharacterRange}])`;
 const diacritics = "\u064b-\u065f\u0670\u0674"; // pretty generous diactritic range
 
 function sanitizeInput(input: string, options: IFuzzifyOptions): string {
@@ -38,17 +29,23 @@ function sanitizeInput(input: string, options: IFuzzifyOptions): string {
   return safeInput;
 }
 
+// TODO: make across files
+type replacerItem = { 
+  char: string, 
+  range: string, 
+  plus?: string[],
+  ignorable?: boolean, 
+}
+
 function prepareMainRegexLogic(sanitizedInput: string, options: IFuzzifyOptions): string {
   return sanitizedInput.replace(pashtoReplacerRegex, (mtch) => {
-    const r = pashtoReplacerInfo[mtch];
-    let range = `[${r.range}]`;
-    if (r.plus) {
-      const additionalOptionGroups = r.plus.reduce((t: string, o: string) => {
-        return t + o + "|";
-      }, "");
-      range = `(${additionalOptionGroups}${range})`;
+    const r = pashtoReplacerInfo.find((x) => x.char === mtch);
+    let section = `[${r && r.range}]`;
+    if (r && r.plus) {
+      const additionalOptionGroups = r.plus.join("|");
+      section = `(?:${section}|${additionalOptionGroups})`;
     }
-    return `${range}${r.ignorable ? "?" : ""}ع?${options.ignoreDiacritics ? `[${diacritics}]?`: ""}${options.allowSpacesInWords ? "\ ?" : ""}`;
+    return `${section}${r && r.ignorable ? "?" : ""}ع?${options.ignoreDiacritics ? `[${diacritics}]?`: ""}${options.allowSpacesInWords ? "\ ?" : ""}`;
   });
 }
 
@@ -87,18 +84,13 @@ function prepareEnding(options: IFuzzifyOptions): string {
   return "";
 }
 
-function prepareFlags(options: IFuzzifyOptions): string {
-  return `m${options.globalMatch === false ? "" : "g"}`;
-}
-
 // Main function for returning a regular expression based on a string of Pashto text
-export function fuzzifyPashto(input: string, options: IFuzzifyOptions = {}): RegExp {
+export function fuzzifyPashto(input: string, options: IFuzzifyOptions = {}): string {
   const sanitizedInput = sanitizeInput(input, options);
   const mainRegexLogic = prepareMainRegexLogic(sanitizedInput, options);
   const beginning = prepareBeginning(options);
   const ending = prepareEnding(options);
-  const flags = prepareFlags(options);
-  return new RegExp(`${beginning}${mainRegexLogic}${ending}`, flags);
+  return `${beginning}${mainRegexLogic}${ending}`;
 }
 
 // Convienience function for testing if an environment supports lookbehind assertions
