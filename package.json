@@ -37,8 +37,8 @@
     "precommit": "lint-staged",
     "develop-website": "parcel website/index.html",
     "publish-website": "rimraf website/dist && parcel build website/index.html --out-dir=./website/dist --public-url=/fuzzify-pashto && git add . && git commit -m 'website update' && git subtree push --prefix website/dist origin gh-pages",
-    "tslint": "tslint -c tslint.json 'src/*.ts' 'test/*.ts'",
-    "eslint": "./node_modules/.bin/eslint src/*.ts"
+    "tslint": "tslint -c tslint.json --project .",
+    "eslint": "./node_modules/.bin/eslint src/*.ts test/*.ts"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
