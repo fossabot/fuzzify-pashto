@@ -6,7 +6,7 @@ import sourceMaps from "rollup-plugin-sourcemaps";
 import typescript from "rollup-plugin-typescript2";
 // import { terser } from "rollup-plugin-terser"
 
-// @tslint:ignore-next-line
+// tslint:disable-next-line
 const pkg = require("./package.json");
 
 const libraryName = "fuzzify-pashto";

@@ -142,12 +142,3 @@ unsupported environments. It will cause a syntax error.
 
 -   `true` Diacritics will be ignored, and matches will work regardless of 
 whether or not they are included  
-
-### fuzzifyPashto.es2018IsSupported()
-
-A convenience function to test if the current platform supports 
-[lookbehind assertions](https://v8.dev/blog/regexp-lookbehind-assertions) as 
-per es2018.
-
-Returns `true` if lookbehind assertions are supported, and `false` if they are 
-not.
