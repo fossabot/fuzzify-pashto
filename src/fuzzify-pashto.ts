@@ -27,7 +27,8 @@ function sanitizeInput(input: string, options: IFuzzifyOptions): string {
     safeInput = safeInput.replace(/ /g, "");
   }
   if (options.ignoreDiacritics) {
-    safeInput = safeInput.replace(new RegExp(`[${diacritics}]`, "g"), "");
+    // Using literal regular expressions instead of variable for security linting
+    safeInput = safeInput.replace(/\u064b-\u065f\u0670\u0674/g, "");
   }
   return safeInput;
 }
