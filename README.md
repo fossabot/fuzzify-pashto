@@ -113,7 +113,7 @@ text will break matches
 -   `true` Will match regardless of spaces, ie. `دپاره` will match `د پاره`, 
 and vice versa
 
-##### options.JavaScript
+##### options.script
 
 - `"Pashto"` **(default)** Use Pashto script (پښټو)
 - `"Latin"` Use Latin script (phonetics) (puxto)
