@@ -1,6 +1,6 @@
 {
   "name": "fuzzify-pashto",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A JavaScript library that creates regular expressions (regex) for fuzzy searching Pashto text (approximate string matching)",
   "keywords": [
     "pashto",
@@ -10,7 +10,7 @@
   ],
   "main": "dist/fuzzify-pashto.umd.js",
   "module": "dist/fuzzify-pashto.es5.js",
-  "typings": "dist/types/fuzzify-pashto.d.ts",
+  "types": "dist/src/types/fuzzify-pashto.d.ts",
   "files": [
     "dist"
   ],
@@ -128,6 +128,5 @@
     "typedoc": "^0.15.0",
     "typescript": "^3.5.3",
     "unified": "^8.3.2"
-  },
-  "dependencies": {}
+  }
 }
