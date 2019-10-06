@@ -1,6 +1,7 @@
 # fuzzify-pashto
 
 [![NPM](https://nodei.co/npm/fuzzify-pashto.png)](https://nodei.co/npm/fuzzify-pashto/)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fopenpashto%2Ffuzzify-pashto.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fopenpashto%2Ffuzzify-pashto?ref=badge_shield)
 
 [![Build Status](https://travis-ci.org/openpashto/fuzzify-pashto.svg?branch=master)](https://travis-ci.org/openpashto/fuzzify-pashto)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e8ff024189134686af29bc707798ed73)](https://www.codacy.com/app/openpashto/fuzzify-pashto?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=openpashto/fuzzify-pashto&amp;utm_campaign=Badge_Grade)
@@ -140,3 +141,7 @@ unsupported environments. It will cause a syntax error.
 
 -   `true` Diacritics will be ignored, and matches will work regardless of 
 whether or not they are included  
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fopenpashto%2Ffuzzify-pashto.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fopenpashto%2Ffuzzify-pashto?ref=badge_large)
